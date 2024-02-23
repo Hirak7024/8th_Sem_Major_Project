@@ -1,15 +1,14 @@
 import pool from "../DataBase.js";
 
-//INSERT INTO STUDENTS
 const insertStudent = async (req, res) => {
-    const { Roll_No, Email, Name, Phone_No, Date_of_Birth, Registration_No, Course, Department, Year_of_Joining, Year_of_Passing } = req.body;
+    const { Student_Auth_ID, Roll_No, Email, Name, Phone_No, Date_of_Birth, Registration_No, Course, Department, Year_of_Joining, Year_of_Passing } = req.body;
 
     try {
-        // Check if email exists in student_auth table
-        const emailExistsQuery = `SELECT * FROM student_auth WHERE Email = ?`;
-        const [existingEmail] = await pool.query(emailExistsQuery, [Email]);
-        if (existingEmail.length === 0) {
-            return res.status(400).json({ message: "Student is not registered", status_code: 400 });
+        // Check if Student_Auth_ID corresponds to the Email in student_auth table
+        const authIdEmailCheckQuery = `SELECT * FROM student_auth WHERE Student_Auth_ID = ? AND Email = ?`;
+        const [authIdEmailCheckResult] = await pool.query(authIdEmailCheckQuery, [Student_Auth_ID, Email]);
+        if (authIdEmailCheckResult.length === 0) {
+            return res.status(400).json({ message: "Email and Student Auth Id doesn't match as per Student Authenctication Table", status_code: 400 });
         }
 
         // Check if Roll_No already exists
@@ -27,17 +26,18 @@ const insertStudent = async (req, res) => {
         }
 
         // Insert new student
-        const insertQuery = `INSERT INTO students (Roll_No, Email, Name, Phone_No, Date_of_Birth, Registration_No, Course, Department, Year_of_Joining, Year_of_Passing) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-        await pool.query(insertQuery, [Roll_No, Email, Name, Phone_No, Date_of_Birth, Registration_No, Course, Department, Year_of_Joining, Year_of_Passing]);
+        const insertQuery = `INSERT INTO students (Student_Auth_ID, Roll_No, Email, Name, Phone_No, Date_of_Birth, Registration_No, Course, Department, Year_of_Joining, Year_of_Passing) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+        await pool.query(insertQuery, [Student_Auth_ID, Roll_No, Email, Name, Phone_No, Date_of_Birth, Registration_No, Course, Department, Year_of_Joining, Year_of_Passing]);
 
         // Prepare userResponse
-        const userResponse = { Roll_No, Email, Name, Phone_No, Date_of_Birth, Registration_No, Course, Department, Year_of_Joining, Year_of_Passing };
+        const userResponse = { Student_Auth_ID, Roll_No, Email, Name, Phone_No, Date_of_Birth, Registration_No, Course, Department, Year_of_Joining, Year_of_Passing };
 
         res.status(200).json({ data: { userResponse }, message: "Student Data Inserted Successfully", status_code: 200 });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
+
 
 
 export { insertStudent };
