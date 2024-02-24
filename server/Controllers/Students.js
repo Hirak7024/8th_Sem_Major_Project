@@ -1,7 +1,7 @@
 import pool from "../DataBase.js";
 
 //INSERT INTO TABLE STUDENTS
-const insertStudent = async (req, res) => {
+const InsertStudent = async (req, res) => {
     const { Student_Auth_ID, Roll_No, Email, Name, Phone_No, Date_of_Birth, Registration_No, Course, Department, Year_of_Joining, Year_of_Passing } = req.body;
 
     try {
@@ -45,7 +45,7 @@ const insertStudent = async (req, res) => {
 };
 
 //UPDATE VALUES AT TABLE STUDENT
-const updateStudent = async (req, res) => {
+const UpdateStudent = async (req, res) => {
     const { Student_ID, ...updates } = req.body; // Extract Student_ID and other fields to be updated from request body
 
     try {
@@ -76,7 +76,7 @@ const updateStudent = async (req, res) => {
 };
 
 //DELETE A REW FROM TABLE STUDENT
-const deleteStudent = async (req, res) => {
+const DeleteStudent = async (req, res) => {
     const { Student_ID } = req.body;
 
     try {
@@ -97,6 +97,6 @@ const deleteStudent = async (req, res) => {
     }
 };
 
-export { insertStudent, updateStudent, deleteStudent };
+export { InsertStudent, UpdateStudent, DeleteStudent };
 
 

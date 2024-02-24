@@ -64,7 +64,7 @@ const LoginStudent = async (req, res) => {
 };
 
 // TO UPDATE STUDENT LOGIN CREDENTIALS
-const updateStudentAuth = async (req, res) => {
+const UpdateStudentAuth = async (req, res) => {
     const { Student_Auth_ID, Email, Password } = req.body;
 
     try {
@@ -111,7 +111,7 @@ const updateStudentAuth = async (req, res) => {
 };
 
 // TO DELETE A ROW FROM STUDENT AUTH TABLE
-const deleteStudentAuth = async (req, res) => {
+const DeleteStudentAuth = async (req, res) => {
     const { Student_Auth_ID } = req.body;
 
     try {
@@ -134,4 +134,4 @@ const deleteStudentAuth = async (req, res) => {
 
 
 
-export { RegisterStudent, LoginStudent, updateStudentAuth, deleteStudentAuth };
+export { RegisterStudent, LoginStudent, UpdateStudentAuth, DeleteStudentAuth };
