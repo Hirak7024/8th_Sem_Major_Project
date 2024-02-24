@@ -1,5 +1,6 @@
 import pool from "../DataBase.js";
 
+//INSERT INTO TABLE STUDENTS
 const insertStudent = async (req, res) => {
     const { Student_Auth_ID, Roll_No, Email, Name, Phone_No, Date_of_Birth, Registration_No, Course, Department, Year_of_Joining, Year_of_Passing } = req.body;
 
@@ -8,7 +9,7 @@ const insertStudent = async (req, res) => {
         const authIdEmailCheckQuery = `SELECT * FROM student_auth WHERE Student_Auth_ID = ? AND Email = ?`;
         const [authIdEmailCheckResult] = await pool.query(authIdEmailCheckQuery, [Student_Auth_ID, Email]);
         if (authIdEmailCheckResult.length === 0) {
-            return res.status(400).json({ message: "Email and Student Auth Id doesn't match as per Student Authenctication Table", status_code: 400 });
+            return res.status(400).json({ message: "Email and Student Auth Id doesn't match as per Student Authentication Table", status_code: 400 });
         }
 
         // Check if Roll_No already exists
@@ -29,8 +30,13 @@ const insertStudent = async (req, res) => {
         const insertQuery = `INSERT INTO students (Student_Auth_ID, Roll_No, Email, Name, Phone_No, Date_of_Birth, Registration_No, Course, Department, Year_of_Joining, Year_of_Passing) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
         await pool.query(insertQuery, [Student_Auth_ID, Roll_No, Email, Name, Phone_No, Date_of_Birth, Registration_No, Course, Department, Year_of_Joining, Year_of_Passing]);
 
-        // Prepare userResponse
-        const userResponse = { Student_Auth_ID, Roll_No, Email, Name, Phone_No, Date_of_Birth, Registration_No, Course, Department, Year_of_Joining, Year_of_Passing };
+        // Get the last inserted Student_ID
+        const getLastInsertedIdQuery = `SELECT LAST_INSERT_ID() AS Student_ID`;
+        const [lastInsertedIdResult] = await pool.query(getLastInsertedIdQuery);
+        const Student_ID = lastInsertedIdResult[0].Student_ID;
+
+        // Prepare userResponse including Student_ID
+        const userResponse = { Student_ID, Student_Auth_ID, Roll_No, Email, Name, Phone_No, Date_of_Birth, Registration_No, Course, Department, Year_of_Joining, Year_of_Passing };
 
         res.status(200).json({ data: { userResponse }, message: "Student Data Inserted Successfully", status_code: 200 });
     } catch (error) {
@@ -38,44 +44,59 @@ const insertStudent = async (req, res) => {
     }
 };
 
+//UPDATE VALUES AT TABLE STUDENT
+const updateStudent = async (req, res) => {
+    const { Student_ID, ...updates } = req.body; // Extract Student_ID and other fields to be updated from request body
 
+    try {
+        // Check if the student with the provided Student_ID exists
+        const checkStudentQuery = `SELECT * FROM students WHERE Student_ID = ?`;
+        const [existingStudent] = await pool.query(checkStudentQuery, [Student_ID]);
+        if (existingStudent.length === 0) {
+            return res.status(404).json({ message: "Student not found", status_code: 404 });
+        }
 
-export { insertStudent };
+        // Construct the dynamic SQL query to update only the provided fields
+        const updateFields = Object.keys(updates);
+        const updateValues = Object.values(updates);
+        const updateQuery = `UPDATE students SET ${updateFields.map(field => `${field} = ?`).join(', ')} WHERE Student_ID = ?`;
 
-// Update student by Roll No
-// export const updateStudent = async (req, res) => {
-//     const { Roll_No } = req.params;
-//     const { Name, Phone_No, Date_of_Birth, Registration_No, Course, Department, Year_of_Joining, Year_of_Passing } = req.body;
-//     try {
-//         const query = `UPDATE students SET Name=?, Phone_No=?, Date_of_Birth=?, Registration_No=?, Course=?, Department=?, Year_of_Joining=?, Year_of_Passing=? WHERE Roll_No=?`;
-//         await pool.query(query, [Name, Phone_No, Date_of_Birth, Registration_No, Course, Department, Year_of_Joining, Year_of_Passing, Roll_No]);
-//         res.status(200).json({ message: "Student updated successfully" });
-//     } catch (error) {
-//         res.status(500).json({ message: error.message });
-//     }
-// };
+        // Execute the update query
+        const valuesToUpdate = [...updateValues, Student_ID];
+        await pool.query(updateQuery, valuesToUpdate);
 
-// Delete student by Roll No
-// export const deleteStudent = async (req, res) => {
-//     const { Roll_No } = req.params;
-//     try {
-//         const query = `DELETE FROM students WHERE Roll_No=?`;
-//         await pool.query(query, [Roll_No]);
-//         res.status(200).json({ message: "Student deleted successfully" });
-//     } catch (error) {
-//         res.status(500).json({ message: error.message });
-//     }
-// };
+        // Fetch the updated student record
+        const updatedStudentQuery = `SELECT * FROM students WHERE Student_ID = ?`;
+        const [updatedStudent] = await pool.query(updatedStudentQuery, [Student_ID]);
 
-// Get student by Roll No
-// export const getStudentByRollNo = async (req, res) => {
-//     const { Roll_No } = req.params;
-//     try {
-//         const query = `SELECT * FROM students WHERE Roll_No=?`;
-//         const [student] = await pool.query(query, [Roll_No]);
-//         res.status(200).json({ student });
-//     } catch (error) {
-//         res.status(500).json({ message: error.message });
-//     }
-// };
+        res.status(200).json({ data: updatedStudent[0], message: "Student updated successfully", status_code: 200 });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+//DELETE A REW FROM TABLE STUDENT
+const deleteStudent = async (req, res) => {
+    const { Student_ID } = req.body;
+
+    try {
+        // Check if the student with the provided Student_ID exists
+        const checkStudentQuery = `SELECT * FROM students WHERE Student_ID = ?`;
+        const [existingStudent] = await pool.query(checkStudentQuery, [Student_ID]);
+        if (existingStudent.length === 0) {
+            return res.status(404).json({ message: "Student not found", status_code: 404 });
+        }
+
+        // Delete the student record
+        const deleteQuery = `DELETE FROM students WHERE Student_ID = ?`;
+        await pool.query(deleteQuery, [Student_ID]);
+
+        res.status(200).json({ message: "Student deleted successfully", status_code: 200 });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+export { insertStudent, updateStudent, deleteStudent };
+
 
