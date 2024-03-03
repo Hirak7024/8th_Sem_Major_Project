@@ -1,0 +1,210 @@
+@import "../../css-config/mixins.scss";
+
+.login_Container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    background: linear-gradient(120deg, #092143, #009ffd);
+    position: absolute;
+    top: 0;
+    left: 0;
+    .close_mark_btn{
+        font-size: 20px;
+        font-weight: 600;
+        color: white;
+        position: absolute;
+        right: 2vw;
+        top: 3vh;
+        cursor: pointer;
+        @include xsm{
+            font-size: 15px;
+        }
+    }
+
+    .login_form {
+        display: flex;
+        flex-direction: column;
+        width: 32rem;
+        align-items: center;
+        background-color: white;
+        padding: 4vh 3vw;
+        border-radius: 5px;
+        @include lg{
+            width: 27rem;
+        }
+        @include md{
+            width: 25rem;
+        }
+        @include sm{
+            width: 20rem;
+        }
+        @include xsm{
+            width: 16rem;
+        }
+
+        .formHeading {
+            font-size: 35px;
+            margin-bottom: 2rem;
+            @include lg{
+                font-size: 33px;
+            }
+            @include sm{
+                font-size: 25px;
+            }
+            @include xsm{
+                font-size: 20px;
+            }
+        }
+
+        .labelInput {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            @include xsm{
+                margin-bottom: 0.5rem;
+            }
+
+            label {
+                font-size: 20px;
+                font-weight: 600;
+                @include lg{
+                    font-size: 17px;
+                }
+                @include sm{
+                    font-size: 14px;
+                }
+                @include xsm{
+                    font-size: 12px;
+                }
+            }
+
+            input {
+                font-size: 18px;
+                outline: none;
+                border-top: none;
+                border-left: none;
+                border-right: none;
+                border-bottom: 2px solid #092143;
+                height: 1.7rem;
+                @include lg{
+                    font-size: 16px;
+                }
+                @include sm{
+                    font-size: 14px;
+                }
+                @include xsm{
+                    font-size: 12px;
+                    height: 1.4rem;
+                }
+
+            }
+            .password_container{
+                position: relative;
+                .password_input{
+                    font-size: 18px;
+                    outline: none;
+                    border-top: none;
+                    border-left: none;
+                    border-right: none;
+                    border-bottom: 2px solid #092143;
+                    height: 1.7rem;
+                    width: 100%;
+                    @include lg{
+                        font-size: 16px;
+                    }
+                    @include sm{
+                        font-size: 14px;
+                    }
+                    @include xsm{
+                        font-size: 12px;
+                    }
+                }
+                .icon{
+                    position: absolute;
+                    right: 0;
+                    top: -0.5rem;
+                    cursor: pointer;
+                    width: 2vw;
+                    height: 3vh;
+                    @include sm{
+                        width: 16px;
+                        height: 16px;
+                        top: 0rem;
+                    }
+                }
+            }
+            .error{
+                font-size: 13px;
+                color: red;
+                font-weight: 600;
+                @include sm{
+                    font-size: 10px;
+                }
+                @include xsm{
+                    font-size: 8px;
+                }
+            }
+        }
+
+            .login_btn {
+                width: 8rem;
+                height: 2.8rem;
+                border: none;
+                background-color: #092143;
+                outline: none;
+                color: white;
+                font-size: 17px;
+                font-weight: 500;
+                cursor: pointer;
+                margin-top: 2rem;
+                margin-bottom: 1rem;
+                border-radius: 3px;
+                @include lg{
+                    font-size: 16px;
+                    height: 2.5rem;
+                }
+                @include sm{
+                    font-size: 14px;
+                    height: 2rem;
+                    width: 7rem;
+                }
+                @include xsm{
+                    font-size: 12px;
+                    height: 1.7rem;
+                    width: 6rem;
+                    margin-top: 0.5rem ;
+                }
+            }
+
+            .registerLink_Box {
+                display: flex;
+                font-size: 15px;
+                gap: 5px;
+                @include lg{
+                    font-size: 13px;
+                }
+                @include sm{
+                    font-size: 11px;
+                }
+                @include xsm{
+                    font-size: 9px;
+                }
+
+                .register_Link {
+                    color: #092143;
+                    cursor: pointer;
+                    font-weight: 600;
+                    text-decoration: none;
+                }
+
+                .register_Link:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }

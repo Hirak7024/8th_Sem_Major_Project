@@ -4,9 +4,15 @@ import pool from '../DataBase.js';
 
 //TO REGISTER STUDENT
 const RegisterStudent = async (req, res) => {
-    const { Email, Password } = req.body;
+    const { Email, Password, SignUpKey } = req.body;
+    const serverSignUpKey = process.env.StudentSignUpKey;
 
     try {
+        // Check if SignUpKey matches the server SignUpKey
+        if (SignUpKey !== serverSignUpKey) {
+            return res.status(400).json({ message: "Invalid Sign Up Key", status_code: 400 });
+        }
+
         // Check if user already exists
         const [existingUsers] = await pool.execute('SELECT * FROM student_auth WHERE Email = ?', [Email]);
         if (existingUsers.length > 0) {
@@ -31,6 +37,7 @@ const RegisterStudent = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 }
+
 
 // TO LOGIN STUDENT
 const LoginStudent = async (req, res) => {

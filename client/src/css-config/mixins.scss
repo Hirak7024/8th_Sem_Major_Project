@@ -1,0 +1,34 @@
+@mixin xsm {
+    @media (width <= 425px) {
+        @content;
+    }
+}
+@mixin sm {
+    @media (width <= 600px) {
+        @content;
+    }
+}
+
+@mixin md {
+    @media (width <= 768px) {
+        @content;
+    }
+}
+
+@mixin lg {
+    @media (width <= 1024px) {
+        @content;
+    }
+}
+
+@mixin xl {
+    @media (width <= 1440px) {
+        @content;
+    }
+}
+
+@mixin xxl {
+    @media (width > 1440px) {
+        @content;
+    }
+}
