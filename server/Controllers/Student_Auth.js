@@ -26,17 +26,21 @@ const RegisterStudent = async (req, res) => {
         // Insert new user
         await pool.execute('INSERT INTO student_auth (Email, Password) VALUES (?, ?)', [Email, hashedPass]);
 
+        // Retrieve the newly inserted user to get Student_Auth_ID
+        const [newUser] = await pool.execute('SELECT Student_Auth_ID FROM student_auth WHERE Email = ?', [Email]);
+        const user = newUser[0];
+
         // Generate JWT token
         const token = jwt.sign({ Email }, process.env.JWT_KEY, { expiresIn: 60 * 60 * 24 });
 
         // Prepare response
-        const userResponse = { Email };
+        const userResponse = { Email, Student_Auth_ID: user.Student_Auth_ID };
 
         res.status(200).json({ data: { userResponse, token }, message: "Student Registered Successfully", status_code: 200 });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-}
+};
 
 
 // TO LOGIN STUDENT
@@ -62,7 +66,7 @@ const LoginStudent = async (req, res) => {
         const token = jwt.sign({ Email }, process.env.JWT_KEY, { expiresIn: 60 * 60 * 24 });
 
         // Prepare response
-        const userResponse = { Email };
+        const userResponse = { Email: user.Email, Student_Auth_ID: user.Student_Auth_ID };
 
         res.status(200).json({ data: { userResponse, token }, message: "Login Successful", status_code: 200 });
     } catch (error) {

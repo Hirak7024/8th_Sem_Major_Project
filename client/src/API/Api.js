@@ -21,6 +21,15 @@ const Api = {
             throw error.response.data.message;
         }
     },
+    // API call to insert student data
+    insertStudent: async (formData) => {
+        try {
+            const response = await axios.post(`${baseUrl}/studentdetails/students/insert`, formData);
+            return response.data;
+        } catch (error) {
+            throw error.response.data.message;
+        }
+    }
 };
 
 export default Api;
