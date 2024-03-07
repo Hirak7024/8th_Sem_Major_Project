@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import { useAuth } from "../../Utils/Context.js";
 import { toast } from 'react-toastify';
 
 export default function Register() {
+  const navigate = useNavigate();
   const { registerUser } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [showSignUpKey, setShowSignUpKey] = useState(false);
@@ -69,11 +70,13 @@ export default function Register() {
       const result = await registerUser(formData);
       if (result.success) {
         toast.success(result.message);
+        navigate("/form/studentDetails"); // Navigate to StudentDetailsForm after successful registration
       } else {
         toast.error(result.message);
       }
     }
   };
+  
 
   return (
     <div className='login_Container'>
@@ -125,7 +128,7 @@ export default function Register() {
           Register
         </button>
         <div className='registerLink_Box'>
-          Already Have an Account ? <Link to={"/login"} className='register_Link'>login</Link>
+          Already Have an Account ? <Link to={"/"} className='register_Link'>login</Link>
         </div>
       </form>
     </div>

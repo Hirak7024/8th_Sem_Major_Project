@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../Utils/Context.js';
 import "./StudentDetails.scss";
+import { useNavigate } from 'react-router-dom';
 
 export default function StudentDetails() {
     const { userData } = useAuth();
@@ -12,11 +13,15 @@ export default function StudentDetails() {
         }
     }, [userData]);
 
+    const navigate = useNavigate();
+
     return (
         <div className='StudentDetailsContainer'>
             <h1>Student Details</h1>
+            <button onClick={()=>navigate("/form/update/studentDetails")}>Edit</button>
             {studentDetails ? (
                 <div>
+                    {/* Display updated user details */}
                     <p><strong>Name : </strong>{studentDetails.Name}</p>
                     <p><strong>Roll No : </strong>{studentDetails.Roll_No}</p>
                     <p><strong>Registration No : </strong>{studentDetails.Registration_No}</p>

@@ -30,7 +30,7 @@ const Api = {
             throw error.response.data.message;
         }
     },
-    // API call to insert student data
+    // API call to insert data into table students
     insertStudent: async (formData) => {
         try {
             const response = await axios.post(`${baseUrl}/studentdetails/students/insert`, formData);
@@ -39,6 +39,16 @@ const Api = {
             throw error.response.data.message;
         }
     },
+    // API call to update values at table students
+    updateStudent: async (formData) => {
+        try {
+            const response = await axios.put(`${baseUrl}/studentdetails/students/update`, formData);
+            return response.data;
+        } catch (error) {
+            throw error.response.data.message;
+        }
+    },
+
     // API call to fetch internships by roll number
     fetchInternshipsByRollNo: async (rollNo) => {
         try {

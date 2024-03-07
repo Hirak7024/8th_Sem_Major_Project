@@ -98,7 +98,6 @@ export const DeleteStudent = async (req, res) => {
 };
 
 //GET STUDENT DETAILS BY EMAIL
-
 export const checkStudentByEmail = async (req, res) => {
   try {
     const { Email } = req.body;

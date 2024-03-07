@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
-import { useAuth } from '../../../Utils/Context';
-import Api from '../../../API/Api';
+import React, { useState, useEffect } from 'react';
+import Api from '../../../API/Api.js';
 import { toast } from 'react-toastify';
+import { useAuth } from '../../../Utils/Context';
 import { useNavigate } from 'react-router-dom';
 
-export default function StudentDetailsForm() {
-    const navigate = useNavigate();
+export default function StudentDetailsUpdateForm() {
     const { userData, setUserData } = useAuth();
+    const navigate = useNavigate();
     const [studentDetails, setStudentDetails] = useState({
         Name: "",
         Roll_No: "",
@@ -17,38 +17,37 @@ export default function StudentDetailsForm() {
         Department: "",
         Year_of_Joining: null,
         Year_of_Passing: null
-    })
+    });
+
+    useEffect(() => {
+        if (userData && userData.studentDetails) {
+            setStudentDetails(userData.studentDetails);
+        }
+    }, [userData]);
 
     const handleChange = (e) => {
-        setStudentDetails((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+        setStudentDetails(prev => ({ ...prev, [e.target.name]: e.target.value }));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-          const data = await Api.insertStudent({
-            ...studentDetails,
-            Student_Auth_ID: userData.user.Student_Auth_ID,
-            Email: userData.user.Email
-          });
-          toast.success(data.message);
-          // Fetch updated user data
-          const updatedStudentDetails = await Api.checkStudentByEmail(userData.user.Email);
-          setUserData(prev => ({ ...prev, studentDetails: updatedStudentDetails }));
-          navigate("/studentProfile"); // Navigate to StudentDetails after successfully submitting the form
+            await Api.updateStudent(studentDetails);
+            const updatedStudentDetails = await Api.checkStudentByEmail(userData.user.Email);
+            setUserData(prev => ({ ...prev, studentDetails: updatedStudentDetails }));
+            navigate("/studentProfile"); // Navigate back to StudentDetails after successful update
         } catch (error) {
-          console.error(error);
-          toast.error(error);
+            console.error(error);
+            // Handle error
         }
-      };
-      
-      
+    };
+
 
     return (
         <div className='StudentDetailsFormContainer'>
             <form className="studentDetailsForm" onSubmit={handleSubmit}>
-                <h1>Student Details Form</h1>
-                <p>Enter the following details :</p>
+                <h1>Student Details Update Form</h1>
+                <p>Update the fields needed :</p>
                 <div className="labelInput">
                     <label htmlFor="name">Name : </label>
                     <input

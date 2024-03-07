@@ -8,6 +8,7 @@ import InternshipDetailsForm from './Components/InternshipDetails/InternShipDeta
 import ProjectDetailsForm from './Components/ProjectDetails/ProjectDetailsForm/ProjectDetailsForm';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import StudentDetailsUpdateForm from './Components/StudentDetails/StudentDetailsUpdateForm/StudentDetailsUpdateForm';
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
         <Route path='/form/studentDetails' element={<StudentDetailsForm />} />
         <Route path='/form/internshipDetails' element={<InternshipDetailsForm />} />
         <Route path='/form/projectDetails' element={<ProjectDetailsForm />} />
+        <Route path='/form/update/studentDetails' element={<StudentDetailsUpdateForm />} />
       </Routes>
       <ToastContainer />
     </>

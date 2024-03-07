@@ -25,6 +25,7 @@ export const AuthProvider = ({ children }) => {
             const data = await Api.loginUser(formData);
             const { userResponse, token } = data.data;
             setUserData({ user: userResponse, token });
+            localStorage.setItem("authToken", token);
 
             // Check if student details exist
             const studentDetailsExist = await Api.checkStudentByEmail(formData.Email);
@@ -45,6 +46,7 @@ export const AuthProvider = ({ children }) => {
     return (
         <AuthContext.Provider value={{
             userData,
+            setUserData,
             registerUser,
             loginUser
         }}>
