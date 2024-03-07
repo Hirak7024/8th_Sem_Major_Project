@@ -78,5 +78,31 @@ export const DeleteInternship = async (req, res) => {
     }
 };
 
+//FETCH ALL INTERNSHIPS OF A STUDENT BY ROLL NO
+export const fetchInternshipsByRollNo = async (req, res) => {
+  try {
+    const { Roll_No } = req.body;
+
+    // Query to fetch all internship details of the student using Roll_No
+    const [rows, fields] = await pool.execute('SELECT * FROM internships WHERE Roll_No = ?', [Roll_No]);
+
+    // Check if any internships were found
+    if (rows.length > 0) {
+      // Internships found, return all details
+      const internships = rows;
+      return res.status(200).json(internships);
+    } else {
+      // No internships found for the student
+      return res.status(404).json({ message: 'No internship details found for the student' });
+    }
+  } catch (error) {
+    console.error('Error fetching internships by Roll_No:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+
+
+
 
 

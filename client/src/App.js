@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Login from './Pages/Login/Login';
 import Register from './Pages/Register/Register';
 import StudentProfile from './Pages/StudentProfile/StudentProfile';
@@ -13,8 +13,8 @@ export default function App() {
   return (
     <>
       <Routes>
-        <Route path='/' element={<StudentProfile />} />
-        <Route path='/login' element={<Login />} />
+        <Route path='/' element={<Login />} />
+        <Route path='/studentProfile' element={<StudentProfile />} />
         <Route path='/register' element={<Register />} />
         <Route path='/form/studentDetails' element={<StudentDetailsForm />} />
         <Route path='/form/internshipDetails' element={<InternshipDetailsForm />} />
@@ -24,4 +24,3 @@ export default function App() {
     </>
   )
 }
-

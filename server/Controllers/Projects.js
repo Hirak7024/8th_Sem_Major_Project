@@ -78,5 +78,31 @@ export const DeleteProject = async (req, res) => {
     }
 };
 
+//FETCH ALL PROJECTS DETAILS BY ROLL NO
+
+export const fetchProjectsByRollNo = async (req, res) => {
+    try {
+      const { Roll_No } = req.body;
+  
+      // Query to fetch all project details of the student using Roll_No
+      const [rows, fields] = await pool.execute('SELECT * FROM projects WHERE Roll_No = ?', [Roll_No]);
+  
+      // Check if any projects were found
+      if (rows.length > 0) {
+        // Projects found, return all details
+        const projects = rows;
+        return res.status(200).json(projects);
+      } else {
+        // No projects found for the student
+        return res.status(404).json({ message: 'No project details found for the student' });
+      }
+    } catch (error) {
+      console.error('Error fetching projects by Roll_No:', error);
+      return res.status(500).json({ message: 'Internal server error' });
+    }
+  };
+  
+
+
 
 

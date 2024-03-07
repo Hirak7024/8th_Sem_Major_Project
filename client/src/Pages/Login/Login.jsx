@@ -59,7 +59,7 @@ export default function Login() {
             if (result.success) {
                 toast.success(result.message);
                 if (result.studentDetailsExist) {
-                    navigate("/");
+                    navigate("/studentProfile");
                 } 
                 // else {
                 //     navigate("/form/studentDetails");

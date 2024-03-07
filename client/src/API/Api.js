@@ -38,6 +38,24 @@ const Api = {
         } catch (error) {
             throw error.response.data.message;
         }
+    },
+    // API call to fetch internships by roll number
+    fetchInternshipsByRollNo: async (rollNo) => {
+        try {
+            const response = await axios.post(`${baseUrl}/studentinternships/internship/fetchAll/detailsofInternships`, { Roll_No: rollNo });
+            return response.data;
+        } catch (error) {
+            throw error.response.data.message;
+        }
+    },
+    // API call to fetch projects by roll number
+    fetchProjectsByRollNo: async (rollNo) => {
+        try {
+            const response = await axios.post(`${baseUrl}/studentprojects/project/fetchAll/detailsofProjects`, { Roll_No: rollNo });
+            return response.data;
+        } catch (error) {
+            throw error.response.data.message;
+        }
     }
 };
 
