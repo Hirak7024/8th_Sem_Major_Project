@@ -97,6 +97,32 @@ export const DeleteStudent = async (req, res) => {
     }
 };
 
+//GET STUDENT DETAILS BY EMAIL
+
+export const checkStudentByEmail = async (req, res) => {
+  try {
+    const { Email } = req.body;
+
+    // Query to check if the student exists
+    const [rows, fields] = await pool.execute('SELECT * FROM students WHERE Email = ?', [Email]);
+
+    // Check if any student was found
+    if (rows.length > 0) {
+      // Student found, return all details
+      const student = rows[0];
+      return res.status(200).json(student);
+    } else {
+      // Student not found
+      return res.status(404).json({ message: 'Student details do not exist' });
+    }
+  } catch (error) {
+    console.error('Error checking student by email:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+
+
 // GET STUDENT DETAILS ALONG WITH THEIR INTERNSHIPS AND PROJECTS
 // export const FetchStudentDetails = async (req, res) => {
 //     const { Roll_No } = req.body;

@@ -1,20 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useAuth } from '../../Utils/Context.js';
 import "./StudentDetails.scss";
 
 export default function StudentDetails() {
+    const { userData } = useAuth();
+    const [studentDetails, setStudentDetails] = useState(null);
+
+    useEffect(() => {
+        if (userData && userData.studentDetails) {
+            setStudentDetails(userData.studentDetails);
+        }
+    }, [userData]);
 
     return (
         <div className='StudentDetailsContainer'>
             <h1>Student Details</h1>
-            <button>Edit</button>
-            <p><strong>Name : </strong>Hirak Jyoti Das</p>
-            <p><strong>Roll No : </strong>200710007024</p>
-            <p><strong>Registration No : </strong>326507120</p>
-            <p><strong>Date of Birth : </strong>28-08-2000</p>
-            <p><strong>Phone No : </strong>6000649547</p>
-            <p><strong>Course : </strong>B.Tech</p>
-            <p><strong>Department : </strong>Computer Science & Engineering</p>
-            <p><strong>Batch : </strong>2020-2024</p>
+            {studentDetails ? (
+                <div>
+                    <p><strong>Name : </strong>{studentDetails.Name}</p>
+                    <p><strong>Roll No : </strong>{studentDetails.Roll_No}</p>
+                    <p><strong>Registration No : </strong>{studentDetails.Registration_No}</p>
+                    <p><strong>Date of Birth : </strong>{studentDetails.Date_of_Birth}</p>
+                    <p><strong>Course : </strong>{studentDetails.Course}</p>
+                    <p><strong>Department : </strong>{studentDetails.Department}</p>
+                    <p><strong>Batch : </strong>{studentDetails.Year_of_Joining}-{studentDetails.Year_of_Passing}</p>
+                    <p><strong>Phone No : </strong>{studentDetails.Phone_No}</p>
+                    <p><strong>Email : </strong>{studentDetails.Email}</p>
+                </div>
+            ) : (
+                <p>Loading...</p>
+            )}
         </div>
     )
 }

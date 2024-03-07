@@ -33,7 +33,6 @@ export default function Login() {
             Password: ""
         };
 
-
         // Email validation
         if (formData.Email.length === 0) {
             newErrors.Email = "*Email field can't be empty";
@@ -59,12 +58,19 @@ export default function Login() {
             const result = await loginUser(formData);
             if (result.success) {
                 toast.success(result.message);
-                navigate("/");
+                if (result.studentDetailsExist) {
+                    navigate("/");
+                } 
+                // else {
+                //     navigate("/form/studentDetails");
+                // }
             } else {
-                toast.error(result.message);
+                // toast.error(result.message);
+                navigate("/form/studentDetails");
             }
         }
     };
+    
 
     return (
         <div className='login_Container'>

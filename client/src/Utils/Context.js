@@ -19,24 +19,35 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    //Function to Login a Student
+    // Function to Login a Student
     const loginUser = async (formData) => {
         try {
             const data = await Api.loginUser(formData);
             const { userResponse, token } = data.data;
             setUserData({ user: userResponse, token });
-            localStorage.setItem("authToken", token);
-            return { success: true, message: data.message };
+
+            // Check if student details exist
+            const studentDetailsExist = await Api.checkStudentByEmail(formData.Email);
+            if (studentDetailsExist) {
+                const studentDetails = await Api.checkStudentByEmail(formData.Email);
+                setUserData(prev => ({ ...prev, studentDetails }));
+                return { success: true, message: data.message, studentDetailsExist: true };
+            } else {
+                return { success: true, message: data.message, studentDetailsExist: false };
+            }
         } catch (error) {
             return { success: false, message: error };
         }
     };
 
+
+
     return (
-        <AuthContext.Provider value={{ 
-            userData, 
-            registerUser, 
-            loginUser }}>
+        <AuthContext.Provider value={{
+            userData,
+            registerUser,
+            loginUser
+        }}>
             {children}
         </AuthContext.Provider>
     );
