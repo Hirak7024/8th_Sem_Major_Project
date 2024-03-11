@@ -21,7 +21,7 @@ const Api = {
             throw error.response.data.message;
         }
     },
-    // API call to check if student details exist by email
+    // API call to check if student details exist using email
     checkStudentByEmail: async (email) => {
         try {
             const response = await axios.post(`${baseUrl}/studentdetails/getStudentDetails/byEmail`, { Email: email });
@@ -49,7 +49,7 @@ const Api = {
         }
     },
 
-    // API call to fetch internships by roll number
+    // API call to fetch internships by roll number from table internships
     fetchInternshipsByRollNo: async (rollNo) => {
         try {
             const response = await axios.post(`${baseUrl}/studentinternships/internship/fetchAll/detailsofInternships`, { Roll_No: rollNo });
@@ -68,26 +68,6 @@ const Api = {
             throw error.response.data.message;
         }
     },
-
-    // API call to fetch projects by roll number
-    fetchProjectsByRollNo: async (rollNo) => {
-        try {
-            const response = await axios.post(`${baseUrl}/studentprojects/project/fetchAll/detailsofProjects`, { Roll_No: rollNo });
-            return response.data;
-        } catch (error) {
-            throw error.response.data.message;
-        }
-    },
-    // API call to insert project details into table projects
-    insertProjectDetails: async (rollNo, formData) => {
-        try {
-            const data = { Roll_No: rollNo, ...formData };
-            const response = await axios.post(`${baseUrl}/studentprojects/project/insert`, data);
-            return response.data;
-        } catch (error) {
-            throw error.response.data.message;
-        }
-    },
     // API call to update internship details
     updateInternship: async (formData) => {
         try {
@@ -101,6 +81,44 @@ const Api = {
     fetchInternshipDetailsById: async (internshipId) => {
         try {
             const response = await axios.post(`${baseUrl}/studentinternships/internship/fetch/detailsofInternship/byID`, internshipId);
+            return response.data;
+        } catch (error) {
+            throw error.response.data.message;
+        }
+    },
+     // API call to fetch all projects by roll number
+     fetchProjectsByRollNo: async (rollNo) => {
+        try {
+            const response = await axios.post(`${baseUrl}/studentprojects/project/fetchAll/detailsofProjects`, { Roll_No: rollNo });
+            return response.data;
+        } catch (error) {
+            throw error.response.data.message;
+        }
+    },
+     // API call to insert project details into table projects
+     insertProjectDetails: async (rollNo, formData) => {
+        try {
+            const data = { Roll_No: rollNo, ...formData };
+            const response = await axios.post(`${baseUrl}/studentprojects/project/insert`, data);
+            return response.data;
+        } catch (error) {
+            throw error.response.data.message;
+        }
+    },
+    //fetch project details using Project_ID
+    fetchProjectDetailsById: async (projectId) => {
+        try {
+            const response = await axios.post(`${baseUrl}/studentprojects/project/fetch/detailsofProject/byID`, projectId);
+            return response.data;
+        } catch (error) {
+            throw error.response.data.message;
+        }
+    },
+
+    // API call to update project details
+    updateProject: async (formData) => {
+        try {
+            const response = await axios.put(`${baseUrl}/studentprojects/project/update`, formData);
             return response.data;
         } catch (error) {
             throw error.response.data.message;

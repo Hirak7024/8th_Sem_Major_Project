@@ -1,33 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Api from '../../../API/Api';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../../../Utils/Context';
 
 export default function ProjectDetailsUpdateForm() {
-    const {userData} = useAuth();
-  const [projectDetails, setProjectDetails] = useState({
-    Project_Type: "",
-    Title: "",
-    Start_Date: "",
-    End_Date: "",
-    Organisation: "",
-    Guide_Name: "",
-    Guide_Designation: "",
-    Description: "",
-    Certificate_Link: "",
-    Report_Link: ""
-  });;
+    const { projectId } = useParams();
+    const { userData } = useAuth();
+    const [projectDetails, setProjectDetails] = useState({
+        Project_Type: "",
+        Title: "",
+        Start_Date: "",
+        End_Date: "",
+        Organisation: "",
+        Guide_Name: "",
+        Guide_Designation: "",
+        Description: "",
+        Certificate_Link: "",
+        Report_Link: ""
+    });
 
-  const navigate = useNavigate();
+    useEffect(() => {
+        async function fetchProjectDetails() {
+            try {
+                const data = await Api.fetchProjectDetailsById({ Project_ID: projectId });
+                setProjectDetails(data);
+            } catch (error) {
+                console.error('Error fetching project details:', error);
+            }
+        }
 
-  const handleChange = (e) => {
-    setProjectDetails((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
+        fetchProjectDetails();
+    }, [projectId]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-  };
+    const navigate = useNavigate();
+
+    const handleChange = (e) => {
+        setProjectDetails((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            await Api.updateProject({ Project_ID: projectId, ...projectDetails });
+            toast.success('Project details updated successfully');
+            navigate('/studentProfile');
+        } catch (error) {
+            toast.error('Error updating project details');
+            console.error('Error updating project details:', error);
+        }
+    };
+
 
   return (
     <div className='StudentDetailsFormContainer'>

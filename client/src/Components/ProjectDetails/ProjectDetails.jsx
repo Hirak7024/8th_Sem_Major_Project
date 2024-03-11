@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Api from '../../API/Api.js';
 import { useAuth } from '../../Utils/Context.js';
-import "./ProjectDetails.scss";
 import { useNavigate } from 'react-router-dom';
+import "./ProjectDetails.scss";
 
 export default function ProjectDetails() {
     const { userData } = useAuth();
@@ -11,7 +11,6 @@ export default function ProjectDetails() {
     useEffect(() => {
         async function fetchProjects() {
             try {
-                // Assume the roll number is available in userData
                 const rollNo = userData.studentDetails.Roll_No;
                 const data = await Api.fetchProjectsByRollNo(rollNo);
                 setProjects(data);
@@ -25,13 +24,17 @@ export default function ProjectDetails() {
 
     const navigate = useNavigate();
 
+    const handleEdit = (projectId) => {
+        navigate(`/form/update/projectDetails/${projectId}`);
+    };
+
     return (
         <div className='ProjectDetailsContainer'>
             <h1>Project Details</h1>
-            <button onClick={()=>navigate("/form/projectDetails")}>Add Project</button>
+            <button onClick={() => navigate("/form/projectDetails")}>Add Project</button>
             {projects.map((project, index) => (
                 <div key={index}>
-                    <button onClick={()=>navigate("/form/update/projectDetails")}>Edit</button>
+                    <button onClick={() => handleEdit(project.Project_ID)}>Edit</button>
                     <br />
                     <button>Delete</button>
                     <p><strong>Project Type: </strong>{project.Project_Type}</p>

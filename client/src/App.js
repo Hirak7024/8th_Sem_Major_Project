@@ -24,7 +24,7 @@ export default function App() {
         <Route path='/form/projectDetails' element={<ProjectDetailsForm />} />
         <Route path='/form/update/studentDetails' element={<StudentDetailsUpdateForm />} />
         <Route path='/form/update/internshipDetails/:internshipId' element={<InternshipDetailsUpdateForm />} />
-        <Route path='/form/update/projectDetails' element={<ProjectDetailsUpdateForm />} />
+        <Route path='/form/update/projectDetails/:projectId' element={<ProjectDetailsUpdateForm />} />
       </Routes>
       <ToastContainer />
     </>
