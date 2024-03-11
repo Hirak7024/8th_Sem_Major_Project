@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
+import Api from '../../../API/Api';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../../Utils/Context';
 
 export default function InternshipDetailsForm() {
+  const { userData } = useAuth();
   const [internshipDetails, setInternshipDetails] = useState({
     Internship_Type: "",
     Title: "",
@@ -12,15 +17,29 @@ export default function InternshipDetailsForm() {
     Description: "",
     Certificate_Link: "",
     Report_Link: ""
-  });;
+  });
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setInternshipDetails((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
-  
-  const handleSubmit=(e)=>{
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-}
+    try {
+      // Get the Roll_No from userData in the context
+      const rollNo = userData.studentDetails.Roll_No;
+      await Api.insertInternshipDetails(rollNo, internshipDetails);
+      toast.success("Internship inserted successfully");
+      navigate("/studentProfile");
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to insert internship");
+    }
+  };
+
+
 
   return (
     <div className='StudentDetailsFormContainer'>
@@ -36,7 +55,7 @@ export default function InternshipDetailsForm() {
             onChange={handleChange}
           >
             <option value="">Select Internship Type</option>
-            <option value="Summer Internship">Summer Internship</option>
+            <option value="Social Internship">Social Internship</option>
             <option value="Academic Internship">Academic Internship</option>
             <option value="Industrial Internship">Industrial Internship</option>
           </select>
@@ -108,15 +127,15 @@ export default function InternshipDetailsForm() {
           {/* <p className="error">{errors.Email}</p> */}
         </div>
         <div className="labelInput">
-                <label htmlFor="description">Description : </label>
-                <textarea
-                    id="description"
-                    name="Description"
-                    value={internshipDetails.Description}
-                    onChange={handleChange}
-                ></textarea>
+          <label htmlFor="description">Description : </label>
+          <textarea
+            id="description"
+            name="Description"
+            value={internshipDetails.Description}
+            onChange={handleChange}
+          ></textarea>
           {/* <p className="error">{errors.Email}</p> */}
-            </div>
+        </div>
         <div className="labelInput">
           <label htmlFor="certificateLink">Certificate [Paste the Google Drive Link] : </label>
           <input

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Api from '../../API/Api.js';
 import { useAuth } from '../../Utils/Context.js';
 import "./InternshipDetails.scss";
+import { useNavigate } from 'react-router-dom';
 
 export default function InternshipDetails() {
     const { userData } = useAuth();
@@ -22,12 +23,17 @@ export default function InternshipDetails() {
         fetchInternships();
     }, [userData]);
 
+    const navigate = useNavigate();
+
     return (
         <div className='InternshipDetailsContainer'>
             <h1>Internship Details</h1>
-            <button>Edit</button>
+            <button onClick={()=>navigate("/form/internshipDetails")}>Add Internship</button>
             {internships.map((internship, index) => (
                 <div key={index}>
+                     <button>Edit</button>
+                     <br />
+                     <button>Delete</button>
                     <p><strong>Internship Type: </strong>{internship.Internship_Type}</p>
                     <p><strong>Title: </strong>{internship.Title}</p>
                     <p><strong>Start Date: </strong>{internship.Start_Date}</p>

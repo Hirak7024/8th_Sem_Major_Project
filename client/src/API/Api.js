@@ -58,6 +58,17 @@ const Api = {
             throw error.response.data.message;
         }
     },
+    // API call to insert internship details into table internships
+    insertInternshipDetails: async (rollNo, formData) => {
+        try {
+            const data = { Roll_No: rollNo, ...formData };
+            const response = await axios.post(`${baseUrl}/studentinternships/internship/insert`, data);
+            return response.data;
+        } catch (error) {
+            throw error.response.data.message;
+        }
+    },
+
     // API call to fetch projects by roll number
     fetchProjectsByRollNo: async (rollNo) => {
         try {
@@ -66,7 +77,17 @@ const Api = {
         } catch (error) {
             throw error.response.data.message;
         }
-    }
+    },
+    // API call to insert project details into table projects
+    insertProjectDetails: async (rollNo, formData) => {
+        try {
+            const data = { Roll_No: rollNo, ...formData };
+            const response = await axios.post(`${baseUrl}/studentprojects/project/insert`, data);
+            return response.data;
+        } catch (error) {
+            throw error.response.data.message;
+        }
+    },
 };
 
 export default Api;

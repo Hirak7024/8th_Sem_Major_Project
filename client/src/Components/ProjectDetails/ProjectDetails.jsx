@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Api from '../../API/Api.js';
 import { useAuth } from '../../Utils/Context.js';
 import "./ProjectDetails.scss";
+import { useNavigate } from 'react-router-dom';
 
 export default function ProjectDetails() {
     const { userData } = useAuth();
@@ -22,12 +23,17 @@ export default function ProjectDetails() {
         fetchProjects();
     }, [userData]);
 
+    const navigate = useNavigate();
+
     return (
         <div className='ProjectDetailsContainer'>
             <h1>Project Details</h1>
-            <button>Edit</button>
+            <button onClick={()=>navigate("/form/projectDetails")}>Add Project</button>
             {projects.map((project, index) => (
                 <div key={index}>
+                    <button>Edit</button>
+                    <br />
+                    <button>Delete</button>
                     <p><strong>Project Type: </strong>{project.Project_Type}</p>
                     <p><strong>Title: </strong>{project.Title}</p>
                     <p><strong>Start Date: </strong>{project.Start_Date}</p>

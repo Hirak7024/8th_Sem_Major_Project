@@ -35,7 +35,7 @@ export default function StudentDetailsUpdateForm() {
             await Api.updateStudent(studentDetails);
             const updatedStudentDetails = await Api.checkStudentByEmail(userData.user.Email);
             setUserData(prev => ({ ...prev, studentDetails: updatedStudentDetails }));
-            navigate("/studentProfile"); // Navigate back to StudentDetails after successful update
+            navigate("/studentProfile");
         } catch (error) {
             console.error(error);
             // Handle error

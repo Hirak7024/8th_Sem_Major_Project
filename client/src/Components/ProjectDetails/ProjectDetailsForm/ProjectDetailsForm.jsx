@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
+import Api from '../../../API/Api';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../../Utils/Context';
 
 export default function ProjectDetailsForm() {
+    const {userData} = useAuth();
   const [projectDetails, setProjectDetails] = useState({
     Project_Type: "",
     Title: "",
@@ -14,13 +19,25 @@ export default function ProjectDetailsForm() {
     Report_Link: ""
   });;
 
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     setProjectDetails((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
-  
-  const handleSubmit=(e)=>{
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-}
+    try {
+      // Get the Roll_No from userData in the context
+      const rollNo = userData.studentDetails.Roll_No;
+      await Api.insertProjectDetails(rollNo, projectDetails);
+      toast.success("Project inserted successfully");
+      navigate("/studentProfile");
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to insert internship");
+    }
+  };
 
   return (
     <div className='StudentDetailsFormContainer'>
