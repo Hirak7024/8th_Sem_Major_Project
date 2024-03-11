@@ -11,7 +11,6 @@ export default function InternshipDetails() {
     useEffect(() => {
         async function fetchInternships() {
             try {
-                // Assume the roll number is available in userData
                 const rollNo = userData.studentDetails.Roll_No;
                 const data = await Api.fetchInternshipsByRollNo(rollNo);
                 setInternships(data);
@@ -29,15 +28,25 @@ export default function InternshipDetails() {
         navigate(`/form/update/internshipDetails/${internshipId}`);
     };
 
+    const handleDelete = async (Internship_ID) => {
+        try {
+            await Api.deleteInternship({ Internship_ID }); // Pass Internship_ID in the request body
+            // Remove the deleted internship from the local state
+            setInternships(internships.filter(internship => internship.Internship_ID !== Internship_ID));
+            console.log("Internship deleted successfully");
+        } catch (error) {
+            console.error('Error deleting internship:', error);
+        }
+    };
+
     return (
         <div className='InternshipDetailsContainer'>
             <h1>Internship Details</h1>
             <button onClick={()=>navigate("/form/internshipDetails")}>Add Internship</button>
             {internships.map((internship, index) => (
                 <div key={index}>
-                     <button onClick={() => handleEdit(internship.Internship_ID)}>Edit</button>
-                     <br />
-                     <button>Delete</button>
+                    <button onClick={() => handleEdit(internship.Internship_ID)}>Edit</button>
+                    <button onClick={() => handleDelete(internship.Internship_ID)}>Delete</button>
                     <p><strong>Internship Type: </strong>{internship.Internship_Type}</p>
                     <p><strong>Title: </strong>{internship.Title}</p>
                     <p><strong>Start Date: </strong>{internship.Start_Date}</p>

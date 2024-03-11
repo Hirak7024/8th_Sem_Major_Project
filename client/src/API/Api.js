@@ -86,8 +86,18 @@ const Api = {
             throw error.response.data.message;
         }
     },
-     // API call to fetch all projects by roll number
-     fetchProjectsByRollNo: async (rollNo) => {
+     // API call to delete an internship by Internship_ID
+     deleteInternship: async (formData) => {
+        try {
+            const response = await axios.delete(`${baseUrl}/studentinternships/internship/delete`, { data: formData });
+            return response.data;
+        } catch (error) {
+            throw error.response.data.message;
+        }
+    },
+
+    // API call to fetch all projects by roll number
+    fetchProjectsByRollNo: async (rollNo) => {
         try {
             const response = await axios.post(`${baseUrl}/studentprojects/project/fetchAll/detailsofProjects`, { Roll_No: rollNo });
             return response.data;
@@ -95,8 +105,8 @@ const Api = {
             throw error.response.data.message;
         }
     },
-     // API call to insert project details into table projects
-     insertProjectDetails: async (rollNo, formData) => {
+    // API call to insert project details into table projects
+    insertProjectDetails: async (rollNo, formData) => {
         try {
             const data = { Roll_No: rollNo, ...formData };
             const response = await axios.post(`${baseUrl}/studentprojects/project/insert`, data);
@@ -105,7 +115,7 @@ const Api = {
             throw error.response.data.message;
         }
     },
-    //fetch project details using Project_ID
+    // API call to fetch project details using Project_ID
     fetchProjectDetailsById: async (projectId) => {
         try {
             const response = await axios.post(`${baseUrl}/studentprojects/project/fetch/detailsofProject/byID`, projectId);
@@ -119,6 +129,15 @@ const Api = {
     updateProject: async (formData) => {
         try {
             const response = await axios.put(`${baseUrl}/studentprojects/project/update`, formData);
+            return response.data;
+        } catch (error) {
+            throw error.response.data.message;
+        }
+    },
+    //  API call to delete a project 
+    deleteProject: async (Project_ID) => {
+        try {
+            const response = await axios.delete(`${baseUrl}/studentprojects/project/delete`, { data: { Project_ID } });
             return response.data;
         } catch (error) {
             throw error.response.data.message;

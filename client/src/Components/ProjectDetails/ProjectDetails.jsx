@@ -28,6 +28,17 @@ export default function ProjectDetails() {
         navigate(`/form/update/projectDetails/${projectId}`);
     };
 
+    const handleDelete = async (Project_ID) => {
+        try {
+            await Api.deleteProject(Project_ID);
+            // Remove the deleted project from the local state
+            setProjects(projects.filter(project => project.Project_ID !== Project_ID));
+            console.log("Project deleted successfully");
+        } catch (error) {
+            console.error('Error deleting project:', error);
+        }
+    };
+
     return (
         <div className='ProjectDetailsContainer'>
             <h1>Project Details</h1>
@@ -36,7 +47,7 @@ export default function ProjectDetails() {
                 <div key={index}>
                     <button onClick={() => handleEdit(project.Project_ID)}>Edit</button>
                     <br />
-                    <button>Delete</button>
+                    <button onClick={() => handleDelete(project.Project_ID)}>Delete</button>
                     <p><strong>Project Type: </strong>{project.Project_Type}</p>
                     <p><strong>Title: </strong>{project.Title}</p>
                     <p><strong>Start Date: </strong>{project.Start_Date}</p>
