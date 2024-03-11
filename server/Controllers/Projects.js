@@ -1,4 +1,4 @@
-import pool from '../DataBase.js'; 
+import pool from '../DataBase.js';
 
 // INSERT INTO PROJECTS
 export const InsertProject = async (req, res) => {
@@ -50,11 +50,16 @@ export const UpdateProject = async (req, res) => {
         // Execute the update query
         await pool.query(updateQuery, updateValues);
 
-        res.status(200).json({ message: "Project updated successfully", status_code: 200 });
+        // Fetch the updated project record
+        const updatedProjectQuery = `SELECT * FROM projects WHERE Project_ID = ?`;
+        const [updatedProject] = await pool.query(updatedProjectQuery, [Project_ID]);
+
+        res.status(200).json({ data: updatedProject[0], message: "Project updated successfully", status_code: 200 });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
+
 
 //DELETE A PROJECT
 export const DeleteProject = async (req, res) => {
@@ -79,29 +84,55 @@ export const DeleteProject = async (req, res) => {
 };
 
 //FETCH ALL PROJECTS DETAILS BY ROLL NO
-
 export const fetchProjectsByRollNo = async (req, res) => {
     try {
-      const { Roll_No } = req.body;
-  
-      // Query to fetch all project details of the student using Roll_No
-      const [rows, fields] = await pool.execute('SELECT * FROM projects WHERE Roll_No = ?', [Roll_No]);
-  
-      // Check if any projects were found
-      if (rows.length > 0) {
-        // Projects found, return all details
-        const projects = rows;
-        return res.status(200).json(projects);
-      } else {
-        // No projects found for the student
-        return res.status(404).json({ message: 'No project details found for the student' });
-      }
+        const { Roll_No } = req.body;
+
+        // Query to fetch all project details of the student using Roll_No
+        const [rows, fields] = await pool.execute('SELECT * FROM projects WHERE Roll_No = ?', [Roll_No]);
+
+        // Check if any projects were found
+        if (rows.length > 0) {
+            // Projects found, return all details
+            const projects = rows;
+            return res.status(200).json(projects);
+        } else {
+            // No projects found for the student
+            return res.status(404).json({ message: 'No project details found for the student' });
+        }
     } catch (error) {
-      console.error('Error fetching projects by Roll_No:', error);
-      return res.status(500).json({ message: 'Internal server error' });
+        console.error('Error fetching projects by Roll_No:', error);
+        return res.status(500).json({ message: 'Internal server error' });
     }
-  };
-  
+};
+
+// FETCH PROJECT DETAILS OF A PARTICULAR PROJECT USING PROJECT_ID
+export const fetchProjectDetailsById = async (req, res) => {
+    try {
+        const { Project_ID } = req.body;
+
+        // Query to check if the project exists
+        const [projectRows, _] = await pool.execute('SELECT * FROM projects WHERE Project_ID = ?', [Project_ID]);
+
+        // Check if any project was found
+        if (projectRows.length === 0) {
+            // Project not found
+            return res.status(404).json({ message: 'Project details not found' });
+        }
+
+        // Project found, fetch details
+        const [rows, fields] = await pool.execute('SELECT * FROM projects WHERE Project_ID = ?', [Project_ID]);
+        const project = rows[0];
+
+        return res.status(200).json(project);
+
+    } catch (error) {
+        console.error('Error fetching project details by Project_ID:', error);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+
 
 
 

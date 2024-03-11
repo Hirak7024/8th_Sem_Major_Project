@@ -28,14 +28,14 @@ export const UpdateInternship = async (req, res) => {
     const { Internship_ID, ...updateFields } = req.body;
 
     try {
-        // Check if the project with the provided Project_ID exists
-        const checkProjectQuery = `SELECT * FROM internships WHERE Internship_ID = ?`;
-        const [existingProject] = await pool.query(checkProjectQuery, [Internship_ID]);
-        if (existingProject.length === 0) {
+        // Check if the internship with the provided Internship_ID exists
+        const checkInternshipQuery = `SELECT * FROM internships WHERE Internship_ID = ?`;
+        const [existingInternship] = await pool.query(checkInternshipQuery, [Internship_ID]);
+        if (existingInternship.length === 0) {
             return res.status(404).json({ message: "Internship not found", status_code: 404 });
         }
 
-        // Construct the dynamic SQL query to update the project
+        // Construct the dynamic SQL query to update the internship
         let updateQuery = `UPDATE internships SET `;
         const updateValues = [];
         Object.keys(updateFields).forEach(key => {
@@ -50,25 +50,30 @@ export const UpdateInternship = async (req, res) => {
         // Execute the update query
         await pool.query(updateQuery, updateValues);
 
-        res.status(200).json({ message: "Internship updated successfully", status_code: 200 });
+        // Fetch the updated internship record
+        const updatedInternshipQuery = `SELECT * FROM internships WHERE Internship_ID = ?`;
+        const [updatedInternship] = await pool.query(updatedInternshipQuery, [Internship_ID]);
+
+        res.status(200).json({ data: updatedInternship[0], message: "Internship updated successfully", status_code: 200 });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
+
 
 //DELETE AN INTERNSHIP 
 export const DeleteInternship = async (req, res) => {
     const { Internship_ID } = req.body;
 
     try {
-        // Check if the project with the provided Project_ID exists
-        const checkProjectQuery = `SELECT * FROM internships WHERE Internship_ID = ?`;
-        const [existingProject] = await pool.query(checkProjectQuery, [Internship_ID]);
-        if (existingProject.length === 0) {
+        // Check if the internship with the provided Internship_ID exists
+        const checkInternshipQuery = `SELECT * FROM internships WHERE Internship_ID = ?`;
+        const [existingInternship] = await pool.query(checkInternshipQuery, [Internship_ID]);
+        if (existingInternship.length === 0) {
             return res.status(404).json({ message: "Internship not found", status_code: 404 });
         }
 
-        // Delete the project record
+        // Delete the internship record
         const deleteQuery = `DELETE FROM internships WHERE Internship_ID = ?`;
         await pool.query(deleteQuery, [Internship_ID]);
 
@@ -100,6 +105,33 @@ export const fetchInternshipsByRollNo = async (req, res) => {
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
+
+// FETCH INTERNSHIP DETAILS OF A PARTICULAR INTERNSHIP USING INTERNSHIP_ID
+export const fetchInternshipDetailsById = async (req, res) => {
+  try {
+    const { Internship_ID } = req.body;
+
+    // Query to check if the internship exists
+    const [internshipRows, _] = await pool.execute('SELECT * FROM internships WHERE Internship_ID = ?', [Internship_ID]);
+
+    // Check if any internship was found
+    if (internshipRows.length === 0) {
+      // Internship not found
+      return res.status(404).json({ message: 'Internship details not found' });
+    } 
+
+    // Internship found, fetch details
+    const [rows, fields] = await pool.execute('SELECT * FROM internships WHERE Internship_ID = ?', [Internship_ID]);
+    const internship = rows[0];
+    
+    return res.status(200).json(internship);
+    
+  } catch (error) {
+    console.error('Error fetching internship details by Internship_ID:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
 
 
 

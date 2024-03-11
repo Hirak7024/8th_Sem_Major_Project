@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Api from '../../API/Api.js';
 import { useAuth } from '../../Utils/Context.js';
-import "./InternshipDetails.scss";
 import { useNavigate } from 'react-router-dom';
+import "./InternshipDetails.scss";
 
 export default function InternshipDetails() {
     const { userData } = useAuth();
@@ -25,13 +25,17 @@ export default function InternshipDetails() {
 
     const navigate = useNavigate();
 
+    const handleEdit = (internshipId) => {
+        navigate(`/form/update/internshipDetails/${internshipId}`);
+    };
+
     return (
         <div className='InternshipDetailsContainer'>
             <h1>Internship Details</h1>
             <button onClick={()=>navigate("/form/internshipDetails")}>Add Internship</button>
             {internships.map((internship, index) => (
                 <div key={index}>
-                     <button>Edit</button>
+                     <button onClick={() => handleEdit(internship.Internship_ID)}>Edit</button>
                      <br />
                      <button>Delete</button>
                     <p><strong>Internship Type: </strong>{internship.Internship_Type}</p>

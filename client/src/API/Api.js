@@ -88,6 +88,25 @@ const Api = {
             throw error.response.data.message;
         }
     },
+    // API call to update internship details
+    updateInternship: async (formData) => {
+        try {
+            const response = await axios.put(`${baseUrl}/studentinternships/internship/update`, formData);
+            return response.data;
+        } catch (error) {
+            throw error.response.data.message;
+        }
+    },
+    // API call to fetch internship details by Internship_ID
+    fetchInternshipDetailsById: async (internshipId) => {
+        try {
+            const response = await axios.post(`${baseUrl}/studentinternships/internship/fetch/detailsofInternship/byID`, internshipId);
+            return response.data;
+        } catch (error) {
+            throw error.response.data.message;
+        }
+    },
+
 };
 
 export default Api;

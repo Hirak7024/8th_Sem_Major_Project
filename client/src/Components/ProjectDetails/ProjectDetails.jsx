@@ -31,7 +31,7 @@ export default function ProjectDetails() {
             <button onClick={()=>navigate("/form/projectDetails")}>Add Project</button>
             {projects.map((project, index) => (
                 <div key={index}>
-                    <button>Edit</button>
+                    <button onClick={()=>navigate("/form/update/projectDetails")}>Edit</button>
                     <br />
                     <button>Delete</button>
                     <p><strong>Project Type: </strong>{project.Project_Type}</p>

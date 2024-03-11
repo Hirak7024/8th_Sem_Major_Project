@@ -38,7 +38,6 @@ export default function StudentDetailsUpdateForm() {
             navigate("/studentProfile");
         } catch (error) {
             console.error(error);
-            // Handle error
         }
     };
 
