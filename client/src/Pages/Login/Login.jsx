@@ -7,7 +7,7 @@ import "./Login.scss";
 
 export default function Login() {
     const navigate = useNavigate();
-    const { loginUser } = useAuth();
+    const { loginStudent, loginAdmin } = useAuth();
     const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState({
         Email: "",
@@ -52,30 +52,45 @@ export default function Login() {
         return isValid;
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e, userType) => {
         e.preventDefault();
         if (validateForm()) {
-            const result = await loginUser(formData);
-            if (result.success) {
-                toast.success(result.message);
-                if (result.studentDetailsExist) {
-                    navigate("/studentProfile");
-                } 
-                // else {
-                //     navigate("/form/studentDetails");
-                // }
-            } else {
-                // toast.error(result.message);
-                navigate("/form/studentDetails");
+            let result;
+            if (userType === 'student') {
+                result = await loginStudent(formData);
+                if (result.success) {
+                    toast.success(result.message);
+                    if (result.studentDetailsExist) {
+                        navigate("/studentProfile");
+                    } else {
+                        navigate("/form/studentDetails");
+                    }
+                } else {
+                    // Check if the message indicates student details do not exist
+                    if (result.message === "Student details do not exist") {
+                        navigate("/form/studentDetails");
+                    } else {
+                        toast.error(result.message);
+                    }
+                }
+            } else if (userType === 'admin') {
+                result = await loginAdmin(formData);
+                if (result.success) {
+                    toast.success(result.message);
+                    navigate("/adminPage");
+                } else {
+                    toast.error(result.message);
+                }
             }
         }
     };
+    
     
 
     return (
         <div className='login_Container'>
             <h1 className="close_mark_btn">X</h1>
-            <form className='login_form' onSubmit={handleSubmit}>
+            <form className='login_form'>
                 <h1 className="formHeading">Login</h1>
                 <div className="labelInput">
                     <label htmlFor="email">Enter Your Email : </label>
@@ -103,9 +118,8 @@ export default function Login() {
                     </div>
                     <p className="error">{errors.Password}</p>
                 </div>
-                <button type='submit' className='login_btn'>
-                    Login
-                </button>
+                <button type='submit' className='login_btn' onClick={(e) => handleSubmit(e, 'student')}>Login as Student</button>
+                <button className='login_btn' onClick={(e) => handleSubmit(e, 'admin')}>Login as Admin</button>
                 <div className='registerLink_Box'>
                     Don't Have an Account ? <Link to={"/register"} className='register_Link'>Sign Up</Link>
                 </div>

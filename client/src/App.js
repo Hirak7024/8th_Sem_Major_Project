@@ -9,6 +9,7 @@ import ProjectDetailsForm from './Components/ProjectDetails/ProjectDetailsForm/P
 import StudentDetailsUpdateForm from './Components/StudentDetails/StudentDetailsUpdateForm/StudentDetailsUpdateForm';
 import InternshipDetailsUpdateForm from './Components/InternshipDetails/InternshipDetailsUpdateForm/InternshipDetailsUpdateForm';
 import ProjectDetailsUpdateForm from './Components/ProjectDetails/ProjectDetailsUpdateForm/ProjectDetailsUpdateForm';
+import AdminPage from './Pages/AdminPage/AdminPage';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -25,6 +26,7 @@ export default function App() {
         <Route path='/form/update/studentDetails' element={<StudentDetailsUpdateForm />} />
         <Route path='/form/update/internshipDetails/:internshipId' element={<InternshipDetailsUpdateForm />} />
         <Route path='/form/update/projectDetails/:projectId' element={<ProjectDetailsUpdateForm />} />
+        <Route path='/adminPage' element={<AdminPage/>} />
       </Routes>
       <ToastContainer />
     </>

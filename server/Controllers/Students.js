@@ -75,7 +75,7 @@ export const UpdateStudent = async (req, res) => {
     }
 };
 
-//DELETE A REW FROM TABLE STUDENT
+//DELETE A ROW FROM TABLE STUDENT
 export const DeleteStudent = async (req, res) => {
     const { Student_ID } = req.body;
 

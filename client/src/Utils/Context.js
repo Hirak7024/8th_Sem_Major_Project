@@ -6,10 +6,24 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
     const [userData, setUserData] = useState(null);
 
-    // Function to Register a Student
-    const registerUser = async (formData) => {
+    // Function to Login as Admin
+    const loginAdmin = async (formData) => {
         try {
-            const data = await Api.registerUser(formData);
+            const data = await Api.loginAdmin(formData);
+            const { userResponse, token } = data.data;
+            setUserData({ user: userResponse, token });
+            localStorage.setItem("authToken", token);
+            return { success: true, message: data.message };
+        } catch (error) {
+            return { success: false, message: error };
+        }
+    };
+
+
+    // Function to Register a Student
+    const registerStudent = async (formData) => {
+        try {
+            const data = await Api.registerStudent(formData);
             const { userResponse, token } = data.data;
             setUserData({ user: userResponse, token });
             localStorage.setItem("authToken", token);
@@ -20,9 +34,9 @@ export const AuthProvider = ({ children }) => {
     };
 
     // Function to Login a Student
-    const loginUser = async (formData) => {
+    const loginStudent = async (formData) => {
         try {
-            const data = await Api.loginUser(formData);
+            const data = await Api.loginStudent(formData);
             const { userResponse, token } = data.data;
             setUserData({ user: userResponse, token });
             localStorage.setItem("authToken", token);
@@ -47,8 +61,9 @@ export const AuthProvider = ({ children }) => {
         <AuthContext.Provider value={{
             userData,
             setUserData,
-            registerUser,
-            loginUser
+            registerStudent,
+            loginStudent,
+            loginAdmin
         }}>
             {children}
         </AuthContext.Provider>

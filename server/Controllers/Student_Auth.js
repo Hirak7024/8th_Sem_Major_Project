@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import pool from '../DataBase.js';
 
-//TO REGISTER STUDENT
+//TO REGISTER NEW STUDENT
 const RegisterStudent = async (req, res) => {
     const { Email, Password, SignUpKey } = req.body;
     const serverSignUpKey = process.env.StudentSignUpKey;

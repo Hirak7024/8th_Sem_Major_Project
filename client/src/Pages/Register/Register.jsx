@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 
 export default function Register() {
   const navigate = useNavigate();
-  const { registerUser } = useAuth();
+  const { registerStudent } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [showSignUpKey, setShowSignUpKey] = useState(false);
   const [formData, setFormData] = useState({
@@ -67,7 +67,7 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      const result = await registerUser(formData);
+      const result = await registerStudent(formData);
       if (result.success) {
         toast.success(result.message);
         navigate("/form/studentDetails"); // Navigate to StudentDetailsForm after successful registration

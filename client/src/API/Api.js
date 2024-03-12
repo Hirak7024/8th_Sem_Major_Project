@@ -3,8 +3,17 @@ import axios from 'axios';
 const baseUrl = "http://localhost:8001/api";
 
 const Api = {
+    // API call to login as admin
+    loginAdmin: async (formData) => {
+        try {
+            const response = await axios.post(`${baseUrl}/admin/login`, formData);
+            return response.data;
+        } catch (error) {
+            throw error.response.data.message;
+        }
+    },
     // API call to register a student
-    registerUser: async (formData) => {
+    registerStudent: async (formData) => {
         try {
             const response = await axios.post(`${baseUrl}/studentauth/register`, formData);
             return response.data;
@@ -13,7 +22,7 @@ const Api = {
         }
     },
     // API call to login a student
-    loginUser: async (formData) => {
+    loginStudent: async (formData) => {
         try {
             const response = await axios.post(`${baseUrl}/studentauth/login`, formData);
             return response.data;
@@ -86,8 +95,8 @@ const Api = {
             throw error.response.data.message;
         }
     },
-     // API call to delete an internship by Internship_ID
-     deleteInternship: async (formData) => {
+    // API call to delete an internship by Internship_ID
+    deleteInternship: async (formData) => {
         try {
             const response = await axios.delete(`${baseUrl}/studentinternships/internship/delete`, { data: formData });
             return response.data;
