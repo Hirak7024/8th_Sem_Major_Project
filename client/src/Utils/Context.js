@@ -6,6 +6,19 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
     const [userData, setUserData] = useState(null);
 
+    // Function to Register new Admin
+    const registerAdmin = async (formData) => {
+        try {
+            const data = await Api.registerAdmin(formData);
+            const { userResponse, token } = data.data;
+            setUserData({ user: userResponse, token });
+            localStorage.setItem("authToken", token);
+            return { success: true, message: data.message };
+        } catch (error) {
+            return { success: false, message: error };
+        }
+    };
+    
     // Function to Login as Admin
     const loginAdmin = async (formData) => {
         try {
@@ -18,7 +31,6 @@ export const AuthProvider = ({ children }) => {
             return { success: false, message: error };
         }
     };
-
 
     // Function to Register a Student
     const registerStudent = async (formData) => {
@@ -63,6 +75,7 @@ export const AuthProvider = ({ children }) => {
             setUserData,
             registerStudent,
             loginStudent,
+            registerAdmin,
             loginAdmin
         }}>
             {children}

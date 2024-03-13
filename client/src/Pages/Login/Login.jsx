@@ -119,7 +119,7 @@ export default function Login() {
                     <p className="error">{errors.Password}</p>
                 </div>
                 <button type='submit' className='login_btn' onClick={(e) => handleSubmit(e, 'student')}>Login as Student</button>
-                <button className='login_btn' onClick={(e) => handleSubmit(e, 'admin')}>Login as Admin</button>
+                <button type='submit' className='login_btn' onClick={(e) => handleSubmit(e, 'admin')}>Login as Admin</button>
                 <div className='registerLink_Box'>
                     Don't Have an Account ? <Link to={"/register"} className='register_Link'>Sign Up</Link>
                 </div>

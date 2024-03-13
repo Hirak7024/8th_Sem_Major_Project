@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import { Link,useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from "../../Utils/Context.js";
 import { toast } from 'react-toastify';
 
 export default function Register() {
   const navigate = useNavigate();
-  const { registerStudent } = useAuth();
+  const { registerStudent, registerAdmin } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [showSignUpKey, setShowSignUpKey] = useState(false);
   const [formData, setFormData] = useState({
@@ -64,19 +64,43 @@ export default function Register() {
     return isValid;
   };
 
-  const handleSubmit = async (e) => {
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   if (validateForm()) {
+  //     const result = await registerStudent(formData);
+  //     if (result.success) {
+  //       toast.success(result.message);
+  //       navigate("/form/studentDetails");
+  //     } else {
+  //       toast.error(result.message);
+  //     }
+  //   }
+  // };
+
+  const handleSubmit = async (e, userType) => {
     e.preventDefault();
     if (validateForm()) {
-      const result = await registerStudent(formData);
-      if (result.success) {
-        toast.success(result.message);
-        navigate("/form/studentDetails"); // Navigate to StudentDetailsForm after successful registration
-      } else {
-        toast.error(result.message);
+      let result;
+      if (userType === 'student') {
+        result = await registerStudent(formData);
+        if (result.success) {
+          toast.success(result.message);
+          navigate("/form/studentDetails");
+        } else {
+          toast.error(result.message);
+        }
+      } else if (userType === 'admin') {
+        result = await registerAdmin(formData);
+        if (result.success) {
+          toast.success(result.message);
+          navigate("/adminPage");
+        } else {
+          toast.error(result.message);
+        }
       }
     }
   };
-  
+
 
   return (
     <div className='login_Container'>
@@ -124,9 +148,8 @@ export default function Register() {
             <p className="error">{errors.SignUpKey}</p>
           </div>
         </div>
-        <button type='submit' className='login_btn'>
-          Register
-        </button>
+        <button type='submit' className='login_btn' onClick={(e) => handleSubmit(e, 'student')}>Register as Student</button>
+        <button type='submit' className='login_btn' onClick={(e) => handleSubmit(e, 'admin')}>Register as Admin</button>
         <div className='registerLink_Box'>
           Already Have an Account ? <Link to={"/"} className='register_Link'>login</Link>
         </div>

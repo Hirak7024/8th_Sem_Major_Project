@@ -3,6 +3,15 @@ import axios from 'axios';
 const baseUrl = "http://localhost:8001/api";
 
 const Api = {
+    // API call to register new admin
+    registerAdmin: async (formData) => {
+        try {
+            const response = await axios.post(`${baseUrl}/admin/register`, formData);
+            return response.data;
+        } catch (error) {
+            throw error.response.data.message;
+        }
+    },
     // API call to login as admin
     loginAdmin: async (formData) => {
         try {
