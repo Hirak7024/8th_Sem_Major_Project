@@ -89,7 +89,7 @@ export default function Login() {
 
     return (
         <div className='login_Container'>
-            <h1 className="close_mark_btn">X</h1>
+            {/* <h1 className="close_mark_btn">X</h1> */}
             <form className='login_form'>
                 <h1 className="formHeading">Login</h1>
                 <div className="labelInput">

@@ -64,19 +64,6 @@ export default function Register() {
     return isValid;
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   if (validateForm()) {
-  //     const result = await registerStudent(formData);
-  //     if (result.success) {
-  //       toast.success(result.message);
-  //       navigate("/form/studentDetails");
-  //     } else {
-  //       toast.error(result.message);
-  //     }
-  //   }
-  // };
-
   const handleSubmit = async (e, userType) => {
     e.preventDefault();
     if (validateForm()) {
@@ -104,7 +91,7 @@ export default function Register() {
 
   return (
     <div className='login_Container'>
-      <h1 className="close_mark_btn">X</h1>
+      {/* <h1 className="close_mark_btn">X</h1> */}
       <form className='login_form' onSubmit={handleSubmit}>
         <h1 className="formHeading">Register</h1>
         <div className="labelInput">

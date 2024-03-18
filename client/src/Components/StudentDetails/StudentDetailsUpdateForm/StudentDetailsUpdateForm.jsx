@@ -114,15 +114,20 @@ export default function StudentDetailsUpdateForm() {
                     {/* <p className="error">{errors.Email}</p> */}
                 </div>
                 <div className="labelInput">
-                    <label htmlFor="department">Department : </label>
-                    <input
-                        type="text"
-                        id='department'
-                        name='Department'
+                    <label htmlFor="department">Student's Department : </label>
+                    <select
+                        id="department"
+                        name="Department"
                         value={studentDetails.Department}
                         onChange={handleChange}
-                    />
-                    {/* <p className="error">{errors.Email}</p> */}
+                    >
+                        <option value="">Select Student's Department </option>
+                        <option value="Computer Science & Engineering">Computer Science & Engineering</option>
+                        <option value="Civil Engineering">Civil Engineering</option>
+                        <option value="Electrical Engineering">Electrical Engineering</option>
+                        <option value="Mechanical Engineering">Mechanical Engineering</option>
+                        <option value="Instrumentation Engineering">Instrumentation Engineering</option>
+                    </select>
                 </div>
                 <div className="labelInput">
                     <label htmlFor="yearOfJoining">Year of Joining : </label>
