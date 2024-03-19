@@ -21,6 +21,16 @@ const Api = {
             throw error.response.data.message;
         }
     },
+    // API call to fetch student details along with project and internship details based on admin input
+    fetchStudentDetails : async (formData) => {
+        try {
+            const response = await axios.post(`${baseUrl}/studentdetails/getAll/studentDetails/internshipAndProject`, formData);
+            return response.data;
+        } catch (error) {
+            throw error.response.data.message;
+        }
+    },
+
     // API call to register a student
     registerStudent: async (formData) => {
         try {
