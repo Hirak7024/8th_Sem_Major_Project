@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
             if (token) {
                 try {
                     const decodedToken = await Api.GetPayloadFromToken(token);
-                    const { Email } = decodedToken.payload; // Assuming Email is part of decoded payload
+                    const { Email } = decodedToken.payload;
                     setUserData({user: {Email: Email}});
                     const studentDetailsExist = await Api.checkStudentByEmail(Email);
                     if (studentDetailsExist) {
@@ -26,9 +26,9 @@ export const AuthProvider = ({ children }) => {
         };
 
         fetchTokenData();
-    }, []); // Run only once on component mount
+    }, []); 
 
-    // Function to Register new Admin
+    // FUNCTION TO REGISTER A NEW ADMIN
     const registerAdmin = async (formData) => {
         try {
             const data = await Api.registerAdmin(formData);
@@ -41,7 +41,7 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    // Function to Login as Admin
+    // FUNCTION TO LOGIN AS NEW ADMIN
     const loginAdmin = async (formData) => {
         try {
             const data = await Api.loginAdmin(formData);
@@ -54,7 +54,7 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    // Function to Register a Student
+    // FUNCTION TO REGISTER A NEW STUDENT
     const registerStudent = async (formData) => {
         try {
             const data = await Api.registerStudent(formData);
@@ -67,7 +67,7 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    // Function to Login a Student
+    // FUNCTION TO LOGIN AS NEW ADMIN
     const loginStudent = async (formData) => {
         try {
             const data = await Api.loginStudent(formData);

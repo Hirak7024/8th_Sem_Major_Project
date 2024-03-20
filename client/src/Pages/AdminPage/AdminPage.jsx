@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Api from "../../API/Api.js";
 import { toast } from "react-toastify";
 import { DataGrid } from '@mui/x-data-grid';
@@ -19,6 +19,23 @@ export default function AdminPage() {
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
+
+  useEffect(() => {
+    // Prevent the user from navigating back using the browser's back button
+    const disableBackButton = () => {
+      window.history.pushState(null, "", window.location.href);
+      window.onpopstate = () => {
+        window.history.pushState(null, "", window.location.href);
+      };
+    };
+
+    disableBackButton();
+
+    // Cleanup on component unmount
+    return () => {
+      window.onpopstate = null;
+    };
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { useAuth } from '../../Utils/Context.js';
@@ -25,6 +25,23 @@ export default function Login() {
     const handleChange = (e) => {
         setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     };
+
+    useEffect(() => {
+        // Prevent the user from navigating back using the browser's back button
+        const disableBackButton = () => {
+            window.history.pushState(null, "", window.location.href);
+            window.onpopstate = () => {
+                window.history.pushState(null, "", window.location.href);
+            };
+        };
+
+        disableBackButton();
+
+        // Cleanup on component unmount
+        return () => {
+            window.onpopstate = null;
+        };
+    }, []);
 
     const validateForm = () => {
         let isValid = true;
@@ -84,8 +101,8 @@ export default function Login() {
             }
         }
     };
-    
-    
+
+
 
     return (
         <div className='login_Container'>

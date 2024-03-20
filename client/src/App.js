@@ -12,10 +12,12 @@ import ProjectDetailsUpdateForm from './Components/ProjectDetails/ProjectDetails
 import AdminPage from './Pages/AdminPage/AdminPage';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Navbar from './Components/Navbar/Navbar';
 
 export default function App() {
   return (
     <>
+    <Navbar/>
       <Routes>
         <Route path='/' element={<Login />} />
         <Route path='/studentProfile' element={<StudentProfile />} />

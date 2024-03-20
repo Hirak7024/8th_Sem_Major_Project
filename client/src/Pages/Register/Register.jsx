@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from "../../Utils/Context.js";
@@ -19,6 +19,23 @@ export default function Register() {
     Password: "",
     SignUpKey: "",
   });
+
+  useEffect(() => {
+    // Prevent the user from navigating back using the browser's back button
+    const disableBackButton = () => {
+        window.history.pushState(null, "", window.location.href);
+        window.onpopstate = () => {
+            window.history.pushState(null, "", window.location.href);
+        };
+    };
+
+    disableBackButton();
+
+    // Cleanup on component unmount
+    return () => {
+        window.onpopstate = null;
+    };
+}, []);
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
