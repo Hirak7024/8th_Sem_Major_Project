@@ -121,62 +121,120 @@ export const checkStudentByEmail = async (req, res) => {
 };
 
 // FETCHING STUDENT DETAILS ALONG WITH INTERNSHIPS AND PROJECTS (ADMIN SIDE)
+// export const fetchAllDetails = async (req, res) => {
+//     try {
+//       let { Roll_No, Registration_No, Department, Year_of_Joining, Year_of_Passing, Internship_Type, Project_Type } = req.body;
+  
+//       // Validate input parameters
+//       if (!Department || !Year_of_Joining || !Year_of_Passing) {
+//         return res.status(400).json({ success: false, error: 'Missing required parameters' });
+//       }
+  
+//       if (isNaN(Year_of_Joining) || isNaN(Year_of_Passing)) {
+//         return res.status(400).json({ success: false, error: 'Invalid joining or passing year' });
+//       }
+  
+//       // If Roll_No, Registration_No, or Project_Type are not provided, set them to null
+//       Roll_No = Roll_No || null;
+//       Registration_No = Registration_No || null;
+//       Project_Type = Project_Type || null;
+//       Internship_Type = Internship_Type || null;
+  
+//       let query = `
+//         SELECT 
+//           students.*,
+//           internships.Internship_Type, internships.Title AS Internship_Title, internships.Start_Date AS Internship_Start_Date, internships.End_Date AS Internship_End_Date,
+//           projects.Project_Type, projects.Title AS Project_Title, projects.Start_Date AS Project_Start_Date, projects.End_Date AS Project_End_Date
+//         FROM students
+//         LEFT JOIN internships ON students.Roll_No = internships.Roll_No AND internships.Internship_Type = ?
+//         LEFT JOIN projects ON students.Roll_No = projects.Roll_No AND projects.Project_Type = ?
+//         WHERE 
+//           students.Department = ? AND
+//           (students.Year_of_Joining = ? OR students.Year_of_Joining IS NULL) AND
+//           (students.Year_of_Passing = ? OR students.Year_of_Passing IS NULL)
+//       `;
+  
+//       let queryParams = [Internship_Type, Project_Type, Department, Year_of_Joining, Year_of_Passing];
+  
+//       if (Roll_No) {
+//         query += ` AND students.Roll_No = ?`;
+//         queryParams.push(Roll_No);
+//       }
+  
+//       if (Registration_No) {
+//         query += ` AND students.Registration_No = ?`;
+//         queryParams.push(Registration_No);
+//       }
+  
+//       // Fetching student details with LEFT JOINs for internship and project details
+//       const [rows] = await pool.query(query, queryParams);
+  
+//       // Sending the response
+//       res.status(200).json({ success: true, data: rows });
+//     } catch (error) {
+//       console.error('Error fetching data:', error);
+//       res.status(500).json({ success: false, error: 'Internal Server Error', details: error.message });
+//     }
+//   };
+  
+
 export const fetchAllDetails = async (req, res) => {
-    try {
-      let { Roll_No, Registration_No, Department, Year_of_Joining, Year_of_Passing, Internship_Type, Project_Type } = req.body;
-  
-      // Validate input parameters
-      if (!Department || !Year_of_Joining || !Year_of_Passing) {
-        return res.status(400).json({ success: false, error: 'Missing required parameters' });
-      }
-  
-      if (isNaN(Year_of_Joining) || isNaN(Year_of_Passing)) {
-        return res.status(400).json({ success: false, error: 'Invalid joining or passing year' });
-      }
-  
-      // If Roll_No, Registration_No, or Project_Type are not provided, set them to null
-      Roll_No = Roll_No || null;
-      Registration_No = Registration_No || null;
-      Project_Type = Project_Type || null;
-      Internship_Type = Internship_Type || null;
-  
-      let query = `
-        SELECT 
-          students.*,
-          internships.Internship_Type, internships.Title AS Internship_Title, internships.Start_Date AS Internship_Start_Date, internships.End_Date AS Internship_End_Date,
-          projects.Project_Type, projects.Title AS Project_Title, projects.Start_Date AS Project_Start_Date, projects.End_Date AS Project_End_Date
-        FROM students
-        LEFT JOIN internships ON students.Roll_No = internships.Roll_No AND internships.Internship_Type = ?
-        LEFT JOIN projects ON students.Roll_No = projects.Roll_No AND projects.Project_Type = ?
-        WHERE 
-          students.Department = ? AND
-          (students.Year_of_Joining = ? OR students.Year_of_Joining IS NULL) AND
-          (students.Year_of_Passing = ? OR students.Year_of_Passing IS NULL)
-      `;
-  
-      let queryParams = [Internship_Type, Project_Type, Department, Year_of_Joining, Year_of_Passing];
-  
-      if (Roll_No) {
-        query += ` AND students.Roll_No = ?`;
-        queryParams.push(Roll_No);
-      }
-  
-      if (Registration_No) {
-        query += ` AND students.Registration_No = ?`;
-        queryParams.push(Registration_No);
-      }
-  
-      // Fetching student details with LEFT JOINs for internship and project details
-      const [rows] = await pool.query(query, queryParams);
-  
-      // Sending the response
-      res.status(200).json({ success: true, data: rows });
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      res.status(500).json({ success: false, error: 'Internal Server Error', details: error.message });
+  try {
+    let { Roll_No, Registration_No, Department, Year_of_Joining, Year_of_Passing, Internship_Type, Project_Type } = req.body;
+
+    // Validate input parameters
+    if (!Department || !Year_of_Joining || !Year_of_Passing) {
+      return res.status(400).json({ success: false, error: 'Missing required parameters' });
     }
-  };
-  
+
+    if (isNaN(Year_of_Joining) || isNaN(Year_of_Passing)) {
+      return res.status(400).json({ success: false, error: 'Invalid joining or passing year' });
+    }
+
+    // If Roll_No, Registration_No, or Project_Type are not provided, set them to null
+    Roll_No = Roll_No || null;
+    Registration_No = Registration_No || null;
+    Project_Type = Project_Type || null;
+    Internship_Type = Internship_Type || null;
+
+    let query = `
+      SELECT 
+        students.*,
+        internships.*, 
+        projects.*     
+      FROM students
+      LEFT JOIN internships ON students.Roll_No = internships.Internship_Roll_No AND internships.Internship_Type = ?
+      LEFT JOIN projects ON students.Roll_No = projects.Project_Roll_No AND projects.Project_Type = ?
+      WHERE 
+        students.Department = ? AND
+        (students.Year_of_Joining = ? OR students.Year_of_Joining IS NULL) AND
+        (students.Year_of_Passing = ? OR students.Year_of_Passing IS NULL)
+    `;
+
+    let queryParams = [Internship_Type, Project_Type, Department, Year_of_Joining, Year_of_Passing];
+
+    if (Roll_No) {
+      query += ` AND students.Roll_No = ?`;
+      queryParams.push(Roll_No);
+    }
+
+    if (Registration_No) {
+      query += ` AND students.Registration_No = ?`;
+      queryParams.push(Registration_No);
+    }
+
+    // Fetching student details with LEFT JOINs for internship and project details
+    const [rows] = await pool.query(query, queryParams);
+
+    // Sending the response
+    res.status(200).json({ success: true, data: rows });
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    res.status(500).json({ success: false, error: 'Internal Server Error', details: error.message });
+  }
+};
+
+
 
 
 
