@@ -13,6 +13,7 @@ import AdminPage from './Pages/AdminPage/AdminPage';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from './Components/Navbar/Navbar';
+import AdminStudentProfilePage from './Pages/AdminStudentProfilePage/AdminStudentProfilePage';
 
 export default function App() {
   return (
@@ -29,6 +30,7 @@ export default function App() {
         <Route path='/form/update/internshipDetails/:internshipId' element={<InternshipDetailsUpdateForm />} />
         <Route path='/form/update/projectDetails/:projectId' element={<ProjectDetailsUpdateForm />} />
         <Route path='/adminPage' element={<AdminPage/>} />
+        <Route path='/from/adminSide/StudentProfile' element={<AdminStudentProfilePage/>} />
       </Routes>
       <ToastContainer />
     </>

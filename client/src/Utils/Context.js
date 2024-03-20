@@ -5,6 +5,7 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [userData, setUserData] = useState(null);
+    const [selectedStudent, setSelectedStudent] = useState(null);
 
     useEffect(() => {
         const fetchTokenData = async () => {
@@ -98,7 +99,9 @@ export const AuthProvider = ({ children }) => {
             registerStudent,
             loginStudent,
             registerAdmin,
-            loginAdmin
+            loginAdmin,
+            selectedStudent, 
+            setSelectedStudent
         }}>
             {children}
         </AuthContext.Provider>
