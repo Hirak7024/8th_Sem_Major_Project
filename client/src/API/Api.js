@@ -3,6 +3,17 @@ import axios from 'axios';
 const baseUrl = "http://localhost:8001/api";
 
 const Api = {
+    // API call to fetch decoded token from backend
+    GetPayloadFromToken: async (token) => {
+        try {
+            const response = await axios.get(`${baseUrl}/studentauth/getDecode/TokenPayload`, {  headers: {
+                Authorization: `Bearer ${token}`,
+              }, });
+            return response.data;
+        } catch (error) {
+            throw error.response.data.message;
+        }
+    },
     // API call to register new admin
     registerAdmin: async (formData) => {
         try {

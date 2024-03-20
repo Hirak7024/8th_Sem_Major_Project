@@ -143,6 +143,30 @@ const DeleteStudentAuth = async (req, res) => {
     }
 };
 
+//GET DECODED TOKEN
+const GetPayloadFromToken = (req, res) => {
+    const token = req.headers.authorization;
+
+    if (!token) {
+        return res.status(401).json({ message: 'Unauthorized - No token provided' });
+    }
+
+    const tokenParts = token.split(" ");
+
+    if (tokenParts.length !== 2 || tokenParts[0].toLowerCase() !== 'bearer') {
+        return res.status(401).json({ message: 'Unauthorized - Invalid token format' });
+    }
+
+    const jwtToken = tokenParts[1];
+
+    try {
+        const decodedPayload = jwt.verify(jwtToken, process.env.JWT_KEY);
+        res.json({ payload: decodedPayload });
+    } catch (error) {
+        res.status(401).json({ message: 'Unauthorized - Invalid token' });
+    }
+};
 
 
-export { RegisterStudent, LoginStudent, UpdateStudentAuth, DeleteStudentAuth };
+
+export { RegisterStudent, LoginStudent, UpdateStudentAuth, DeleteStudentAuth, GetPayloadFromToken };

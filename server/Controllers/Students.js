@@ -120,7 +120,7 @@ export const checkStudentByEmail = async (req, res) => {
   }
 };
 
-// FETCHING STUDENT DETAILS ALONG WITH INTERNSHIPS AND PROJECTS
+// FETCHING STUDENT DETAILS ALONG WITH INTERNSHIPS AND PROJECTS (ADMIN SIDE)
 export const fetchAllDetails = async (req, res) => {
     try {
       let { Roll_No, Registration_No, Department, Year_of_Joining, Year_of_Passing, Internship_Type, Project_Type } = req.body;
