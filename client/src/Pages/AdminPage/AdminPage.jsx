@@ -7,23 +7,8 @@ import "./AdminPage.scss";
 import { useAuth } from '../../Utils/Context.js';
 
 export default function AdminPage() {
-  const {setSelectedStudent} = useAuth();
-  useEffect(() => {
-    // Prevent the user from navigating back using the browser's back button
-    const disableBackButton = () => {
-      window.history.pushState(null, "", window.location.href);
-      window.onpopstate = () => {
-        window.history.pushState(null, "", window.location.href);
-      };
-    };
-
-    disableBackButton();
-
-    // Cleanup on component unmount
-    return () => {
-      window.onpopstate = null;
-    };
-  }, []);
+  const { setSelectedStudent } = useAuth();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     Roll_No: "",
@@ -37,34 +22,45 @@ export default function AdminPage() {
 
   const [studentDetails, setStudentDetails] = useState([]);
 
+  useEffect(() => {
+    // Load student details from storage on component mount
+    const storedStudentDetails = JSON.parse(localStorage.getItem('studentDetails'));
+    if (storedStudentDetails) {
+      setStudentDetails(storedStudentDetails);
+    }
+  }, []);
+
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const fetchStudentDetails = async () => {
     try {
       const data = await Api.fetchStudentDetails(formData);
-      // Assign Student_ID as the id for each row
       const updatedData = data.data.map((student) => ({
         ...student,
         id: student.Student_ID
       }));
       setStudentDetails(updatedData);
+      // Store fetched student details in localStorage
+      localStorage.setItem('studentDetails', JSON.stringify(updatedData));
     } catch (error) {
       console.error("Error fetching student details:", error);
-      toast.error("Error fetching student details")
+      toast.error("Error fetching student details");
     }
   };
 
-  const navigate = useNavigate();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await fetchStudentDetails();
+  };
 
   const handleRowDoubleClick = (params) => {
     const selectedStudentRow = studentDetails.find(student => student.id === params.id);
-    setSelectedStudent(selectedStudentRow); // Update context state with selected student details
-    navigate('/from/adminSide/StudentProfile'); // Navigate to the student profile page
+    setSelectedStudent(selectedStudentRow); 
+    navigate('/from/adminSide/StudentProfile');
   };
+  
 
   const columns = [
     { field: 'Roll_No', sortable: false, filterable: false, headerName: 'Roll No', width: 130 },
