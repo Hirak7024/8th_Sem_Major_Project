@@ -2,20 +2,20 @@ import pool from '../DataBase.js';
 
 // INSERT INTO PROJECTS
 export const InsertProject = async (req, res) => {
-    const { Roll_No, Project_Type, Title, Start_Date, End_Date, Organisation, Guide_Name, Guide_Designation, Description, Certificate_Link, Report_Link } = req.body;
+    const { Project_Roll_No, Project_Type, Project_Title, Project_Start_Date, Project_End_Date, Project_Organisation, Project_Guide_Name, Project_Guide_Designation, Project_Description, Project_Certificate_Link, Project_Report_Link } = req.body;
 
     try {
         // Check if the provided Roll No exists in the students table
         const checkRollNoQuery = `SELECT * FROM students WHERE Roll_No = ?`;
-        const [existingStudent] = await pool.query(checkRollNoQuery, [Roll_No]);
+        const [existingStudent] = await pool.query(checkRollNoQuery, [Project_Roll_No]);
         if (existingStudent.length === 0) {
             return res.status(400).json({ message: "Student Roll No doesn't exist in table students", status_code: 400 });
         }
 
         // Insert new project
-        const insertQuery = `INSERT INTO projects (Roll_No, Project_Type, Title, Start_Date, End_Date, Organisation, Guide_Name, Guide_Designation, Description, Certificate_Link, Report_Link) 
+        const insertQuery = `INSERT INTO projects (Project_Roll_No, Project_Type, Project_Title, Project_Start_Date, Project_End_Date, Project_Organisation, Project_Guide_Name, Project_Guide_Designation, Project_Description, Project_Certificate_Link, Project_Report_Link) 
                              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-        await pool.query(insertQuery, [Roll_No, Project_Type, Title, Start_Date, End_Date, Organisation, Guide_Name, Guide_Designation, Description, Certificate_Link, Report_Link]);
+        await pool.query(insertQuery, [Project_Roll_No, Project_Type, Project_Title, Project_Start_Date, Project_End_Date, Project_Organisation, Project_Guide_Name, Project_Guide_Designation, Project_Description, Project_Certificate_Link, Project_Report_Link]);
 
         res.status(200).json({ message: "Project inserted successfully", status_code: 200 });
     } catch (error) {
@@ -89,7 +89,7 @@ export const fetchProjectsByRollNo = async (req, res) => {
         const { Roll_No } = req.body;
 
         // Query to fetch all project details of the student using Roll_No
-        const [rows, fields] = await pool.execute('SELECT * FROM projects WHERE Roll_No = ?', [Roll_No]);
+        const [rows, fields] = await pool.execute('SELECT * FROM projects WHERE Project_Roll_No = ?', [Roll_No]);
 
         // Check if any projects were found
         if (rows.length > 0) {

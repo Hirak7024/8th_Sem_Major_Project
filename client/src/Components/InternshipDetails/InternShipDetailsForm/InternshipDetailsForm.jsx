@@ -8,15 +8,15 @@ export default function InternshipDetailsForm() {
   const { userData } = useAuth();
   const [internshipDetails, setInternshipDetails] = useState({
     Internship_Type: "",
-    Title: "",
-    Start_Date: "",
-    End_Date: "",
-    Organisation: "",
-    Guide_Name: "",
-    Guide_Designation: "",
-    Description: "",
-    Certificate_Link: "",
-    Report_Link: ""
+    Internship_Title: "",
+    Internship_Start_Date: "",
+    Internship_End_Date: "",
+    Internship_Organisation: "",
+    Internship_Guide_Name: "",
+    Internship_Guide_Designation: "",
+    Internship_Description: "",
+    Internship_Certificate_Link: "",
+    Internship_Report_Link: ""
   });
 
   const navigate = useNavigate();
@@ -29,8 +29,8 @@ export default function InternshipDetailsForm() {
     e.preventDefault();
     try {
       // Get the Roll_No from userData in the context
-      const rollNo = userData.studentDetails.Roll_No;
-      await Api.insertInternshipDetails(rollNo, internshipDetails);
+      const Internship_Roll_No = userData.studentDetails.Roll_No;
+      await Api.insertInternshipDetails(Internship_Roll_No, internshipDetails);
       toast.success("Internship inserted successfully");
       navigate("/studentProfile");
     } catch (error) {
@@ -65,8 +65,8 @@ export default function InternshipDetailsForm() {
           <input
             type="text"
             id='title'
-            name='Title'
-            value={internshipDetails.Title}
+            name='Internship_Title'
+            value={internshipDetails.Internship_Title}
             onChange={handleChange}
           />
           {/* <p className="error">{errors.Email}</p> */}
@@ -76,8 +76,8 @@ export default function InternshipDetailsForm() {
           <input
             type="text"
             id='startDate'
-            name='Start_Date'
-            value={internshipDetails.Start_Date}
+            name='Internship_Start_Date'
+            value={internshipDetails.Internship_Start_Date}
             onChange={handleChange}
           />
           {/* <p className="error">{errors.Email}</p> */}
@@ -87,8 +87,8 @@ export default function InternshipDetailsForm() {
           <input
             type="text"
             id='endDate'
-            name='End_Date'
-            value={internshipDetails.End_Date}
+            name='Internship_End_Date'
+            value={internshipDetails.Internship_End_Date}
             onChange={handleChange}
           />
           {/* <p className="error">{errors.Email}</p> */}
@@ -98,8 +98,8 @@ export default function InternshipDetailsForm() {
           <input
             type="text"
             id='organisation'
-            name='Organisation'
-            value={internshipDetails.Organisation}
+            name='Internship_Organisation'
+            value={internshipDetails.Internship_Organisation}
             onChange={handleChange}
           />
           {/* <p className="error">{errors.Email}</p> */}
@@ -109,8 +109,8 @@ export default function InternshipDetailsForm() {
           <input
             type="text"
             id='guideName'
-            name='Guide_Name'
-            value={internshipDetails.Guide_Name}
+            name='Internship_Guide_Name'
+            value={internshipDetails.Internship_Guide_Name}
             onChange={handleChange}
           />
           {/* <p className="error">{errors.Email}</p> */}
@@ -120,8 +120,8 @@ export default function InternshipDetailsForm() {
           <input
             type="text"
             id='guideDesignation'
-            name='Guide_Designation'
-            value={internshipDetails.Guide_Designation}
+            name='Internship_Guide_Designation'
+            value={internshipDetails.Internship_Guide_Designation}
             onChange={handleChange}
           />
           {/* <p className="error">{errors.Email}</p> */}
@@ -130,8 +130,8 @@ export default function InternshipDetailsForm() {
           <label htmlFor="description">Description : </label>
           <textarea
             id="description"
-            name="Description"
-            value={internshipDetails.Description}
+            name="Internship_Description"
+            value={internshipDetails.Internship_Description}
             onChange={handleChange}
           ></textarea>
           {/* <p className="error">{errors.Email}</p> */}
@@ -141,8 +141,8 @@ export default function InternshipDetailsForm() {
           <input
             type="text"
             id='certificateLink'
-            name='Certificate_Link'
-            value={internshipDetails.Certificate_Link}
+            name='Internship_Certificate_Link'
+            value={internshipDetails.Internship_Certificate_Link}
             onChange={handleChange}
           />
           {/* <p className="error">{errors.Email}</p> */}
@@ -152,8 +152,8 @@ export default function InternshipDetailsForm() {
           <input
             type="text"
             id='reportLink'
-            name='Report_Link'
-            value={internshipDetails.Report_Link}
+            name='Internship_Report_Link'
+            value={internshipDetails.Internship_Report_Link}
             onChange={handleChange}
           />
           {/* <p className="error">{errors.Email}</p> */}

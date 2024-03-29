@@ -2,20 +2,20 @@ import pool from '../DataBase.js';
 
 // INSERT INTO INTERNSHIPS
 export const InsertInternship = async (req, res) => {
-    const { Roll_No, Internship_Type, Title, Start_Date, End_Date, Organisation, Guide_Name, Guide_Designation, Description, Certificate_Link, Report_Link } = req.body;
+    const { Internship_Roll_No, Internship_Type, Internship_Title, Internship_Start_Date, Internship_End_Date, Internship_Organisation, Internship_Guide_Name, Internship_Guide_Designation, Internship_Description, Internship_Certificate_Link, Internship_Report_Link } = req.body;
 
     try {
         // Check if the provided Roll No exists in the students table
         const checkRollNoQuery = `SELECT * FROM students WHERE Roll_No = ?`;
-        const [existingStudent] = await pool.query(checkRollNoQuery, [Roll_No]);
+        const [existingStudent] = await pool.query(checkRollNoQuery, [Internship_Roll_No]);
         if (existingStudent.length === 0) {
             return res.status(400).json({ message: "Student Roll No doesn't exist in table students", status_code: 400 });
         }
 
         // Insert new project
-        const insertQuery = `INSERT INTO internships (Roll_No, Internship_Type, Title, Start_Date, End_Date, Organisation, Guide_Name, Guide_Designation, Description, Certificate_Link, Report_Link) 
+        const insertQuery = `INSERT INTO internships (Internship_Roll_No, Internship_Type, Internship_Title, Internship_Start_Date, Internship_End_Date, Internship_Organisation, Internship_Guide_Name, Internship_Guide_Designation, Internship_Description, Internship_Certificate_Link, Internship_Report_Link) 
                              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-        await pool.query(insertQuery, [Roll_No, Internship_Type, Title, Start_Date, End_Date, Organisation, Guide_Name, Guide_Designation, Description, Certificate_Link, Report_Link]);
+        await pool.query(insertQuery, [Internship_Roll_No, Internship_Type, Internship_Title, Internship_Start_Date, Internship_End_Date, Internship_Organisation, Internship_Guide_Name, Internship_Guide_Designation, Internship_Description, Internship_Certificate_Link, Internship_Report_Link]);
 
         res.status(200).json({ message: "Internship inserted successfully", status_code: 200 });
     } catch (error) {
@@ -89,7 +89,7 @@ export const fetchInternshipsByRollNo = async (req, res) => {
     const { Roll_No } = req.body;
 
     // Query to fetch all internship details of the student using Roll_No
-    const [rows, fields] = await pool.execute('SELECT * FROM internships WHERE Roll_No = ?', [Roll_No]);
+    const [rows, fields] = await pool.execute('SELECT * FROM internships WHERE Internship_Roll_No = ?', [Roll_No]);
 
     // Check if any internships were found
     if (rows.length > 0) {

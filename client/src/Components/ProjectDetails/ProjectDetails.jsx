@@ -49,15 +49,15 @@ export default function ProjectDetails() {
                     <br />
                     <button onClick={() => handleDelete(project.Project_ID)}>Delete</button>
                     <p><strong>Project Type: </strong>{project.Project_Type}</p>
-                    <p><strong>Title: </strong>{project.Title}</p>
-                    <p><strong>Start Date: </strong>{project.Start_Date}</p>
-                    <p><strong>End Date: </strong>{project.End_Date}</p>
-                    <p><strong>Organisation: </strong>{project.Organisation}</p>
-                    <p><strong>Guide Name: </strong>{project.Guide_Name}</p>
-                    <p><strong>Guide Designation: </strong>{project.Guide_Designation}</p>
-                    <p><strong>Description: </strong>{project.Description}</p>
-                    <p><strong>Certificate Link: </strong>{project.Certificate_Link}</p>
-                    <p><strong>Report Link: </strong>{project.Report_Link}</p>
+                    <p><strong>Title: </strong>{project.Project_Title}</p>
+                    <p><strong>Start Date: </strong>{project.Project_Start_Date}</p>
+                    <p><strong>End Date: </strong>{project.Project_End_Date}</p>
+                    <p><strong>Organisation: </strong>{project.Project_Organisation}</p>
+                    <p><strong>Guide Name: </strong>{project.Project_Guide_Name}</p>
+                    <p><strong>Guide Designation: </strong>{project.Project_Guide_Designation}</p>
+                    <p><strong>Description: </strong>{project.Project_Description}</p>
+                    <p><strong>Certificate Link: </strong>{project.Project_Certificate_Link}</p>
+                    <p><strong>Report Link: </strong>{project.Project_Report_Link}</p>
                     <hr />
                 </div>
             ))}

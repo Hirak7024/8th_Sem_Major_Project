@@ -9,15 +9,15 @@ export default function ProjectDetailsUpdateForm() {
     const { userData } = useAuth();
     const [projectDetails, setProjectDetails] = useState({
         Project_Type: "",
-        Title: "",
-        Start_Date: "",
-        End_Date: "",
-        Organisation: "",
-        Guide_Name: "",
-        Guide_Designation: "",
-        Description: "",
-        Certificate_Link: "",
-        Report_Link: ""
+        Project_Title: "",
+        Project_Start_Date: "",
+        Project_End_Date: "",
+        Project_Organisation: "",
+        Project_Guide_Name: "",
+        Project_Guide_Designation: "",
+        Project_Description: "",
+        Project_Certificate_Link: "",
+        Project_Report_Link: ""
     });
 
     useEffect(() => {
@@ -75,8 +75,8 @@ export default function ProjectDetailsUpdateForm() {
           <input
             type="text"
             id='title'
-            name='Title'
-            value={projectDetails.Title}
+            name='Project_Title'
+            value={projectDetails.Project_Title}
             onChange={handleChange}
           />
           {/* <p className="error">{errors.Email}</p> */}
@@ -86,8 +86,8 @@ export default function ProjectDetailsUpdateForm() {
           <input
             type="text"
             id='startDate'
-            name='Start_Date'
-            value={projectDetails.Start_Date}
+            name='Project_Start_Date'
+            value={projectDetails.Project_Start_Date}
             onChange={handleChange}
           />
           {/* <p className="error">{errors.Email}</p> */}
@@ -97,8 +97,8 @@ export default function ProjectDetailsUpdateForm() {
           <input
             type="text"
             id='endDate'
-            name='End_Date'
-            value={projectDetails.End_Date}
+            name='Project_End_Date'
+            value={projectDetails.Project_End_Date}
             onChange={handleChange}
           />
           {/* <p className="error">{errors.Email}</p> */}
@@ -108,8 +108,8 @@ export default function ProjectDetailsUpdateForm() {
           <input
             type="text"
             id='organisation'
-            name='Organisation'
-            value={projectDetails.Organisation}
+            name='Project_Organisation'
+            value={projectDetails.Project_Organisation}
             onChange={handleChange}
           />
           {/* <p className="error">{errors.Email}</p> */}
@@ -119,8 +119,8 @@ export default function ProjectDetailsUpdateForm() {
           <input
             type="text"
             id='guideName'
-            name='Guide_Name'
-            value={projectDetails.Guide_Name}
+            name='Project_Guide_Name'
+            value={projectDetails.Project_Guide_Name}
             onChange={handleChange}
           />
           {/* <p className="error">{errors.Email}</p> */}
@@ -130,8 +130,8 @@ export default function ProjectDetailsUpdateForm() {
           <input
             type="text"
             id='guideDesignation'
-            name='Guide_Designation'
-            value={projectDetails.Guide_Designation}
+            name='Project_Guide_Designation'
+            value={projectDetails.Project_Guide_Designation}
             onChange={handleChange}
           />
           {/* <p className="error">{errors.Email}</p> */}
@@ -140,8 +140,8 @@ export default function ProjectDetailsUpdateForm() {
                 <label htmlFor="description">Description : </label>
                 <textarea
                     id="description"
-                    name="Description"
-                    value={projectDetails.Description}
+                    name="Project_Description"
+                    value={projectDetails.Project_Description}
                     onChange={handleChange}
                 ></textarea>
           {/* <p className="error">{errors.Email}</p> */}
@@ -151,8 +151,8 @@ export default function ProjectDetailsUpdateForm() {
           <input
             type="text"
             id='certificateLink'
-            name='Certificate_Link'
-            value={projectDetails.Certificate_Link}
+            name='Project_Certificate_Link'
+            value={projectDetails.Project_Certificate_Link}
             onChange={handleChange}
           />
           {/* <p className="error">{errors.Email}</p> */}
@@ -162,8 +162,8 @@ export default function ProjectDetailsUpdateForm() {
           <input
             type="text"
             id='reportLink'
-            name='Report_Link'
-            value={projectDetails.Report_Link}
+            name='Project_Report_Link'
+            value={projectDetails.Project_Report_Link}
             onChange={handleChange}
           />
           {/* <p className="error">{errors.Email}</p> */}

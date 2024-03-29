@@ -100,7 +100,7 @@ const Api = {
     // API call to insert internship details into table internships
     insertInternshipDetails: async (rollNo, formData) => {
         try {
-            const data = { Roll_No: rollNo, ...formData };
+            const data = { Internship_Roll_No: rollNo, ...formData };
             const response = await axios.post(`${baseUrl}/studentinternships/internship/insert`, data);
             return response.data;
         } catch (error) {
@@ -147,7 +147,7 @@ const Api = {
     // API call to insert project details into table projects
     insertProjectDetails: async (rollNo, formData) => {
         try {
-            const data = { Roll_No: rollNo, ...formData };
+            const data = { Project_Roll_No: rollNo, ...formData };
             const response = await axios.post(`${baseUrl}/studentprojects/project/insert`, data);
             return response.data;
         } catch (error) {

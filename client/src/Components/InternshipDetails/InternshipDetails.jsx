@@ -48,15 +48,15 @@ export default function InternshipDetails() {
                     <button onClick={() => handleEdit(internship.Internship_ID)}>Edit</button>
                     <button onClick={() => handleDelete(internship.Internship_ID)}>Delete</button>
                     <p><strong>Internship Type: </strong>{internship.Internship_Type}</p>
-                    <p><strong>Title: </strong>{internship.Title}</p>
-                    <p><strong>Start Date: </strong>{internship.Start_Date}</p>
-                    <p><strong>End Date: </strong>{internship.End_Date}</p>
-                    <p><strong>Organisation: </strong>{internship.Organisation}</p>
-                    <p><strong>Guide Name: </strong>{internship.Guide_Name}</p>
-                    <p><strong>Guide Designation: </strong>{internship.Guide_Designation}</p>
-                    <p><strong>Description: </strong>{internship.Description}</p>
-                    <p><strong>Certificate Link: </strong>{internship.Certificate_Link}</p>
-                    <p><strong>Report Link: </strong>{internship.Report_Link}</p>
+                    <p><strong>Title: </strong>{internship.Internship_Title}</p>
+                    <p><strong>Start Date: </strong>{internship.Internship_Start_Date}</p>
+                    <p><strong>End Date: </strong>{internship.Internship_End_Date}</p>
+                    <p><strong>Organisation: </strong>{internship.Internship_Organisation}</p>
+                    <p><strong>Guide Name: </strong>{internship.Internship_Guide_Name}</p>
+                    <p><strong>Guide Designation: </strong>{internship.Internship_Guide_Designation}</p>
+                    <p><strong>Description: </strong>{internship.Internship_Description}</p>
+                    <p><strong>Certificate Link: </strong>{internship.Internship_Certificate_Link}</p>
+                    <p><strong>Report Link: </strong>{internship.Internship_Report_Link}</p>
                     <hr />
                 </div>
             ))}
