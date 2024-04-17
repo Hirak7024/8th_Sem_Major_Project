@@ -2,6 +2,7 @@ import express from "express";
 import multer from "multer";
 import path from "path";
 import pool from "../DataBase.js";
+import { pool2 } from "../DataBase.js";
 import { InsertInternship, UpdateInternship, DeleteInternship, fetchInternshipsByRollNo, fetchInternshipDetailsById } from "../Controllers/Internships.js";
 
 const router = express.Router();
@@ -44,7 +45,7 @@ router.post("/upload/pdf/certificateAndReport/forInternship", (req, res) => {
             const Report = req.files["Report"][0].filename;
 
             const sql = "UPDATE internships SET Internship_Certificate_Link = ?, Internship_Report_Link = ? WHERE Internship_ID = ?";
-            pool.query(sql, [Certificate, Report, Internship_ID], (err, result) => {
+            pool2.query(sql, [Certificate, Report, Internship_ID], (err, result) => {
                 if (err) {
                     console.error(err);
                     return res.status(500).json({ Message: "Failed to update internship with PDF files" });

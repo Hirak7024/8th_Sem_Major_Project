@@ -2,6 +2,7 @@ import express from 'express';
 import multer from "multer";
 import path from "path";
 import pool from "../DataBase.js"
+import { pool2 } from '../DataBase.js';
 import { InsertStudent, UpdateStudent, DeleteStudent, checkStudentByEmail, fetchAllDetails } from "../Controllers/Students.js";
 
 const router = express.Router();
@@ -22,27 +23,6 @@ router.delete('/students/delete', DeleteStudent);
 router.post("/getStudentDetails/byEmail", checkStudentByEmail);
 router.post("/getAll/studentDetails/internshipAndProject", fetchAllDetails);
 
-// router.post("/upload/image/ProfilePicture/forStudent", uploadImage, (req, res) => {
-//     const { Student_ID } = req.body; // Retrieve Student_ID from request body
-//     if (!Student_ID) {
-//         return res.status(400).json({ Message: "Student_ID missing" });
-//     }
-
-//     if (!req.file) {
-//         return res.status(400).json({ Message: "No image uploaded" });
-//     }
-
-//     const image = req.file.filename;
-//     const sql = "UPDATE students SET ProfilePicture = ? WHERE Student_ID = ?";
-//     pool.query(sql, [image, Student_ID], (err, result) => {
-//         if (err) {
-//             console.error(err);
-//             return res.json({ Message: "Error" });
-//         }
-//         return res.json({ Status: "Success" });
-//     });
-// });
-
 router.post("/upload/profilePicture", (req, res) => {
     uploadImage(req, res, (err) => {
         if (err) {
@@ -54,7 +34,7 @@ router.post("/upload/profilePicture", (req, res) => {
         console.log("Student_ID :", Student_ID); // Log the Student_ID received from the frontend
         console.log("Image filename:", image); // Log the filename of the uploaded image
         const sql = "UPDATE students SET ProfilePicture = ? WHERE Student_ID = ?";
-        pool.query(sql, [image, Student_ID], (err, result) => {
+        pool2.query(sql, [image, Student_ID], (err, result) => {
             if (err) {
                 console.error("Database error:", err);
                 return res.status(500).json({ message: "Error updating image in database" });
@@ -64,4 +44,5 @@ router.post("/upload/profilePicture", (req, res) => {
         });
     });
 });
+
 export default router;
