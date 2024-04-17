@@ -1,0 +1,13 @@
+.StudentDetailsContainer{
+    position: relative;
+    .studentDetailsEditBtn{
+        position: absolute;
+        right: 2rem;
+        padding: 3px 12px;
+        color: white;
+        background-color: black;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+}

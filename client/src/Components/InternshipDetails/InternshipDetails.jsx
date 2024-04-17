@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import Api from '../../API/Api.js';
 import { useAuth } from '../../Utils/Context.js';
 import { useNavigate } from 'react-router-dom';
+import UploadCertificateReport from './UploadCertificateReport/UploadCertificateReport.jsx';
 import "./InternshipDetails.scss";
 
 export default function InternshipDetails() {
     const { userData } = useAuth();
     const [internships, setInternships] = useState([]);
+    const [uploadPdfFiles, setUploadPdfFiles] = useState(false);
 
     useEffect(() => {
         async function fetchInternships() {
@@ -41,12 +43,12 @@ export default function InternshipDetails() {
 
     return (
         <div className='InternshipDetailsContainer'>
-            <h1>Internship Details</h1>
-            <button onClick={()=>navigate("/form/internshipDetails")}>Add Internship</button>
+            <h1 className='internshipDetailsTitle'>Internship Details</h1>
+            <button className='internshipDetailsAddBtn' onClick={()=>navigate("/form/internshipDetails")}>Add Internship</button>
             {internships.map((internship, index) => (
                 <div key={index}>
-                    <button onClick={() => handleEdit(internship.Internship_ID)}>Edit</button>
-                    <button onClick={() => handleDelete(internship.Internship_ID)}>Delete</button>
+                    <button className='internshipDetailsEditBtn' onClick={() => handleEdit(internship.Internship_ID)}>Edit</button>
+                    <button className='internshipDetailsDeleteBtn' onClick={() => handleDelete(internship.Internship_ID)}>Delete</button>
                     <p><strong>Internship Type: </strong>{internship.Internship_Type}</p>
                     <p><strong>Title: </strong>{internship.Internship_Title}</p>
                     <p><strong>Start Date: </strong>{internship.Internship_Start_Date}</p>
@@ -55,8 +57,8 @@ export default function InternshipDetails() {
                     <p><strong>Guide Name: </strong>{internship.Internship_Guide_Name}</p>
                     <p><strong>Guide Designation: </strong>{internship.Internship_Guide_Designation}</p>
                     <p><strong>Description: </strong>{internship.Internship_Description}</p>
-                    <p><strong>Certificate Link: </strong>{internship.Internship_Certificate_Link}</p>
-                    <p><strong>Report Link: </strong>{internship.Internship_Report_Link}</p>
+                    <button onClick={()=>setUploadPdfFiles(true)}>Upload Certificate and Report</button>
+                    {uploadPdfFiles && <UploadCertificateReport setUploadPdfFiles={setUploadPdfFiles} Internship_ID = {internship.Internship_ID}/>}
                     <hr />
                 </div>
             ))}

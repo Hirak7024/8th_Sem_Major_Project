@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../Utils/Context.js';
-import "./StudentDetails.scss";
 import { useNavigate } from 'react-router-dom';
+import defaultImage from "../../Assets/No_Profile_Picture.jpeg"
+import Api from "../../API/Api.js" // Import the Api.js file
+import "./StudentDetails.scss";
 
 export default function StudentDetails() {
     const { userData } = useAuth();
     const [studentDetails, setStudentDetails] = useState(null);
+    const [imageFile, setImageFile] = useState(null);
+    const [imageURL, setImageURL] = useState(defaultImage); // Initialize with default image
 
     useEffect(() => {
         if (userData && userData.studentDetails) {
@@ -15,13 +19,44 @@ export default function StudentDetails() {
 
     const navigate = useNavigate();
 
+    const handleImageFile = (e) => {
+        setImageFile(e.target.files[0]);
+        setImageURL(URL.createObjectURL(e.target.files[0])); // Set image URL for preview
+    };
+
+    const handleUploadImage = () => {
+        if (!imageFile || !studentDetails || !studentDetails.Student_ID) {
+            console.log("No image selected or Student_ID missing");
+            return;
+        }
+
+        console.log("Student ID is : "+ studentDetails.Student_ID);
+    
+        const formData = new FormData();
+        formData.append("image", imageFile);
+        formData.append("Student_ID", studentDetails.Student_ID); // Send Student_ID in the request body
+    
+        Api.uploadProfilePicture(formData)
+            .then(res => {
+                if (res.Status === "Success") {
+                    console.log("Image uploaded successfully");
+                    setImageURL(URL.createObjectURL(imageFile)); // Update image URL
+                } else {
+                    console.log("Failed to upload image");
+                }
+            })
+            .catch(err => console.log(err));
+    };
+
     return (
         <div className='StudentDetailsContainer'>
-            <h1>Student Details</h1>
-            <button onClick={()=>navigate("/form/update/studentDetails")}>Edit</button>
+            <h1 className='studentDetailsTitle'>Student Details</h1>
+            <button className='studentDetailsEditBtn' onClick={() => navigate("/form/update/studentDetails")}>Edit</button>
             {studentDetails ? (
                 <div>
                     {/* Display updated user details */}
+                    <input type="file" onChange={handleImageFile} />
+                    <button onClick={handleUploadImage}>Upload Image</button>
                     <p><strong>Name : </strong>{studentDetails.Name}</p>
                     <p><strong>Roll No : </strong>{studentDetails.Roll_No}</p>
                     <p><strong>Registration No : </strong>{studentDetails.Registration_No}</p>

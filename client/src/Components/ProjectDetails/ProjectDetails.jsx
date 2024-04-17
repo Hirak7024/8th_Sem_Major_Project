@@ -41,13 +41,12 @@ export default function ProjectDetails() {
 
     return (
         <div className='ProjectDetailsContainer'>
-            <h1>Project Details</h1>
-            <button onClick={() => navigate("/form/projectDetails")}>Add Project</button>
+            <h1 className='projectDetailsTitle'>Project Details</h1>
+            <button className='projectDetailsAddBtn' onClick={() => navigate("/form/projectDetails")}>Add Project</button>
             {projects.map((project, index) => (
                 <div key={index}>
-                    <button onClick={() => handleEdit(project.Project_ID)}>Edit</button>
-                    <br />
-                    <button onClick={() => handleDelete(project.Project_ID)}>Delete</button>
+                    <button className='projectDetailsEditBtn' onClick={() => handleEdit(project.Project_ID)}>Edit</button>
+                    <button className='projectDetailsDeleteBtn' onClick={() => handleDelete(project.Project_ID)}>Delete</button>
                     <p><strong>Project Type: </strong>{project.Project_Type}</p>
                     <p><strong>Title: </strong>{project.Project_Title}</p>
                     <p><strong>Start Date: </strong>{project.Project_Start_Date}</p>

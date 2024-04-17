@@ -2,7 +2,7 @@ import pool from '../DataBase.js';
 
 // INSERT INTO INTERNSHIPS
 export const InsertInternship = async (req, res) => {
-    const { Internship_Roll_No, Internship_Type, Internship_Title, Internship_Start_Date, Internship_End_Date, Internship_Organisation, Internship_Guide_Name, Internship_Guide_Designation, Internship_Description, Internship_Certificate_Link, Internship_Report_Link } = req.body;
+    const { Internship_Roll_No, Internship_Type, Internship_Title, Internship_Start_Date, Internship_End_Date, Internship_Organisation, Internship_Guide_Name, Internship_Guide_Designation, Internship_Description} = req.body;
 
     try {
         // Check if the provided Roll No exists in the students table
@@ -13,9 +13,9 @@ export const InsertInternship = async (req, res) => {
         }
 
         // Insert new project
-        const insertQuery = `INSERT INTO internships (Internship_Roll_No, Internship_Type, Internship_Title, Internship_Start_Date, Internship_End_Date, Internship_Organisation, Internship_Guide_Name, Internship_Guide_Designation, Internship_Description, Internship_Certificate_Link, Internship_Report_Link) 
-                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-        await pool.query(insertQuery, [Internship_Roll_No, Internship_Type, Internship_Title, Internship_Start_Date, Internship_End_Date, Internship_Organisation, Internship_Guide_Name, Internship_Guide_Designation, Internship_Description, Internship_Certificate_Link, Internship_Report_Link]);
+        const insertQuery = `INSERT INTO internships (Internship_Roll_No, Internship_Type, Internship_Title, Internship_Start_Date, Internship_End_Date, Internship_Organisation, Internship_Guide_Name, Internship_Guide_Designation, Internship_Description) 
+                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+        await pool.query(insertQuery, [Internship_Roll_No, Internship_Type, Internship_Title, Internship_Start_Date, Internship_End_Date, Internship_Organisation, Internship_Guide_Name, Internship_Guide_Designation, Internship_Description]);
 
         res.status(200).json({ message: "Internship inserted successfully", status_code: 200 });
     } catch (error) {
@@ -131,10 +131,3 @@ export const fetchInternshipDetailsById = async (req, res) => {
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
-
-
-
-
-
-
-

@@ -3,12 +3,43 @@ import axios from 'axios';
 const baseUrl = "http://localhost:8001/api";
 
 const Api = {
+
+    uploadProfilePicture: async (formData) => {
+        try {
+            const response = await axios.post(`${baseUrl}/studentdetails/upload/profilePicture`, formData
+            , {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }
+        );
+            return response.data;
+        } catch (error) {
+            throw error.response.data.message;
+        }
+    },
+    uploadPdfFiles: async (formData) => {
+        try {
+            const response = await axios.post(`${baseUrl}/studentinternships//upload/pdf/certificateAndReport/forInternship`, formData
+            , {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }
+        );
+            return response.data;
+        } catch (error) {
+            throw error.response.data.message;
+        }
+    },
     // API call to fetch decoded token from backend
     GetPayloadFromToken: async (token) => {
         try {
-            const response = await axios.get(`${baseUrl}/studentauth/getDecode/TokenPayload`, {  headers: {
-                Authorization: `Bearer ${token}`,
-              }, });
+            const response = await axios.get(`${baseUrl}/studentauth/getDecode/TokenPayload`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
             return response.data;
         } catch (error) {
             throw error.response.data.message;
@@ -33,7 +64,7 @@ const Api = {
         }
     },
     // API call to fetch student details along with project and internship details based on admin input
-    fetchStudentDetails : async (formData) => {
+    fetchStudentDetails: async (formData) => {
         try {
             const response = await axios.post(`${baseUrl}/studentdetails/getAll/studentDetails/internshipAndProject`, formData);
             return response.data;
@@ -107,6 +138,7 @@ const Api = {
             throw error.response.data.message;
         }
     },
+
     // API call to update internship details
     updateInternship: async (formData) => {
         try {

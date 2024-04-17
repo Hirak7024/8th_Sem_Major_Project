@@ -15,9 +15,7 @@ export default function InternshipDetailsUpdateForm() {
         Internship_Organisation: "",
         Internship_Guide_Name: "",
         Internship_Guide_Designation: "",
-        Internship_Description: "",
-        Internship_Certificate_Link: "",
-        Internship_Report_Link: ""
+        Internship_Description: ""
     });
 
     useEffect(() => {
@@ -145,28 +143,6 @@ export default function InternshipDetailsUpdateForm() {
             value={internshipDetails.Internship_Description}
             onChange={handleChange}
           ></textarea>
-          {/* <p className="error">{errors.Email}</p> */}
-        </div>
-        <div className="labelInput">
-          <label htmlFor="certificateLink">Certificate [Paste the Google Drive Link] : </label>
-          <input
-            type="text"
-            id='certificateLink'
-            name='Internship_Certificate_Link'
-            value={internshipDetails.Internship_Certificate_Link}
-            onChange={handleChange}
-          />
-          {/* <p className="error">{errors.Email}</p> */}
-        </div>
-        <div className="labelInput">
-          <label htmlFor="reportLink">Report [Paste the Google Drive Link] : </label>
-          <input
-            type="text"
-            id='reportLink'
-            name='Internship_Report_Link'
-            value={internshipDetails.Internship_Report_Link}
-            onChange={handleChange}
-          />
           {/* <p className="error">{errors.Email}</p> */}
         </div>
         <button className='formButton' type='submit'>Submit</button>

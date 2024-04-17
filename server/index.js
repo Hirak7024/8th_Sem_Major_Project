@@ -9,10 +9,11 @@ import Admin_Routes from "./Routes/admin.js";
 
 dotenv.config();
 const app = express();
-const PORT = 8001;
 
 app.use(express.json());
 app.use(cors());
+app.use(express.static("public"));
+const PORT = 8001;
 
 app.get("/", (req, res) => {
     res.send("Hello from Server");
