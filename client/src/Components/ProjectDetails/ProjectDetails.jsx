@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import Api from '../../API/Api.js';
 import { useAuth } from '../../Utils/Context.js';
 import { useNavigate } from 'react-router-dom';
+import UploadProjectCertificateReport from './UploadProjectCertificateReport/UploadProjectCertificateReport.jsx';
 import "./ProjectDetails.scss";
 
 export default function ProjectDetails() {
     const { userData } = useAuth();
     const [projects, setProjects] = useState([]);
+    const [uploadProjectPdfFiles, setUploadProjectPdfFiles] = useState({});
 
     useEffect(() => {
         async function fetchProjects() {
@@ -39,6 +41,13 @@ export default function ProjectDetails() {
         }
     };
 
+    const handleUploadClick = (projectId) => {
+        setUploadProjectPdfFiles(prevState => ({
+            ...prevState,
+            [projectId]: true
+        }));
+    };
+
     return (
         <div className='ProjectDetailsContainer'>
             <h1 className='projectDetailsTitle'>Project Details</h1>
@@ -57,6 +66,8 @@ export default function ProjectDetails() {
                     <p><strong>Description: </strong>{project.Project_Description}</p>
                     <p><strong>Certificate Link: </strong>{project.Project_Certificate_Link}</p>
                     <p><strong>Report Link: </strong>{project.Project_Report_Link}</p>
+                    <button onClick={()=>handleUploadClick(project.Project_ID)}>Upload Certificate and Report</button>
+                    {uploadProjectPdfFiles[project.Project_ID] && <UploadProjectCertificateReport setUploadProjectPdfFiles={setUploadProjectPdfFiles} Project_ID = {project.Project_ID}/>}
                     <hr />
                 </div>
             ))}

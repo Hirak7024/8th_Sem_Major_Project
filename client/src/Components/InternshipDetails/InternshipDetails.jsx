@@ -8,7 +8,7 @@ import "./InternshipDetails.scss";
 export default function InternshipDetails() {
     const { userData } = useAuth();
     const [internships, setInternships] = useState([]);
-    const [uploadPdfFiles, setUploadPdfFiles] = useState(false);
+    const [uploadPdfFiles, setUploadPdfFiles] = useState({});
 
     useEffect(() => {
         async function fetchInternships() {
@@ -41,6 +41,13 @@ export default function InternshipDetails() {
         }
     };
 
+    const handleUploadClick = (internshipId) => {
+        setUploadPdfFiles(prevState => ({
+            ...prevState,
+            [internshipId]: true
+        }));
+    };
+
     return (
         <div className='InternshipDetailsContainer'>
             <h1 className='internshipDetailsTitle'>Internship Details</h1>
@@ -57,11 +64,12 @@ export default function InternshipDetails() {
                     <p><strong>Guide Name: </strong>{internship.Internship_Guide_Name}</p>
                     <p><strong>Guide Designation: </strong>{internship.Internship_Guide_Designation}</p>
                     <p><strong>Description: </strong>{internship.Internship_Description}</p>
-                    <button onClick={()=>setUploadPdfFiles(true)}>Upload Certificate and Report</button>
-                    {uploadPdfFiles && <UploadCertificateReport setUploadPdfFiles={setUploadPdfFiles} Internship_ID = {internship.Internship_ID}/>}
+                    <button onClick={()=>handleUploadClick(internship.Internship_ID)}>Upload Certificate and Report</button>
+                    {uploadPdfFiles[internship.Internship_ID] && <UploadCertificateReport setUploadPdfFiles={setUploadPdfFiles} Internship_ID = {internship.Internship_ID}/>}
                     <hr />
                 </div>
             ))}
         </div>
     );
 }
+

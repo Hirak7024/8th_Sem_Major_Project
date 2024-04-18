@@ -32,6 +32,20 @@ const Api = {
             throw error.response.data.message;
         }
     },
+    uploadProjectPdfFiles: async (formData) => {
+        try {
+            const response = await axios.post(`${baseUrl}/studentprojects/upload/pdf/certificateAndReport/forProject`, formData
+            , {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }
+        );
+            return response.data;
+        } catch (error) {
+            throw error.response.data.message;
+        }
+    },
     // API call to fetch decoded token from backend
     GetPayloadFromToken: async (token) => {
         try {

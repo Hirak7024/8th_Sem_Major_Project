@@ -24,18 +24,16 @@ export default function UploadCertificateReport({ Internship_ID, setUploadPdfFil
 
         const formData = new FormData();
         formData.append('Internship_ID', Internship_ID);
-        formData.append('Certificate', pdfFiles.Certificate);
-        formData.append('Report', pdfFiles.Report);
+        formData.append('Internship_Certificate', pdfFiles.Certificate);
+        formData.append('Internship_Report', pdfFiles.Report);
 
         Api.uploadPdfFiles(formData)
             .then((res) => {
                 if (res.Status === 'Success') {
                     toast.success('PDF files uploaded successfully');
-                    // Handle success, such as displaying a success message to the user
-                    setUploadPdfFiles(false); // Assuming this is a state to control visibility or something similar
+                    setUploadPdfFiles(false); 
                 } else {
                     toast.error('Failed to upload PDF files');
-                    // Handle failure, such as displaying an error message to the user
                 }
             })
             .catch((err) => console.log(err));

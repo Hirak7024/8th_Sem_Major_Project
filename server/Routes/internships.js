@@ -1,7 +1,6 @@
 import express from "express";
 import multer from "multer";
 import path from "path";
-import pool from "../DataBase.js";
 import { pool2 } from "../DataBase.js";
 import { InsertInternship, UpdateInternship, DeleteInternship, fetchInternshipsByRollNo, fetchInternshipDetailsById } from "../Controllers/Internships.js";
 
@@ -9,7 +8,7 @@ const router = express.Router();
 
 const pdfStorage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, "public/pdfs");
+        cb(null, "public/pdfs/internships");
     },
     filename: (req, file, cb) => {
         cb(null, file.fieldname + "_" + Date.now() + path.extname(file.originalname));
@@ -17,8 +16,8 @@ const pdfStorage = multer.diskStorage({
 });
 
 const uploadPdf = multer({ storage: pdfStorage }).fields([
-    { name: "Certificate" },
-    { name: "Report" }
+    { name: "Internship_Certificate" },
+    { name: "Internship_Report" }
 ]);
 
 router.post("/internship/insert", InsertInternship);
@@ -41,8 +40,8 @@ router.post("/upload/pdf/certificateAndReport/forInternship", (req, res) => {
         }
 
         try {
-            const Certificate = req.files["Certificate"][0].filename;
-            const Report = req.files["Report"][0].filename;
+            const Certificate = req.files["Internship_Certificate"][0].filename;
+            const Report = req.files["Internship_Report"][0].filename;
 
             const sql = "UPDATE internships SET Internship_Certificate_Link = ?, Internship_Report_Link = ? WHERE Internship_ID = ?";
             pool2.query(sql, [Certificate, Report, Internship_ID], (err, result) => {
