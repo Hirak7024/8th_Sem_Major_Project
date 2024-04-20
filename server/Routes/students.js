@@ -29,18 +29,15 @@ router.post("/upload/profilePicture", (req, res) => {
             console.error("Image upload error:", err);
             return res.status(500).json({ message: "Error uploading image" });
         }
-        const { Student_ID } = req.body; // Extract Student_ID from req.body
+        const { Student_ID } = req.body; 
         const image = req.file.filename;
-        console.log("Student_ID :", Student_ID); // Log the Student_ID received from the frontend
-        console.log("Image filename:", image); // Log the filename of the uploaded image
         const sql = "UPDATE students SET ProfilePicture = ? WHERE Student_ID = ?";
         pool2.query(sql, [image, Student_ID], (err, result) => {
             if (err) {
                 console.error("Database error:", err);
                 return res.status(500).json({ message: "Error updating image in database" });
             }
-            console.log("Update result:", result); // Log the result of the update query
-            return res.status(200).json({ status: "Success", image: image });
+            return res.status(200).json({ status: "Success", message:"Profile Picture Updated Successfully" });
         });
     });
 });

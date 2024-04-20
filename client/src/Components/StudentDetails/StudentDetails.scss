@@ -1,13 +1,94 @@
-.StudentDetailsContainer{
+.StudentDetailsMainContainer {
+    padding: 2rem 3rem;
     position: relative;
-    .studentDetailsEditBtn{
-        position: absolute;
-        right: 2rem;
-        padding: 3px 12px;
-        color: white;
-        background-color: black;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
+    .StudentDetailsContainer {
+        display: flex;
+        .profilePictureBox {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            .imageAndEditBtn{
+                position: relative;
+                .ProdileImageTag{
+                    width: 18rem;
+                    height: 18rem;
+                    object-fit: cover;
+                    border-radius: 50%;
+                }
+                .ProfileImageEditBtn{
+                    width: 2.2rem;
+                    height: 2.2rem;
+                    padding: 5px;
+                    background-color: white;
+                    border-radius: 50%;
+                    position: absolute;
+                    right: 5vw;
+                    top: 35vh;
+                    cursor: pointer;
+                }
+            }
+            .ProfilePictureEditContainer{
+                position: absolute;
+                top: 0px;
+                right: 0px;
+                width: 100vw;
+                height: 100vh;
+                display: flex;
+                justify-content: center;
+                background-color: rgba(0, 0, 0, 0.5);
+                .profilePictureEditBox{
+                    width: 70vw;
+                    height: 60vh;
+                    gap: 1rem;
+                    background-color: white;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    position: relative;
+                    .ProfilePictureEditContainerExit{
+                        position: absolute;
+                        top: 1rem;
+                        right: 2rem;
+                        cursor: pointer;
+                        padding: 0.1rem 0.6rem;
+                        border: none;
+                        outline: none;
+                        background-color: red;
+                        color: white;
+                    }
+                    .ModelProfilePic{
+                        width: 25vw;
+                        height: 35vh;
+                        object-fit: cover;
+                        border-radius: 50%;
+                    }
+                    .uploadImgButton{
+                        padding: 0.3rem 0.7rem;
+                        border: none;
+                        outline: none;
+                        background-color: black;
+                        color: white;
+                        font-size: 14px;
+                        cursor: pointer;
+                    }
+                }
+            }
+
+        }
+
+        .studentDetailsBox {
+            display: flex;
+            flex-direction: column;
+            flex: 2;
+
+            .studentDetailsEditBtn {
+                position: absolute;
+                right: 2rem;
+                width: 20px;
+                height: 20px;
+                cursor: pointer;
+            }
+        }
     }
 }

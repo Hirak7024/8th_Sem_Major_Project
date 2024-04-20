@@ -24,8 +24,8 @@ export default function StudentProfile() {
   return (
     <div>
       <StudentDetails />
-      <InternshipDetails />
-      <ProjectDetails />
+      {/* <InternshipDetails /> */}
+      {/* <ProjectDetails /> */}
     </div>
   )
 }
