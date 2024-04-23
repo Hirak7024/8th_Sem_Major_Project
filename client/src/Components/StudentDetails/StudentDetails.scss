@@ -1,33 +1,51 @@
 .StudentDetailsMainContainer {
+    width: 100vw;
+    height: fit-content;
     padding: 2rem 3rem;
-    position: relative;
+
+    // position: relative;
     .StudentDetailsContainer {
         display: flex;
+        width: 100%;
+        padding: 0 7vw 0 2vw;
+
         .profilePictureBox {
             display: flex;
             flex-direction: column;
-            flex: 1;
-            .imageAndEditBtn{
+
+            .imageAndEditBtn {
                 position: relative;
-                .ProdileImageTag{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+
+                .ProdileImageTag {
                     width: 18rem;
                     height: 18rem;
                     object-fit: cover;
                     border-radius: 50%;
                 }
-                .ProfileImageEditBtn{
+
+                .ProfileImageEditBtn {
                     width: 2.2rem;
                     height: 2.2rem;
                     padding: 5px;
                     background-color: white;
                     border-radius: 50%;
                     position: absolute;
-                    right: 5vw;
-                    top: 35vh;
+                    right: 2rem;
+                    top: 14.5rem;
                     cursor: pointer;
                 }
+
+                .studentName {
+                    font-size: 30px;
+                    font-weight: 400;
+                }
             }
-            .ProfilePictureEditContainer{
+
+            .ProfilePictureEditContainer {
                 position: absolute;
                 top: 0px;
                 right: 0px;
@@ -35,10 +53,12 @@
                 height: 100vh;
                 display: flex;
                 justify-content: center;
+                align-items: center;
                 background-color: rgba(0, 0, 0, 0.5);
-                .profilePictureEditBox{
-                    width: 70vw;
-                    height: 60vh;
+
+                .profilePictureEditBox {
+                    width: 75vw;
+                    height: 45vh;
                     gap: 1rem;
                     background-color: white;
                     display: flex;
@@ -46,10 +66,13 @@
                     justify-content: center;
                     align-items: center;
                     position: relative;
-                    .ProfilePictureEditContainerExit{
+                    padding: 1rem 0;
+
+                    // border-radius: 10px;
+                    .ProfilePictureEditContainerExit {
                         position: absolute;
                         top: 1rem;
-                        right: 2rem;
+                        right: 1rem;
                         cursor: pointer;
                         padding: 0.1rem 0.6rem;
                         border: none;
@@ -57,13 +80,15 @@
                         background-color: red;
                         color: white;
                     }
-                    .ModelProfilePic{
-                        width: 25vw;
-                        height: 35vh;
+
+                    .ModelProfilePic {
+                        width: 10rem;
+                        height: 10rem;
                         object-fit: cover;
                         border-radius: 50%;
                     }
-                    .uploadImgButton{
+
+                    .uploadImgButton {
                         padding: 0.3rem 0.7rem;
                         border: none;
                         outline: none;
@@ -79,15 +104,55 @@
 
         .studentDetailsBox {
             display: flex;
-            flex-direction: column;
-            flex: 2;
+            width: 100%;
+            justify-content: space-between;
+            margin-left: 5rem;
+            padding-top: 1rem;
+            gap: 0.5rem;
 
             .studentDetailsEditBtn {
                 position: absolute;
-                right: 2rem;
+                top: 5.3rem;
+                right: 3rem;
                 width: 20px;
                 height: 20px;
                 cursor: pointer;
+            }
+
+            .studentCollegeDetails {
+                display: flex;
+                gap: 1rem;
+                flex-direction: column;
+
+                .studentInfoHeading {
+                    display: flex;
+                    flex-direction: column;
+                    font-size: 12px;
+                    font-weight: 400;
+
+                    .studentInfoValue {
+                        font-size: 15px;
+                        font-weight: 600;
+                    }
+                }
+            }
+
+            .studentContactDetails {
+                display: flex;
+                flex-direction: column;
+                gap: 0.4rem;
+
+                .contactPara {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    font-size: 12px;
+
+                    .phoneAndMailIcon {
+                        width: 0.8rem;
+                        height: 0.8rem;
+                    }
+                }
             }
         }
     }

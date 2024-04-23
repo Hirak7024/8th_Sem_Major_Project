@@ -18,7 +18,7 @@ export default function Navbar() {
 
     return (
         <div className='NavbarMainContainer'>
-            <h1 className="title">Title</h1>
+            <h1 className="title"></h1>
             <button className="logoutBtn" onClick={handleLogout}>Logout</button>
         </div>
     )

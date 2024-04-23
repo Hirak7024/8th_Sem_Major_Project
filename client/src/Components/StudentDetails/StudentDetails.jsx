@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../Utils/Context.js';
 import { useNavigate } from 'react-router-dom';
-import defaultImage from "../../Assets/No_Profile_Picture.jpeg"
+import defaultImage from "../../Assets/No_Profile_Picture.jpg"
 import Api from "../../API/Api.js"
 import { MdOutlineModeEditOutline } from "react-icons/md";
+import { FaPhone } from "react-icons/fa6";
+import { IoMdMail } from "react-icons/io";
 import { toast } from 'react-toastify';
 import "./StudentDetails.scss";
 
@@ -39,7 +41,7 @@ export default function StudentDetails() {
             }
         }
     }, [userData]);
-    
+
 
     const navigate = useNavigate();
 
@@ -86,6 +88,7 @@ export default function StudentDetails() {
                         <div className='imageAndEditBtn'>
                             <img className='ProdileImageTag' src={imageURL} alt="Uploaded" />
                             <MdOutlineModeEditOutline className='ProfileImageEditBtn' onClick={() => setProfilePictureEditModel(true)} />
+                            <h1 className="studentName">{studentDetails.Name.toUpperCase()}</h1>
                         </div>
                         {profilePictureEditModel && <div className='ProfilePictureEditContainer'>
                             <div className="profilePictureEditBox">
@@ -98,15 +101,19 @@ export default function StudentDetails() {
                     </div>
                     <div className="studentDetailsBox">
                         < MdOutlineModeEditOutline className='studentDetailsEditBtn' onClick={() => navigate("/form/update/studentDetails")} />
-                        <p><strong>Name : </strong>{studentDetails.Name}</p>
-                        <p><strong>Roll No : </strong>{studentDetails.Roll_No}</p>
-                        <p><strong>Registration No : </strong>{studentDetails.Registration_No}</p>
-                        <p><strong>Date of Birth : </strong>{studentDetails.Date_of_Birth}</p>
-                        <p><strong>Course : </strong>{studentDetails.Course}</p>
-                        <p><strong>Department : </strong>{studentDetails.Department}</p>
-                        <p><strong>Batch : </strong>{studentDetails.Year_of_Joining}-{studentDetails.Year_of_Passing}</p>
-                        <p><strong>Phone No : </strong>{studentDetails.Phone_No}</p>
-                        <p><strong>Email : </strong>{studentDetails.Email}</p>
+                        {/* <p className='studentInfoHeading'>Name <strong className='studentInfoValue'>{studentDetails.Name}</strong></p> */}
+                        <div className="studentCollegeDetails">
+                            <p className='studentInfoHeading'>Roll Number <strong className='studentInfoValue'>{studentDetails.Roll_No}</strong></p>
+                            <p className='studentInfoHeading'>Registration Number <strong className='studentInfoValue'>{studentDetails.Registration_No}</strong></p>
+                            <p className='studentInfoHeading'>Date of Birth <strong className='studentInfoValue'>{studentDetails.Date_of_Birth}</strong></p>
+                            <p className='studentInfoHeading'>Course <strong className='studentInfoValue'>{studentDetails.Course}</strong></p>
+                            <p className='studentInfoHeading'>Department <strong className='studentInfoValue'>{studentDetails.Department}</strong></p>
+                            <p className='studentInfoHeading'>Batch <strong className='studentInfoValue'>{studentDetails.Year_of_Joining}-{studentDetails.Year_of_Passing}</strong></p>
+                        </div>
+                        <div className="studentContactDetails">
+                            <p className='contactPara'><FaPhone className='phoneAndMailIcon'/>{studentDetails.Phone_No}</p>
+                            <p className='contactPara'><IoMdMail className='phoneAndMailIcon'/>{studentDetails.Email}</p>
+                        </div>
                     </div>
                 </div>
             ) : (

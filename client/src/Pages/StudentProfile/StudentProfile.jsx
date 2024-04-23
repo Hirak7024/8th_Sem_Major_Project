@@ -1,8 +1,8 @@
 import React ,{useEffect}from 'react';
-import "./StudentProfile.scss";
 import StudentDetails from '../../Components/StudentDetails/StudentDetails';
 import InternshipDetails from '../../Components/InternshipDetails/InternshipDetails';
 import ProjectDetails from '../../Components/ProjectDetails/ProjectDetails';
+import "./StudentProfile.scss";
 
 export default function StudentProfile() {
   useEffect(() => {
@@ -22,9 +22,9 @@ export default function StudentProfile() {
     };
   }, []);
   return (
-    <div>
+    <div className='StudentProfileMainContainer'>
       <StudentDetails />
-      {/* <InternshipDetails /> */}
+      <InternshipDetails />
       {/* <ProjectDetails /> */}
     </div>
   )

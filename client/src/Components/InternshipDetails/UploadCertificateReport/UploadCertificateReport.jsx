@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Api from '../../../API/Api';
 import { toast } from 'react-toastify';
+import "./UploadInternshipCertificateReport.scss"
 
 export default function UploadCertificateReport({ Internship_ID, setUploadPdfFiles }) {
     const [pdfFiles, setPdfFiles] = useState({
@@ -32,6 +33,7 @@ export default function UploadCertificateReport({ Internship_ID, setUploadPdfFil
                 if (res.Status === 'Success') {
                     toast.success('PDF files uploaded successfully');
                     setUploadPdfFiles(false); 
+                    window.location.reload(); 
                 } else {
                     toast.error('Failed to upload PDF files');
                 }
@@ -41,7 +43,8 @@ export default function UploadCertificateReport({ Internship_ID, setUploadPdfFil
 
     return (
         <div className="UploadCertificateReport_Container">
-            <form>
+            <form className='uploadPdfForm_Container'>
+                <button className="modelCloseBtn" onClick={()=>setPdfFiles(false)}>X</button>
                 <div className="labelInput">
                     <label htmlFor="certificate">Upload Certificate </label>
                     <input
@@ -58,9 +61,10 @@ export default function UploadCertificateReport({ Internship_ID, setUploadPdfFil
                         id="report"
                         name="Report"
                         onChange={handlePdfFile}
+
                     />
                 </div>
-                <button type="button" onClick={handleUploadPdf}>
+                <button type="button" className='InternshipPdfSubmitBtn' onClick={handleUploadPdf}>
                     Upload Files
                 </button>
             </form>

@@ -6,8 +6,15 @@
         color: white;
         background-color: royalblue;
         border: none;
-        border-radius: 5px;
+        // border-radius: 5px;
         cursor: pointer;
+    }
+    .internshipDetailsAddBtn:hover{
+        background-color: white;
+        color: royalblue;
+        cursor: pointer;
+        border: 1px solid royalblue;
+        font-weight: 500;
     }
     .internshipDetailsEditBtn{
         position: absolute;
@@ -30,5 +37,32 @@
         border: none;
         border-radius: 5px;
         cursor: pointer;
+    }
+    .ContainerToUploadInternshipPdf{
+        width: 25vw;
+        height: 15vh;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: center;
+        justify-content: center;
+        border: 2px dashed black;
+        .PdfFileUploadTitle{
+            font-size: 12px;
+            font-weight: 400;
+        }
+        .PdfFileUploadButton{
+            font-size: 10px;
+            font-weight: 500;
+            padding: 5px 10px;
+            border: 1px solid royalblue;
+            background-color: white;
+            color: royalblue;
+        }
+        .PdfFileUploadButton:hover{
+            cursor: pointer;
+            background-color: royalblue;
+            color: white;
+        }
     }
 }
