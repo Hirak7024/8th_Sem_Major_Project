@@ -2,7 +2,7 @@ import pool from "../DataBase.js";
 
 //INSERT INTO TABLE STUDENTS
 export const InsertStudent = async (req, res) => {
-    const { Student_Auth_ID, Roll_No, Email, Name, Phone_No, Date_of_Birth, Registration_No, Course, Department, Year_of_Joining, Year_of_Passing } = req.body;
+    const { Student_Auth_ID, Roll_No, Email, Name, Phone_No, Date_of_Birth, Registration_No, Course, Department, Year_of_Joining, Year_of_Passing,Semester } = req.body;
 
     try {
         // Check if Student_Auth_ID corresponds to the Email in student_auth table
@@ -27,8 +27,8 @@ export const InsertStudent = async (req, res) => {
         }
 
         // Insert new student
-        const insertQuery = `INSERT INTO students (Student_Auth_ID, Roll_No, Email, Name, Phone_No, Date_of_Birth, Registration_No, Course, Department, Year_of_Joining, Year_of_Passing) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-        await pool.query(insertQuery, [Student_Auth_ID, Roll_No, Email, Name, Phone_No, Date_of_Birth, Registration_No, Course, Department, Year_of_Joining, Year_of_Passing]);
+        const insertQuery = `INSERT INTO students (Student_Auth_ID, Roll_No, Email, Name, Phone_No, Date_of_Birth, Registration_No, Course, Department, Year_of_Joining, Year_of_Passing,Semester) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)`;
+        await pool.query(insertQuery, [Student_Auth_ID, Roll_No, Email, Name, Phone_No, Date_of_Birth, Registration_No, Course, Department, Year_of_Joining, Year_of_Passing,Semester]);
 
         // Get the last inserted Student_ID
         const getLastInsertedIdQuery = `SELECT LAST_INSERT_ID() AS Student_ID`;
@@ -36,7 +36,7 @@ export const InsertStudent = async (req, res) => {
         const Student_ID = lastInsertedIdResult[0].Student_ID;
 
         // Prepare userResponse including Student_ID
-        const userResponse = { Student_ID, Student_Auth_ID, Roll_No, Email, Name, Phone_No, Date_of_Birth, Registration_No, Course, Department, Year_of_Joining, Year_of_Passing };
+        const userResponse = { Student_ID, Student_Auth_ID, Roll_No, Email, Name, Phone_No, Date_of_Birth, Registration_No, Course, Department, Year_of_Joining, Year_of_Passing, Semester };
 
         res.status(200).json({ data: { userResponse }, message: "Student Data Inserted Successfully", status_code: 200 });
     } catch (error) {

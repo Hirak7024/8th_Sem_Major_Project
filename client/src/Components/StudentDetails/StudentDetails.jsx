@@ -108,6 +108,7 @@ export default function StudentDetails() {
                             <p className='studentInfoHeading'>Date of Birth <strong className='studentInfoValue'>{studentDetails.Date_of_Birth}</strong></p>
                             <p className='studentInfoHeading'>Course <strong className='studentInfoValue'>{studentDetails.Course}</strong></p>
                             <p className='studentInfoHeading'>Department <strong className='studentInfoValue'>{studentDetails.Department}</strong></p>
+                            <p className='studentInfoHeading'>Semester <strong className='studentInfoValue'>{studentDetails.Semester}</strong></p>
                             <p className='studentInfoHeading'>Batch <strong className='studentInfoValue'>{studentDetails.Year_of_Joining}-{studentDetails.Year_of_Passing}</strong></p>
                         </div>
                         <div className="studentContactDetails">

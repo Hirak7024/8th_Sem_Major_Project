@@ -3,6 +3,7 @@ import Api from '../../../API/Api';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../Utils/Context';
+import "../../InternshipDetails/InternShipDetailsForm/InternshipDetailsForm.scss";
 
 export default function ProjectDetailsForm() {
   const { userData } = useAuth();
@@ -38,98 +39,100 @@ export default function ProjectDetailsForm() {
   };
 
   return (
-    <div className='StudentDetailsFormContainer'>
-      <form className="studentDetailsForm" onSubmit={handleSubmit}>
+    <div className='InternshipDetailsFormContainer'>
+      <form className="InternshipDetailsForm" onSubmit={handleSubmit}>
         <h1>Project Details Form</h1>
         <p>Enter the following details :</p>
-        <div className="labelInput">
-          <label htmlFor="projectType">Project Type : </label>
-          <select
-            id="projectType"
-            name="Project_Type"
-            value={projectDetails.Project_Type}
-            onChange={handleChange}
-          >
-            <option value="">Select Project Type</option>
-            <option value="Minor Project">Minor Project</option>
-            <option value="Major Project">Major Project</option>
-          </select>
-        </div>
-        <div className="labelInput">
-          <label htmlFor="title">Title : </label>
-          <input
-            type="text"
-            id='title'
-            name='Project_Title'
-            value={projectDetails.Project_Title}
-            onChange={handleChange}
-          />
-          {/* <p className="error">{errors.Email}</p> */}
-        </div>
-        <div className="labelInput">
-          <label htmlFor="startDate">Start Date : </label>
-          <input
-            type="text"
-            id='startDate'
-            name='Project_Start_Date'
-            value={projectDetails.Project_Start_Date}
-            onChange={handleChange}
-          />
-          {/* <p className="error">{errors.Email}</p> */}
-        </div>
-        <div className="labelInput">
-          <label htmlFor="endDate">End Date : </label>
-          <input
-            type="text"
-            id='endDate'
-            name='Project_End_Date'
-            value={projectDetails.Project_End_Date}
-            onChange={handleChange}
-          />
-          {/* <p className="error">{errors.Email}</p> */}
-        </div>
-        <div className="labelInput">
-          <label htmlFor="organisation">Organisation Name : </label>
-          <input
-            type="text"
-            id='organisation'
-            name='Project_Organisation'
-            value={projectDetails.Project_Organisation}
-            onChange={handleChange}
-          />
-          {/* <p className="error">{errors.Email}</p> */}
-        </div>
-        <div className="labelInput">
-          <label htmlFor="guideName">Guide's Name : </label>
-          <input
-            type="text"
-            id='guideName'
-            name='Project_Guide_Name'
-            value={projectDetails.Project_Guide_Name}
-            onChange={handleChange}
-          />
-          {/* <p className="error">{errors.Email}</p> */}
-        </div>
-        <div className="labelInput">
-          <label htmlFor="guideDesignation">Guide's Designation : </label>
-          <input
-            type="text"
-            id='guideDesignation'
-            name='Project_Guide_Designation'
-            value={projectDetails.Project_Guide_Designation}
-            onChange={handleChange}
-          />
-          {/* <p className="error">{errors.Email}</p> */}
-        </div>
-        <div className="labelInput">
-          <label htmlFor="description">Description : </label>
-          <textarea
-            id="description"
-            name="Project_Description"
-            value={projectDetails.Project_Description}
-            onChange={handleChange}
-          ></textarea>
-          {/* <p className="error">{errors.Email}</p> */}
+        <div className="NewInternshipFormBox">
+          <div className="labelInput" id='GridBox_1'>
+            <label htmlFor="projectType">Project Type : </label>
+            <select
+              id="projectType"
+              name="Project_Type"
+              value={projectDetails.Project_Type}
+              onChange={handleChange}
+            >
+              <option value="">Select Project Type</option>
+              <option value="Minor Project">Minor Project</option>
+              <option value="Major Project">Major Project</option>
+            </select>
+          </div>
+          <div className="labelInput" id='GridBox_2'>
+            <label htmlFor="title">Title : </label>
+            <input
+              type="text"
+              id='title'
+              name='Project_Title'
+              value={projectDetails.Project_Title}
+              onChange={handleChange}
+            />
+            {/* <p className="error">{errors.Email}</p> */}
+          </div>
+          <div className="labelInput" id='GridBox_3'>
+            <label htmlFor="startDate">Start Date : </label>
+            <input
+              type="text"
+              id='startDate'
+              name='Project_Start_Date'
+              value={projectDetails.Project_Start_Date}
+              onChange={handleChange}
+            />
+            {/* <p className="error">{errors.Email}</p> */}
+          </div>
+          <div className="labelInput" id='GridBox_4'>
+            <label htmlFor="endDate">End Date : </label>
+            <input
+              type="text"
+              id='endDate'
+              name='Project_End_Date'
+              value={projectDetails.Project_End_Date}
+              onChange={handleChange}
+            />
+            {/* <p className="error">{errors.Email}</p> */}
+          </div>
+          <div className="labelInput" id='GridBox_5'>
+            <label htmlFor="organisation">Organisation Name : </label>
+            <input
+              type="text"
+              id='organisation'
+              name='Project_Organisation'
+              value={projectDetails.Project_Organisation}
+              onChange={handleChange}
+            />
+            {/* <p className="error">{errors.Email}</p> */}
+          </div>
+          <div className="labelInput" id='GridBox_6'>
+            <label htmlFor="guideName">Guide's Name : </label>
+            <input
+              type="text"
+              id='guideName'
+              name='Project_Guide_Name'
+              value={projectDetails.Project_Guide_Name}
+              onChange={handleChange}
+            />
+            {/* <p className="error">{errors.Email}</p> */}
+          </div>
+          <div className="labelInput" id='GridBox_7'>
+            <label htmlFor="guideDesignation">Guide's Designation : </label>
+            <input
+              type="text"
+              id='guideDesignation'
+              name='Project_Guide_Designation'
+              value={projectDetails.Project_Guide_Designation}
+              onChange={handleChange}
+            />
+            {/* <p className="error">{errors.Email}</p> */}
+          </div>
+          <div className="labelInput" id='GridBox_8'>
+            <label htmlFor="description">Description : </label>
+            <textarea
+              id="description"
+              name="Project_Description"
+              value={projectDetails.Project_Description}
+              onChange={handleChange}
+            ></textarea>
+            {/* <p className="error">{errors.Email}</p> */}
+          </div>
         </div>
         <button className='formButton' type='submit'>Submit</button>
       </form>
