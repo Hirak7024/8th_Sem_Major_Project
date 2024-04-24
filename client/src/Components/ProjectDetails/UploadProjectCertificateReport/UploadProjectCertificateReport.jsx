@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Api from '../../../API/Api';
 import { toast } from 'react-toastify';
+import "./UploadProjectCertificateReport.scss";
 
 export default function UploadProjectCertificateReport({ Project_ID, setUploadProjectPdfFiles }) {
     const [pdfFiles, setPdfFiles] = useState({
@@ -32,6 +33,7 @@ export default function UploadProjectCertificateReport({ Project_ID, setUploadPr
                 if (res.Status === 'Success') {
                     toast.success('PDF files uploaded successfully');
                     setUploadProjectPdfFiles(false); 
+                    window.location.reload(); 
                 } else {
                     toast.error('Failed to upload PDF files');
                 }
@@ -41,7 +43,8 @@ export default function UploadProjectCertificateReport({ Project_ID, setUploadPr
 
     return (
         <div className="UploadProjectCertificateReport_Container">
-            <form>
+            <form className='uploadProjectPdfForm_Container'>
+            <button className="projectModelCloseBtn" onClick={()=>setPdfFiles(false)}>X</button>
                 <div className="labelInput">
                     <label htmlFor="certificate">Upload Certificate </label>
                     <input
@@ -60,7 +63,7 @@ export default function UploadProjectCertificateReport({ Project_ID, setUploadPr
                         onChange={handlePdfFile}
                     />
                 </div>
-                <button type="button" onClick={handleUploadPdf}>
+                <button type="button" className='ProjectPdfSubmitBtn' onClick={handleUploadPdf}>
                     Upload Files
                 </button>
             </form>

@@ -25,7 +25,7 @@ export default function StudentProfile() {
     <div className='StudentProfileMainContainer'>
       <StudentDetails />
       <InternshipDetails />
-      {/* <ProjectDetails /> */}
+      <ProjectDetails />
     </div>
   )
 }

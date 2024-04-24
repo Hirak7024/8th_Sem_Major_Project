@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../Utils/Context';
 
 export default function ProjectDetailsForm() {
-    const {userData} = useAuth();
+  const { userData } = useAuth();
   const [projectDetails, setProjectDetails] = useState({
     Project_Type: "",
     Project_Title: "",
@@ -14,10 +14,8 @@ export default function ProjectDetailsForm() {
     Project_Organisation: "",
     Project_Guide_Name: "",
     Project_Guide_Designation: "",
-    Project_Description: "",
-    Project_Certificate_Link: "",
-    Project_Report_Link: ""
-  });;
+    Project_Description: ""
+  });
 
   const navigate = useNavigate();
 
@@ -124,35 +122,13 @@ export default function ProjectDetailsForm() {
           {/* <p className="error">{errors.Email}</p> */}
         </div>
         <div className="labelInput">
-                <label htmlFor="description">Description : </label>
-                <textarea
-                    id="description"
-                    name="Project_Description"
-                    value={projectDetails.Project_Description}
-                    onChange={handleChange}
-                ></textarea>
-          {/* <p className="error">{errors.Email}</p> */}
-            </div>
-        <div className="labelInput">
-          <label htmlFor="certificateLink">Certificate [Paste the Google Drive Link] : </label>
-          <input
-            type="text"
-            id='certificateLink'
-            name='Project_Certificate_Link'
-            value={projectDetails.Project_Certificate_Link}
+          <label htmlFor="description">Description : </label>
+          <textarea
+            id="description"
+            name="Project_Description"
+            value={projectDetails.Project_Description}
             onChange={handleChange}
-          />
-          {/* <p className="error">{errors.Email}</p> */}
-        </div>
-        <div className="labelInput">
-          <label htmlFor="reportLink">Report [Paste the Google Drive Link] : </label>
-          <input
-            type="text"
-            id='reportLink'
-            name='Project_Report_Link'
-            value={projectDetails.Project_Report_Link}
-            onChange={handleChange}
-          />
+          ></textarea>
           {/* <p className="error">{errors.Email}</p> */}
         </div>
         <button className='formButton' type='submit'>Submit</button>

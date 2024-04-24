@@ -5,51 +5,49 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../../../Utils/Context';
 
 export default function ProjectDetailsUpdateForm() {
-    const { projectId } = useParams();
-    const { userData } = useAuth();
-    const [projectDetails, setProjectDetails] = useState({
-        Project_Type: "",
-        Project_Title: "",
-        Project_Start_Date: "",
-        Project_End_Date: "",
-        Project_Organisation: "",
-        Project_Guide_Name: "",
-        Project_Guide_Designation: "",
-        Project_Description: "",
-        Project_Certificate_Link: "",
-        Project_Report_Link: ""
-    });
+  const { projectId } = useParams();
+  const { userData } = useAuth();
+  const [projectDetails, setProjectDetails] = useState({
+    Project_Type: "",
+    Project_Title: "",
+    Project_Start_Date: "",
+    Project_End_Date: "",
+    Project_Organisation: "",
+    Project_Guide_Name: "",
+    Project_Guide_Designation: "",
+    Project_Description: "",
+  });
 
-    useEffect(() => {
-        async function fetchProjectDetails() {
-            try {
-                const data = await Api.fetchProjectDetailsById({ Project_ID: projectId });
-                setProjectDetails(data);
-            } catch (error) {
-                console.error('Error fetching project details:', error);
-            }
-        }
+  useEffect(() => {
+    async function fetchProjectDetails() {
+      try {
+        const data = await Api.fetchProjectDetailsById({ Project_ID: projectId });
+        setProjectDetails(data);
+      } catch (error) {
+        console.error('Error fetching project details:', error);
+      }
+    }
 
-        fetchProjectDetails();
-    }, [projectId]);
+    fetchProjectDetails();
+  }, [projectId]);
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const handleChange = (e) => {
-        setProjectDetails((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-    };
+  const handleChange = (e) => {
+    setProjectDetails((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            await Api.updateProject({ Project_ID: projectId, ...projectDetails });
-            toast.success('Project details updated successfully');
-            navigate('/studentProfile');
-        } catch (error) {
-            toast.error('Error updating project details');
-            console.error('Error updating project details:', error);
-        }
-    };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await Api.updateProject({ Project_ID: projectId, ...projectDetails });
+      toast.success('Project details updated successfully');
+      navigate('/studentProfile');
+    } catch (error) {
+      toast.error('Error updating project details');
+      console.error('Error updating project details:', error);
+    }
+  };
 
 
   return (
@@ -137,35 +135,13 @@ export default function ProjectDetailsUpdateForm() {
           {/* <p className="error">{errors.Email}</p> */}
         </div>
         <div className="labelInput">
-                <label htmlFor="description">Description : </label>
-                <textarea
-                    id="description"
-                    name="Project_Description"
-                    value={projectDetails.Project_Description}
-                    onChange={handleChange}
-                ></textarea>
-          {/* <p className="error">{errors.Email}</p> */}
-            </div>
-        <div className="labelInput">
-          <label htmlFor="certificateLink">Certificate [Paste the Google Drive Link] : </label>
-          <input
-            type="text"
-            id='certificateLink'
-            name='Project_Certificate_Link'
-            value={projectDetails.Project_Certificate_Link}
+          <label htmlFor="description">Description : </label>
+          <textarea
+            id="description"
+            name="Project_Description"
+            value={projectDetails.Project_Description}
             onChange={handleChange}
-          />
-          {/* <p className="error">{errors.Email}</p> */}
-        </div>
-        <div className="labelInput">
-          <label htmlFor="reportLink">Report [Paste the Google Drive Link] : </label>
-          <input
-            type="text"
-            id='reportLink'
-            name='Project_Report_Link'
-            value={projectDetails.Project_Report_Link}
-            onChange={handleChange}
-          />
+          ></textarea>
           {/* <p className="error">{errors.Email}</p> */}
         </div>
         <button className='formButton' type='submit'>Submit</button>

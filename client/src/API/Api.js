@@ -220,9 +220,9 @@ const Api = {
         }
     },
     //  API call to delete a project 
-    deleteProject: async (Project_ID) => {
+    deleteProject: async (formData) => {
         try {
-            const response = await axios.delete(`${baseUrl}/studentprojects/project/delete`, { data: { Project_ID } });
+            const response = await axios.delete(`${baseUrl}/studentprojects/project/delete`, { data: formData });
             return response.data;
         } catch (error) {
             throw error.response.data.message;

@@ -4,6 +4,7 @@ import { useAuth } from '../../Utils/Context.js';
 import { useNavigate } from 'react-router-dom';
 import UploadCertificateReport from './UploadCertificateReport/UploadCertificateReport.jsx';
 import axios from "axios";
+import {toast} from "react-toastify"
 import "./InternshipDetails.scss";
 
 export default function InternshipDetails() {
@@ -59,8 +60,10 @@ export default function InternshipDetails() {
             // Remove the deleted internship from the local state
             setInternships(internships.filter(internship => internship.Internship_ID !== Internship_ID));
             console.log("Internship deleted successfully");
+            toast.success("Internship deleted successfully");
         } catch (error) {
             console.error('Error deleting internship:', error);
+            toast.error("Error deleting internship");
         }
     };
 
