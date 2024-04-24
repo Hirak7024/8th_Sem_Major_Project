@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import UploadCertificateReport from './UploadCertificateReport/UploadCertificateReport.jsx';
 import axios from "axios";
 import {toast} from "react-toastify"
+import { MdOutlineModeEditOutline } from "react-icons/md";
+import { RiDeleteBin5Line } from "react-icons/ri";
 import "./InternshipDetails.scss";
 
 export default function InternshipDetails() {
@@ -102,8 +104,8 @@ export default function InternshipDetails() {
             <button className='internshipDetailsAddBtn' onClick={() => navigate("/form/internshipDetails")}>Add New Internship</button>
             {internships.map((internship, index) => (
                 <div key={index}>
-                    <button className='internshipDetailsEditBtn' onClick={() => handleEdit(internship.Internship_ID)}>Edit</button>
-                    <button className='internshipDetailsDeleteBtn' onClick={() => handleDelete(internship.Internship_ID)}>Delete</button>
+                    <MdOutlineModeEditOutline className='internshipDetailsEditBtn' onClick={() => handleEdit(internship.Internship_ID)} />
+                    <RiDeleteBin5Line className='internshipDetailsDeleteBtn' onClick={() => handleDelete(internship.Internship_ID)}/>
                     <p><strong>Internship Type: </strong>{internship.Internship_Type}</p>
                     <p><strong>Title: </strong>{internship.Internship_Title}</p>
                     <p><strong>Start Date: </strong>{internship.Internship_Start_Date}</p>

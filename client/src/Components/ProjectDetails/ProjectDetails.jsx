@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import UploadProjectCertificateReport from './UploadProjectCertificateReport/UploadProjectCertificateReport.jsx';
 import axios from "axios";
 import {toast} from "react-toastify";
+import { MdOutlineModeEditOutline } from "react-icons/md";
+import { RiDeleteBin5Line } from "react-icons/ri";
 import "./ProjectDetails.scss";
 
 export default function ProjectDetails() {
@@ -104,8 +106,8 @@ export default function ProjectDetails() {
             <button className='projectDetailsAddBtn' onClick={() => navigate("/form/projectDetails")}>Add New Project</button>
             {projects.map((project, index) => (
                 <div key={index}>
-                    <button className='projectDetailsEditBtn' onClick={() => handleEdit(project.Project_ID)}>Edit</button>
-                    <button className='projectDetailsDeleteBtn' onClick={() => handleDelete(project.Project_ID)}>Delete</button>
+                    <MdOutlineModeEditOutline className='projectDetailsEditBtn' onClick={() => handleEdit(project.Project_ID)}/>
+                    <RiDeleteBin5Line className='projectDetailsDeleteBtn' onClick={() => handleDelete(project.Project_ID)}/>
                     <p><strong>Project Type: </strong>{project.Project_Type}</p>
                     <p><strong>Title: </strong>{project.Project_Title}</p>
                     <p><strong>Start Date: </strong>{project.Project_Start_Date}</p>
