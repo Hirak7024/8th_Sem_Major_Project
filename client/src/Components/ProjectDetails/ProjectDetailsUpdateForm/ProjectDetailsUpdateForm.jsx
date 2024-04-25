@@ -19,6 +19,15 @@ export default function ProjectDetailsUpdateForm() {
     Project_Description: "",
   });
 
+  const [errors, setErrors] = useState({
+    Project_Type: "",
+    Project_Title: "",
+    Project_Start_Date: "",
+    Project_End_Date: "",
+    Project_Description: ""
+  });
+
+
   useEffect(() => {
     async function fetchProjectDetails() {
       try {
@@ -40,14 +49,60 @@ export default function ProjectDetailsUpdateForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      await Api.updateProject({ Project_ID: projectId, ...projectDetails });
-      toast.success('Project details updated successfully');
-      navigate('/studentProfile');
-    } catch (error) {
-      toast.error('Error updating project details');
-      console.error('Error updating project details:', error);
+    if (validateForm()) {
+      try {
+        await Api.updateProject({ Project_ID: projectId, ...projectDetails });
+        toast.success('Project details updated successfully');
+        navigate('/studentProfile');
+      } catch (error) {
+        toast.error('Error updating project details');
+        console.error('Error updating project details:', error);
+      }
     }
+  };
+
+  const validateForm = () => {
+    let isValid = true;
+    const newErrors = {
+      Project_Type: "",
+      Project_Title: "",
+      Project_Start_Date: "",
+      Project_End_Date: "",
+      Project_Description: ""
+    };
+
+    // Project Type validation
+    if (projectDetails.Project_Type.trim() === "") {
+      newErrors.Project_Type = "*Project Type field can't be empty";
+      isValid = false;
+    }
+
+    // Project Title validation
+    if (projectDetails.Project_Title.trim() === "") {
+      newErrors.Project_Title = "*Title field can't be empty";
+      isValid = false;
+    }
+
+    // Start Date validation
+    if (!/^\d{2}-\d{2}-\d{4}$/.test(projectDetails.Project_Start_Date)) {
+      newErrors.Project_Start_Date = "*Start Date should be in DD-MM-YYYY format";
+      isValid = false;
+    }
+
+    // End Date validation
+    if (!/^\d{2}-\d{2}-\d{4}$/.test(projectDetails.Project_End_Date)) {
+      newErrors.Project_End_Date = "*End Date should be in DD-MM-YYYY format";
+      isValid = false;
+    }
+
+    // Description validation
+    if (projectDetails.Project_Description.trim() === "") {
+      newErrors.Project_Description = "*Description field can't be empty";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
   };
 
 
@@ -69,6 +124,7 @@ export default function ProjectDetailsUpdateForm() {
               <option value="Minor Project">Minor Project</option>
               <option value="Major Project">Major Project</option>
             </select>
+            <p className="error">{errors.Project_Type}</p>
           </div>
           <div className="labelInput" id='GridBox_2'>
             <label htmlFor="title">Title : </label>
@@ -79,7 +135,7 @@ export default function ProjectDetailsUpdateForm() {
               value={projectDetails.Project_Title}
               onChange={handleChange}
             />
-            {/* <p className="error">{errors.Email}</p> */}
+            <p className="error">{errors.Project_Title}</p>
           </div>
           <div className="labelInput" id='GridBox_3'>
             <label htmlFor="startDate">Start Date : </label>
@@ -90,7 +146,7 @@ export default function ProjectDetailsUpdateForm() {
               value={projectDetails.Project_Start_Date}
               onChange={handleChange}
             />
-            {/* <p className="error">{errors.Email}</p> */}
+            <p className="error">{errors.Project_Start_Date}</p>
           </div>
           <div className="labelInput" id='GridBox_4'>
             <label htmlFor="endDate">End Date : </label>
@@ -101,7 +157,7 @@ export default function ProjectDetailsUpdateForm() {
               value={projectDetails.Project_End_Date}
               onChange={handleChange}
             />
-            {/* <p className="error">{errors.Email}</p> */}
+            <p className="error">{errors.Project_End_Date}</p>
           </div>
           <div className="labelInput" id='GridBox_5'>
             <label htmlFor="organisation">Organisation Name : </label>
@@ -112,7 +168,6 @@ export default function ProjectDetailsUpdateForm() {
               value={projectDetails.Project_Organisation}
               onChange={handleChange}
             />
-            {/* <p className="error">{errors.Email}</p> */}
           </div>
           <div className="labelInput" id='GridBox_6'>
             <label htmlFor="guideName">Guide's Name : </label>
@@ -123,7 +178,6 @@ export default function ProjectDetailsUpdateForm() {
               value={projectDetails.Project_Guide_Name}
               onChange={handleChange}
             />
-            {/* <p className="error">{errors.Email}</p> */}
           </div>
           <div className="labelInput" id='GridBox_7'>
             <label htmlFor="guideDesignation">Guide's Designation : </label>
@@ -134,7 +188,6 @@ export default function ProjectDetailsUpdateForm() {
               value={projectDetails.Project_Guide_Designation}
               onChange={handleChange}
             />
-            {/* <p className="error">{errors.Email}</p> */}
           </div>
           <div className="labelInput" id='GridBox_8'>
             <label htmlFor="description">Description : </label>
@@ -144,7 +197,7 @@ export default function ProjectDetailsUpdateForm() {
               value={projectDetails.Project_Description}
               onChange={handleChange}
             ></textarea>
-            {/* <p className="error">{errors.Email}</p> */}
+            <p className="error">{errors.Project_Description}</p>
           </div>
         </div>
         <button className='formButton' type='submit'>Submit</button>

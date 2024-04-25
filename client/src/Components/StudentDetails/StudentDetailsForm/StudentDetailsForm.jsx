@@ -20,6 +20,7 @@ export default function StudentDetailsForm() {
         Year_of_Joining: null,
         Year_of_Passing: null
     });
+    
     const [errors, setErrors] = useState({
         Name: "",
         Roll_No: "",

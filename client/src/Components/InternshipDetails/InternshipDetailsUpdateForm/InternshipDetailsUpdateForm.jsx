@@ -19,6 +19,16 @@ export default function InternshipDetailsUpdateForm() {
     Internship_Description: ""
   });
 
+  const [errors, setErrors] = useState({
+    Internship_Type: "",
+    Internship_Title: "",
+    Internship_Start_Date: "",
+    Internship_End_Date: "",
+    Internship_Organisation: "",
+    Internship_Description: ""
+  });
+
+
   useEffect(() => {
     async function fetchInternshipDetails() {
       try {
@@ -40,14 +50,67 @@ export default function InternshipDetailsUpdateForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      await Api.updateInternship({ Internship_ID: internshipId, ...internshipDetails });
-      toast.success('Internship details updated successfully');
-      navigate('/studentProfile');
-    } catch (error) {
-      toast.error('Error updating internship details');
-      console.error('Error updating internship details:', error);
+    if (validateForm()) {
+      try {
+        await Api.updateInternship({ Internship_ID: internshipId, ...internshipDetails });
+        toast.success('Internship details updated successfully');
+        navigate('/studentProfile');
+      } catch (error) {
+        toast.error('Error updating internship details');
+        console.error('Error updating internship details:', error);
+      }
     }
+  };
+
+  const validateForm = () => {
+    let isValid = true;
+    const newErrors = {
+      Internship_Type: "",
+      Internship_Title: "",
+      Internship_Start_Date: "",
+      Internship_End_Date: "",
+      Internship_Organisation: "",
+      Internship_Description: ""
+    };
+
+    // Internship Type validation
+    if (internshipDetails.Internship_Type.trim() === "") {
+      newErrors.Internship_Type = "*Internship Type field can't be empty";
+      isValid = false;
+    }
+
+    // Internship Title validation
+    if (internshipDetails.Internship_Title.trim() === "") {
+      newErrors.Internship_Title = "*Title field can't be empty";
+      isValid = false;
+    }
+
+    // Start Date validation
+    if (!/^\d{2}-\d{2}-\d{4}$/.test(internshipDetails.Internship_Start_Date)) {
+      newErrors.Internship_Start_Date = "*Start Date should be in DD-MM-YYYY format";
+      isValid = false;
+    }
+
+    // End Date validation
+    if (!/^\d{2}-\d{2}-\d{4}$/.test(internshipDetails.Internship_End_Date)) {
+      newErrors.Internship_End_Date = "*End Date should be in DD-MM-YYYY format";
+      isValid = false;
+    }
+
+    // Organisation Name validation
+    if (internshipDetails.Internship_Organisation.trim() === "") {
+      newErrors.Internship_Organisation = "*Organisation Name field can't be empty";
+      isValid = false;
+    }
+
+    // Description validation
+    if (internshipDetails.Internship_Description.trim() === "") {
+      newErrors.Internship_Description = "*Description field can't be empty";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
   };
 
 
@@ -70,6 +133,7 @@ export default function InternshipDetailsUpdateForm() {
               <option value="Academic Internship">Academic Internship</option>
               <option value="Industrial Internship">Industrial Internship</option>
             </select>
+            <p className="error">{errors.Internship_Type}</p>
           </div>
           <div className="labelInput" id='GridBox_2'>
             <label htmlFor="title">Title : </label>
@@ -80,7 +144,7 @@ export default function InternshipDetailsUpdateForm() {
               value={internshipDetails.Internship_Title}
               onChange={handleChange}
             />
-            {/* <p className="error">{errors.Email}</p> */}
+            <p className="error">{errors.Internship_Title}</p>
           </div>
           <div className="labelInput" id='GridBox_3'>
             <label htmlFor="startDate">Start Date [DD-MM-YYYY] </label>
@@ -91,7 +155,7 @@ export default function InternshipDetailsUpdateForm() {
               value={internshipDetails.Internship_Start_Date}
               onChange={handleChange}
             />
-            {/* <p className="error">{errors.Email}</p> */}
+            <p className="error">{errors.Internship_Start_Date}</p>
           </div>
           <div className="labelInput" id='GridBox_4'>
             <label htmlFor="endDate">End Date [DD-MM-YYYY] </label>
@@ -102,7 +166,7 @@ export default function InternshipDetailsUpdateForm() {
               value={internshipDetails.Internship_End_Date}
               onChange={handleChange}
             />
-            {/* <p className="error">{errors.Email}</p> */}
+            <p className="error">{errors.Internship_End_Date}</p>
           </div>
           <div className="labelInput" id='GridBox_5'>
             <label htmlFor="organisation">Organisation Name  </label>
@@ -113,7 +177,7 @@ export default function InternshipDetailsUpdateForm() {
               value={internshipDetails.Internship_Organisation}
               onChange={handleChange}
             />
-            {/* <p className="error">{errors.Email}</p> */}
+            <p className="error">{errors.Internship_Organisation}</p>
           </div>
           <div className="labelInput" id='GridBox_6'>
             <label htmlFor="guideName">Guide's Name </label>
@@ -124,7 +188,6 @@ export default function InternshipDetailsUpdateForm() {
               value={internshipDetails.Internship_Guide_Name}
               onChange={handleChange}
             />
-            {/* <p className="error">{errors.Email}</p> */}
           </div>
           <div className="labelInput" id='GridBox_7'>
             <label htmlFor="guideDesignation">Guide's Designation </label>
@@ -135,7 +198,6 @@ export default function InternshipDetailsUpdateForm() {
               value={internshipDetails.Internship_Guide_Designation}
               onChange={handleChange}
             />
-            {/* <p className="error">{errors.Email}</p> */}
           </div>
           <div className="labelInput" id='GridBox_8'>
             <label htmlFor="description">Description </label>
@@ -145,7 +207,7 @@ export default function InternshipDetailsUpdateForm() {
               value={internshipDetails.Internship_Description}
               onChange={handleChange}
             ></textarea>
-            {/* <p className="error">{errors.Email}</p> */}
+            <p className="error">{errors.Internship_Description}</p>
           </div>
         </div>
         <button className='formButton' type='submit'>Submit</button>
