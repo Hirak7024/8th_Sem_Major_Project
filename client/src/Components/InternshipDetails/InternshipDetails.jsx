@@ -4,9 +4,10 @@ import { useAuth } from '../../Utils/Context.js';
 import { useNavigate } from 'react-router-dom';
 import UploadCertificateReport from './UploadCertificateReport/UploadCertificateReport.jsx';
 import axios from "axios";
-import {toast} from "react-toastify"
+import { toast } from "react-toastify"
 import { MdOutlineModeEditOutline } from "react-icons/md";
 import { RiDeleteBin5Line } from "react-icons/ri";
+import PdfImage from "../../Assets/PdfIcon.png";
 import "./InternshipDetails.scss";
 
 export default function InternshipDetails() {
@@ -21,7 +22,7 @@ export default function InternshipDetails() {
                 const rollNo = userData.studentDetails.Roll_No;
                 const data = await Api.fetchInternshipsByRollNo(rollNo);
                 setInternships(data);
-                
+
                 // Fetch PDF data for each internship
                 const pdfRequests = data.map(internship => {
                     const certificateRequest = axios.get(`http://localhost:8001/pdfs/internships/${internship.Internship_Certificate_Link}`)
@@ -31,7 +32,7 @@ export default function InternshipDetails() {
                     return Promise.all([certificateRequest, reportRequest]);
                 });
                 const pdfResponses = await Promise.all(pdfRequests);
-                
+
                 // Extract only file names and store them in pdfData state
                 const pdfData = pdfResponses.reduce((acc, response, index) => {
                     acc[data[index].Internship_ID] = {
@@ -40,7 +41,7 @@ export default function InternshipDetails() {
                     };
                     return acc;
                 }, {});
-                
+
                 setPdfData(pdfData);
             } catch (error) {
                 console.error('Error fetching internships:', error);
@@ -105,15 +106,14 @@ export default function InternshipDetails() {
             {internships.map((internship, index) => (
                 <div key={index}>
                     <MdOutlineModeEditOutline className='internshipDetailsEditBtn' onClick={() => handleEdit(internship.Internship_ID)} />
-                    <RiDeleteBin5Line className='internshipDetailsDeleteBtn' onClick={() => handleDelete(internship.Internship_ID)}/>
-                    <p><strong>Internship Type: </strong>{internship.Internship_Type}</p>
-                    <p><strong>Title: </strong>{internship.Internship_Title}</p>
-                    <p><strong>Start Date: </strong>{internship.Internship_Start_Date}</p>
-                    <p><strong>End Date: </strong>{internship.Internship_End_Date}</p>
-                    <p><strong>Organisation: </strong>{internship.Internship_Organisation}</p>
-                    <p><strong>Guide Name: </strong>{internship.Internship_Guide_Name}</p>
-                    <p><strong>Guide Designation: </strong>{internship.Internship_Guide_Designation}</p>
-                    <p><strong>Description: </strong>{internship.Internship_Description}</p>
+                    <RiDeleteBin5Line className='internshipDetailsDeleteBtn' onClick={() => handleDelete(internship.Internship_ID)} />
+                    <p id='internshipTitle'>{internship.Internship_Title} <p id='internshipType'>({internship.Internship_Type})</p> </p>
+                    <p id='internshipOrganisation'>{internship.Internship_Organisation}</p>
+                    <p id='internshipDuration'> <strong>From</strong> {internship.Internship_Start_Date} <strong>To</strong> {internship.Internship_End_Date}</p>
+                    <p id='internshipDescription'>{internship.Internship_Description}</p>
+                    <p id='internshipGuideName'>{internship.Internship_Guide_Name}</p>
+                    <p id='internshipGuideDesignation'>{internship.Internship_Guide_Designation}</p>
+                    {/* <p id='internshipGuideOrganisation'>{internship.Internship_Organisation}</p> */}
                     {pdfData[internship.Internship_ID] && pdfData[internship.Internship_ID].certificate === null && pdfData[internship.Internship_ID].report === null ? (
                         <div className="ContainerToUploadInternshipPdf">
                             <p className='PdfFileUploadTitle'>Add Certificate and Report</p>
@@ -122,8 +122,14 @@ export default function InternshipDetails() {
                     ) : (
                         <div className="viewPdfBox">
                             {/* Buttons to view PDF files */}
-                            <button onClick={() => handleViewCertificatePdf(internship.Internship_ID)}>View Certificate PDF</button>
-                            <button onClick={() => handleViewReportPdf(internship.Internship_ID)}>View Report PDF</button>
+                            <div className="PdfAndTitleBox">
+                                <img src={PdfImage} alt="" className='InternshipViewPdfBtn' onClick={() => handleViewCertificatePdf(internship.Internship_ID)} />
+                                <p className="ViewPdfTitle">{pdfData[internship.Internship_ID].certificate}</p>
+                            </div>
+                            <div className='PdfAndTitleBox'>
+                                <img src={PdfImage} alt="" className='InternshipViewPdfBtn' onClick={() => handleViewReportPdf(internship.Internship_ID)} />
+                                <p className="ViewPdfTitle">{pdfData[internship.Internship_ID].report}</p>
+                            </div>
                         </div>
                     )}
                     {uploadPdfFiles[internship.Internship_ID] && <UploadCertificateReport setUploadPdfFiles={setUploadPdfFiles} Internship_ID={internship.Internship_ID} />}

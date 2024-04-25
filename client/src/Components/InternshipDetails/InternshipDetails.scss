@@ -1,6 +1,7 @@
-.InternshipDetailsContainer{
+.InternshipDetailsContainer {
     position: relative;
-    .internshipDetailsAddBtn{
+
+    .internshipDetailsAddBtn {
         padding: 5px 10px;
         font-size: 12px;
         color: white;
@@ -9,14 +10,16 @@
         // border-radius: 5px;
         cursor: pointer;
     }
-    .internshipDetailsAddBtn:hover{
+
+    .internshipDetailsAddBtn:hover {
         background-color: white;
         color: royalblue;
         cursor: pointer;
         border: 2px solid royalblue;
         font-weight: 600;
     }
-    .internshipDetailsEditBtn{
+
+    .internshipDetailsEditBtn {
         position: absolute;
         right: 6rem;
         width: 1.7rem;
@@ -24,13 +27,15 @@
         padding: 4px;
         color: blue;
     }
-    .internshipDetailsEditBtn:hover{
+
+    .internshipDetailsEditBtn:hover {
         background-color: royalblue;
         color: white;
         cursor: pointer;
         border-radius: 50%;
     }
-    .internshipDetailsDeleteBtn{
+
+    .internshipDetailsDeleteBtn {
         position: absolute;
         right: 3rem;
         width: 1.7rem;
@@ -39,13 +44,58 @@
         color: rgb(156, 5, 5);
         cursor: pointer;
     }
-    .internshipDetailsDeleteBtn:hover{
+
+    .internshipDetailsDeleteBtn:hover {
         background-color: rgb(156, 5, 5);
         color: white;
         cursor: pointer;
         border-radius: 50%;
     }
-    .ContainerToUploadInternshipPdf{
+
+    #internshipTitle {
+        display: flex;
+        font-size: 23px;
+        font-weight: bold;
+        gap: 5px;
+
+        #internshipType {
+            font-weight: 400;
+        }
+    }
+
+    #internshipOrganisation {
+        margin-top: 0.2rem;
+        font-size: 19px;
+        font-weight: 500;
+    }
+
+    #internshipDuration {
+        font-size: 12px;
+    }
+
+    #internshipDescription {
+        margin-top: 0.5rem;
+        font-size: 13px;
+        white-space: pre-line;
+    }
+
+    #internshipGuideName {
+        margin-top: 1.5rem;
+        font-size: 17px;
+        font-weight: 400;
+    }
+
+    #internshipGuideDesignation {
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    #internshipGuideOrganisation {
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .ContainerToUploadInternshipPdf {
         width: 25vw;
         height: 15vh;
         display: flex;
@@ -54,11 +104,13 @@
         align-items: center;
         justify-content: center;
         border: 2px dashed black;
-        .PdfFileUploadTitle{
+
+        .PdfFileUploadTitle {
             font-size: 12px;
             font-weight: 400;
         }
-        .PdfFileUploadButton{
+
+        .PdfFileUploadButton {
             font-size: 10px;
             font-weight: 500;
             padding: 5px 10px;
@@ -66,10 +118,39 @@
             background-color: white;
             color: royalblue;
         }
-        .PdfFileUploadButton:hover{
+
+        .PdfFileUploadButton:hover {
             cursor: pointer;
             background-color: royalblue;
             color: white;
+        }
+    }
+
+    .viewPdfBox {
+        display: flex;
+        gap: 2rem;
+        margin-top: 1rem;
+
+        .PdfAndTitleBox {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            height: fit-content;
+            width: 8rem;
+
+            .InternshipViewPdfBtn {
+                height: 5rem;
+                width: 5rem;
+                object-fit: contain;
+                cursor: pointer;
+            }
+
+            .ViewPdfTitle {
+                font-size: 12px;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+            }
         }
     }
 }
