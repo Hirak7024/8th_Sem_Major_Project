@@ -100,11 +100,11 @@ export default function InternshipDetails() {
     };
 
     return (
-        <div className='InternshipDetailsContainer'>
+        <div className='InternshipDetailsMainContainer'>
             <h1 className='internshipDetailsTitle'>Internship Details</h1>
             <button className='internshipDetailsAddBtn' onClick={() => navigate("/form/internshipDetails")}>Add New Internship</button>
             {internships.map((internship, index) => (
-                <div key={index}>
+                <div key={index} className='internshipDetailsContainer'>
                     <MdOutlineModeEditOutline className='internshipDetailsEditBtn' onClick={() => handleEdit(internship.Internship_ID)} />
                     <RiDeleteBin5Line className='internshipDetailsDeleteBtn' onClick={() => handleDelete(internship.Internship_ID)} />
                     <p id='internshipTitle'>{internship.Internship_Title} <p id='internshipType'>({internship.Internship_Type})</p> </p>
@@ -124,16 +124,15 @@ export default function InternshipDetails() {
                             {/* Buttons to view PDF files */}
                             <div className="PdfAndTitleBox">
                                 <img src={PdfImage} alt="" className='InternshipViewPdfBtn' onClick={() => handleViewCertificatePdf(internship.Internship_ID)} />
-                                <p className="ViewPdfTitle">{pdfData[internship.Internship_ID].certificate}</p>
+                                <p className="ViewPdfTitle">{pdfData[internship.Internship_ID]?.certificate}</p>
                             </div>
                             <div className='PdfAndTitleBox'>
                                 <img src={PdfImage} alt="" className='InternshipViewPdfBtn' onClick={() => handleViewReportPdf(internship.Internship_ID)} />
-                                <p className="ViewPdfTitle">{pdfData[internship.Internship_ID].report}</p>
+                                <p className="ViewPdfTitle">{pdfData[internship.Internship_ID]?.report}</p>
                             </div>
                         </div>
                     )}
                     {uploadPdfFiles[internship.Internship_ID] && <UploadCertificateReport setUploadPdfFiles={setUploadPdfFiles} Internship_ID={internship.Internship_ID} />}
-                    <hr />
                 </div>
             ))}
         </div>

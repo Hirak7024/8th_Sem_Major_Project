@@ -1,5 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import Api from "../API/Api.js";
+import { useLocation } from 'react-router-dom';
 
 const AuthContext = createContext();
 
@@ -28,6 +29,12 @@ export const AuthProvider = ({ children }) => {
 
         fetchTokenData();
     }, []); 
+
+    const location = useLocation();
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [location]);
 
     // FUNCTION TO REGISTER A NEW ADMIN
     const registerAdmin = async (formData) => {

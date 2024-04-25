@@ -1,75 +1,178 @@
-.ProjectDetailsContainer{
-    position: relative;
-    .projectDetailsAddBtn{
-        padding: 5px 10px;
-        font-size: 12px;
+.ProjectDetailsMainContainer {
+    // position: relative;
+    width: 100vw;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+    padding: 2rem 5rem 3rem 5rem;
+
+    .projectDetailsTitle {
+        display: flex;
+        font-size: 35px;
+    }
+
+    .projectDetailsAddBtn {
+        padding:  0.6rem 1rem;
+        font-size: 13px;
         color: white;
         background-color: royalblue;
         border: none;
-        // border-radius: 5px;
+        align-self: flex-start;
+        // margin-left: 1rem;
         cursor: pointer;
     }
-    .projectDetailsAddBtn:hover{
+
+    .projectDetailsAddBtn:hover {
         background-color: white;
         color: royalblue;
         cursor: pointer;
         border: 2px solid royalblue;
         font-weight: 600;
     }
-    .projectDetailsEditBtn{
-        position: absolute;
-        right: 6rem;
-        width: 1.7rem;
-        height: 1.7rem;
-        padding: 4px;
-        color: blue;
-    }
-    .projectDetailsEditBtn:hover{
-        background-color: royalblue;
-        color: white;
-        cursor: pointer;
-        border-radius: 50%;
-    }
-    .projectDetailsDeleteBtn{
-        position: absolute;
-        right: 3rem;
-        width: 1.7rem;
-        height: 1.7rem;
-        padding: 4px;
-        color: rgb(156, 5, 5);
-        cursor: pointer;
-    }
-    .projectDetailsDeleteBtn:hover{
-        background-color: rgb(156, 5, 5);
-        color: white;
-        cursor: pointer;
-        border-radius: 50%;
-    }
-    .ContainerToUploadProjectPdf{
-        width: 25vw;
-        height: 15vh;
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-        align-items: center;
-        justify-content: center;
-        border: 2px dashed black;
-        .PdfFileUploadTitle{
-            font-size: 12px;
-            font-weight: 400;
+
+    .projectDetailsContainer {
+        width: 100%;
+        height: fit-content;
+        padding: 2.5rem 2.5rem;
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+        position: relative;
+        margin: 1rem 0 2rem 0;
+
+        .projectDetailsEditBtn {
+            position: absolute;
+            right: 6rem;
+            width: 1.7rem;
+            height: 1.7rem;
+            padding: 4px;
+            color: blue;
         }
-        .PdfFileUploadButton{
-            font-size: 10px;
-            font-weight: 500;
-            padding: 5px 10px;
-            border: 1px solid royalblue;
-            background-color: white;
-            color: royalblue;
-        }
-        .PdfFileUploadButton:hover{
-            cursor: pointer;
+
+        .projectDetailsEditBtn:hover {
             background-color: royalblue;
             color: white;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        .projectDetailsDeleteBtn {
+            position: absolute;
+            right: 3rem;
+            width: 1.7rem;
+            height: 1.7rem;
+            padding: 4px;
+            color: rgb(156, 5, 5);
+            cursor: pointer;
+        }
+
+        .projectDetailsDeleteBtn:hover {
+            background-color: rgb(156, 5, 5);
+            color: white;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        #projectTitle {
+            display: flex;
+            font-size: 23px;
+            font-weight: bold;
+            gap: 5px;
+
+            #projectType {
+                font-weight: 400;
+            }
+        }
+
+        #projectOrganisation {
+            margin-top: 0.2rem;
+            font-size: 19px;
+            font-weight: 500;
+        }
+
+        #projectDuration {
+            font-size: 12px;
+        }
+
+        #projectDescription {
+            margin-top: 0.5rem;
+            font-size: 13px;
+            white-space: pre-line;
+        }
+
+        #projectGuideName {
+            margin-top: 1.5rem;
+            font-size: 17px;
+            font-weight: 400;
+        }
+
+        #projectGuideDesignation {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        #projectGuideOrganisation {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .ContainerToUploadProjectPdf {
+            width: 25vw;
+            height: 15vh;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed black;
+
+            .PdfFileUploadTitle {
+                font-size: 12px;
+                font-weight: 400;
+            }
+
+            .PdfFileUploadButton {
+                font-size: 10px;
+                font-weight: 500;
+                padding: 5px 10px;
+                border: 1px solid royalblue;
+                background-color: white;
+                color: royalblue;
+            }
+
+            .PdfFileUploadButton:hover {
+                cursor: pointer;
+                background-color: royalblue;
+                color: white;
+            }
+        }
+
+        .ProjectViewPdfBox {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+
+            .ProjectPdfAndTitleBox {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+                height: fit-content;
+                width: 8rem;
+
+                .ProjectViewPdfBtn {
+                    height: 5rem;
+                    width: 5rem;
+                    object-fit: contain;
+                    cursor: pointer;
+                }
+
+                .ViewPdfTitle {
+                    font-size: 12px;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    overflow: hidden;
+                }
+            }
         }
     }
 }
