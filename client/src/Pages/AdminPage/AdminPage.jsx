@@ -7,7 +7,7 @@ import "./AdminPage.scss";
 import { useAuth } from '../../Utils/Context.js';
 
 export default function AdminPage() {
-  const { setSelectedStudent } = useAuth();
+  const { setSelectedStudent,userData } = useAuth();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -61,9 +61,28 @@ export default function AdminPage() {
 
   const handleRowDoubleClick = (params) => {
     const selectedStudentRow = studentDetails.find(student => student.id === params.id);
-    setSelectedStudent(selectedStudentRow); 
+    
+    const selectedFields = {
+      "Student_ID": selectedStudentRow.Student_ID,
+      "Student_Auth_ID": selectedStudentRow.Student_Auth_ID,
+      "Roll_No": selectedStudentRow.Roll_No,
+      "Email": selectedStudentRow.Email,
+      "Name": selectedStudentRow.Name,
+      "Phone_No": selectedStudentRow.Phone_No,
+      "Date_of_Birth": selectedStudentRow.Date_of_Birth,
+      "Registration_No": selectedStudentRow.Registration_No,
+      "Course": selectedStudentRow.Course,
+      "Department": selectedStudentRow.Department,
+      "Year_of_Joining": selectedStudentRow.Year_of_Joining,
+      "Year_of_Passing": selectedStudentRow.Year_of_Passing,
+      "ProfilePicture": selectedStudentRow.ProfilePicture,
+      "Semester": selectedStudentRow.Semester
+    };
+  
+    userData.studentDetails = selectedFields;
     navigate('/from/adminSide/StudentProfile');
   };
+  
   
 
   const columns = [
