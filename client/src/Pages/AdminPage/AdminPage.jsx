@@ -16,8 +16,6 @@ export default function AdminPage() {
     Department: "",
     Year_of_Joining: null,
     Year_of_Passing: null,
-    // Internship_Type: "",
-    // Project_Type: ""
   });
 
   const [studentDetails, setStudentDetails] = useState([]);
@@ -31,22 +29,28 @@ export default function AdminPage() {
   }, []);
 
   const handleChange = (e) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    const { name, value } = e.target;
+    // If the field name is Year_of_Joining or Year_of_Passing, convert the value to a number
+    const numericValue = name === 'Year_of_Joining' || name === 'Year_of_Passing' ? parseInt(value, 10) : value;
+    setFormData((prev) => ({ ...prev, [name]: numericValue }));
   };
+  
 
   const fetchStudentDetails = async () => {
     try {
       const data = await Api.fetchStudentDetails(formData);
+      console.log(data);
       const updatedData = data.data.map((student) => ({
         ...student,
-        id: student.Student_ID
+        id: student.Student_ID,
+        Batch: `${student.Year_of_Joining} - ${student.Year_of_Passing}` // Adding Batch column
       }));
       setStudentDetails(updatedData);
       // Store fetched student details in localStorage
       localStorage.setItem('studentDetails', JSON.stringify(updatedData));
     } catch (error) {
       console.error("Error fetching student details:", error);
-      toast.error("Error fetching student details");
+      toast.error(error);
     }
   };
 
@@ -63,21 +67,13 @@ export default function AdminPage() {
   
 
   const columns = [
-    { field: 'Roll_No', sortable: false, filterable: false, headerName: 'Roll No', width: 130 },
-    { field: 'Registration_No', sortable: false, filterable: false, headerName: 'Registration No', width: 150 },
     { field: 'Name', sortable: false, filterable: false, headerName: 'Name', width: 150 },
-    { field: 'Course', headerName: 'Course', width: 150, sortable: false, filterable: false, },
-    { field: 'Department', headerName: 'Department', sortable: false, filterable: false, width: 150 },
-    { field: 'Year_of_Joining', headerName: 'Year of Joining', sortable: false, filterable: false, width: 150 },
-    { field: 'Year_of_Passing', headerName: 'Year of Passing', sortable: false, filterable: false, width: 150 },
-    // { field: 'Internship_Type', headerName: 'Internship Type', sortable: false, filterable: false, width: 150 },
-    // { field: 'Internship_Title', headerName: 'Internship Title', sortable: false, filterable: false, width: 150 },
-    // { field: 'Internship_Guide_Name', headerName: 'Internship Guide Name', sortable: false, filterable: false, width: 150 },
-    // { field: 'Internship_Organisation', headerName: 'Internship Organisation', sortable: false, filterable: false, width: 150 },
-    // { field: 'Project_Type', headerName: 'Project Type', sortable: false, filterable: false, width: 150 },
-    // { field: 'Project_Title', headerName: 'Project Title', sortable: false, filterable: false, width: 150 },
-    // { field: 'Project_Guide_Name', headerName: 'Project Guide Name', sortable: false, filterable: false, width: 150 },
-    // { field: 'Project_Organisation', headerName: 'Project Organisation', sortable: false, filterable: false, width: 150 },
+    { field: 'Roll_No', sortable: false, filterable: false, headerName: 'Roll No', width: 150 },
+    { field: 'Registration_No', sortable: false, filterable: false, headerName: 'Registration No', width: 150 },
+    { field: 'Course', headerName: 'Course', width: 70, sortable: false, filterable: false, },
+    { field: 'Department', headerName: 'Department', sortable: false, filterable: false, width: 300 },
+    { field: 'Semester', headerName: 'Semester', width: 80, sortable: false, filterable: false, },
+    { field: 'Batch', headerName: 'Batch', sortable: false, filterable: false, width: 200 }, // Adding Batch column
   ];
 
   return (
@@ -125,7 +121,7 @@ export default function AdminPage() {
           <div className="labelInput">
             <label htmlFor="yearOfJoining">Year of Joining : </label>
             <input
-              type="text"
+              type="number"
               id='yearOfJoining'
               name='Year_of_Joining'
               value={formData.Year_of_Joining}
@@ -136,7 +132,7 @@ export default function AdminPage() {
           <div className="labelInput">
             <label htmlFor="yearOfPassing">Year of Passing : </label>
             <input
-              type="text"
+              type="number"
               id='yearOfPassing'
               name='Year_of_Passing'
               value={formData.Year_of_Passing}
