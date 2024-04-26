@@ -128,6 +128,7 @@ export default function AdminPage() {
               name="Department"
               value={formData.Department}
               onChange={handleChange}
+              required
             >
               <option value="">Select Student's Department </option>
               <option value="Computer Science & Engineering">Computer Science & Engineering</option>
@@ -145,6 +146,7 @@ export default function AdminPage() {
               name='Year_of_Joining'
               value={formData.Year_of_Joining}
               onChange={handleChange}
+              required
             />
             {/* <p className="error">{errors.Email}</p> */}
           </div>
@@ -156,6 +158,7 @@ export default function AdminPage() {
               name='Year_of_Passing'
               value={formData.Year_of_Passing}
               onChange={handleChange}
+              required
             />
             {/* <p className="error">{errors.Email}</p> */}
           </div>
