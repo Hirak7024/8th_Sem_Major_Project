@@ -46,7 +46,7 @@ export default function UploadProjectCertificateReport({ Project_ID, setUploadPr
             <form className='uploadProjectPdfForm_Container'>
             <button className="projectModelCloseBtn" onClick={()=>setPdfFiles(false)}>X</button>
                 <div className="labelInput">
-                    <label htmlFor="certificate">Upload Certificate </label>
+                    <label htmlFor="certificate">Upload Certificate : </label>
                     <input
                         type="file"
                         id="certificate"

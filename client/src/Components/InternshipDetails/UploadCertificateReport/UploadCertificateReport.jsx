@@ -46,7 +46,7 @@ export default function UploadCertificateReport({ Internship_ID, setUploadPdfFil
             <form className='uploadPdfForm_Container'>
                 <button className="modelCloseBtn" onClick={()=>setPdfFiles(false)}>X</button>
                 <div className="labelInput">
-                    <label htmlFor="certificate">Upload Certificate </label>
+                    <label htmlFor="certificate">Upload Certificate : </label>
                     <input
                         type="file"
                         id="certificate"

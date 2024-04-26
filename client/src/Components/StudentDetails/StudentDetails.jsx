@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../Utils/Context.js';
 import { useNavigate } from 'react-router-dom';
-import defaultImage from "../../Assets/No_Profile_Picture.jpg"
+import defaultImage from "../../Assets/No_Profile_Picture.jpg";
 import Api from "../../API/Api.js"
 import { MdOutlineModeEditOutline } from "react-icons/md";
 import { FaPhone } from "react-icons/fa6";
