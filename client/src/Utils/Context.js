@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import Api from "../API/Api.js";
+import Api from '../API/Api.js';
 import { useLocation } from 'react-router-dom';
 
 const AuthContext = createContext();
@@ -7,6 +7,7 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
     const [userData, setUserData] = useState(null);
     const [selectedStudent, setSelectedStudent] = useState(null);
+    const [needCorrection, setNeedCorrection] = useState([]);
 
      // Function to update studentDetails within userData
      const updateStudentDetails = (studentDetails) => {
@@ -15,6 +16,19 @@ export const AuthProvider = ({ children }) => {
             studentDetails: { ...studentDetails }
         }));
     };
+
+    // Fetch data from need_correction table
+    useEffect(() => {
+        const fetchPendingCorrections = async () => {
+            try {
+                const response = await Api.getAllNeedCorrection();
+                setNeedCorrection(response); 
+            } catch (error) {
+                console.error("Error fetching pending corrections:", error);
+            }
+        };
+        fetchPendingCorrections();
+    }, []);
 
     useEffect(() => {
         const fetchTokenData = async () => {
@@ -117,7 +131,8 @@ export const AuthProvider = ({ children }) => {
             loginAdmin,
             selectedStudent, 
             setSelectedStudent,
-            updateStudentDetails 
+            updateStudentDetails,
+            needCorrection 
         }}>
             {children}
         </AuthContext.Provider>

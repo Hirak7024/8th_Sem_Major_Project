@@ -8,14 +8,15 @@ import { toast } from "react-toastify";
 import "./AdminStudentProfilePage.scss";
 
 export default function AdminStudentProfilePage() {
-  const { userData } = useAuth();
+  const { userData, needCorrection } = useAuth();
   const studentID = userData?.studentDetails?.Student_ID;
+  needCorrection.map((item)=>{console.log("Student_ID : "+item.Student_ID)});
 
   const studentData = {
-    Student_ID : userData?.studentDetails?.Student_ID,
-    Student_Email : userData?.studentDetails?.Email,
-    Student_RollNo : userData?.studentDetails?.Roll_No,
-    Student_Name : userData?.studentDetails?.Name 
+    Student_ID: userData?.studentDetails?.Student_ID,
+    Student_Email: userData?.studentDetails?.Email,
+    Student_RollNo: userData?.studentDetails?.Roll_No,
+    Student_Name: userData?.studentDetails?.Name
   }
 
 
@@ -47,10 +48,16 @@ export default function AdminStudentProfilePage() {
     }
   };
 
+  // Check if the current student's ID exists in needCorrection array
+  const isStudentNeedsCorrection = needCorrection.some(student => student.Student_ID === studentID);
+
   return (
     <div className='AdminStudentProfilePage_MainContainer'>
-      <button className="markForCorrection" onClick={handleMarkForCorrection}>Mark For Correction</button>
-      <button className="allCorrect" onClick={handleAllCorrect}>All Correct</button>
+      {isStudentNeedsCorrection ? (
+        <button className="allCorrect" onClick={handleAllCorrect}>All Correct</button>
+      ) : (
+        <button className="markForCorrection" onClick={handleMarkForCorrection}>Mark For Correction</button>
+      )}
       <AdminSideStudentView />
       <AdminSideInternshipView />
       <AdminSideProjectView />
