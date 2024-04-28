@@ -18,7 +18,7 @@ export const insertIntoNeedCorrection = async (req, res) => {
     );
     
     // Respond with success message
-    return res.status(200).json({ message: 'Values inserted into need_correction table' });
+    return res.status(200).json({ message: 'Student Saved Successfully' });
   } catch (error) {
     console.error('Error inserting values into need_correction table:', error);
     return res.status(500).json({ message: 'Internal server error' });
@@ -40,29 +40,30 @@ export const getAllNeedCorrection = async (req, res) => {
 };
 
 // TO DELETE A ROW FROM TABLE NEED_CORRECTION
-export const deleteNeedCorrectionById = async (req, res) => {
-  const { id } = req.body;
+export const deleteNeedCorrectionByStudentID = async (req, res) => {
+  const { Student_ID } = req.body;
 
-  if (!id) {
-    return res.status(400).json({ message: 'ID parameter is required' });
+  if (!Student_ID) {
+    return res.status(400).json({ message: 'Student_ID parameter is required' });
   }
 
   try {
-    // Delete the row from the need_correction table based on the provided ID
-    const [result] = await pool.query('DELETE FROM need_correction WHERE id = ?', [id]);
+    // Delete the row from the need_correction table based on the provided Student_ID
+    const [result] = await pool.query('DELETE FROM need_correction WHERE Student_ID = ?', [Student_ID]);
 
     // Check if any row was affected by the deletion
     if (result.affectedRows === 0) {
-      return res.status(404).json({ message: 'Row with the specified ID not found' });
+      return res.status(404).json({ message: 'Student not found' });
     }
 
     // Respond with a success message
-    return res.status(200).json({ message: 'Row deleted successfully' });
+    return res.status(200).json({ message: 'Student removed successfully' });
   } catch (error) {
     console.error('Error deleting row from need_correction table:', error);
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
+
 
 
 

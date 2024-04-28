@@ -9,11 +9,12 @@ import ProjectDetailsForm from './Components/ProjectDetails/ProjectDetailsForm/P
 import StudentDetailsUpdateForm from './Components/StudentDetails/StudentDetailsUpdateForm/StudentDetailsUpdateForm';
 import InternshipDetailsUpdateForm from './Components/InternshipDetails/InternshipDetailsUpdateForm/InternshipDetailsUpdateForm';
 import ProjectDetailsUpdateForm from './Components/ProjectDetails/ProjectDetailsUpdateForm/ProjectDetailsUpdateForm';
+import AdminStudentProfilePage from './Pages/AdminStudentProfilePage/AdminStudentProfilePage';
+import PendingCorrection from './Pages/AdminPage/PendingCorrection';
 import AdminPage from './Pages/AdminPage/AdminPage';
+import Navbar from './Components/Navbar/Navbar';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Navbar from './Components/Navbar/Navbar';
-import AdminStudentProfilePage from './Pages/AdminStudentProfilePage/AdminStudentProfilePage';
 
 export default function App() {
   return (
@@ -31,6 +32,7 @@ export default function App() {
         <Route path='/form/update/projectDetails/:projectId' element={<ProjectDetailsUpdateForm />} />
         <Route path='/adminPage' element={<AdminPage/>} />
         <Route path='/from/adminSide/StudentProfile' element={<AdminStudentProfilePage/>} />
+        <Route path='/adminPage/pendingCorrections' element={<PendingCorrection/>} />
       </Routes>
       <ToastContainer />
     </>

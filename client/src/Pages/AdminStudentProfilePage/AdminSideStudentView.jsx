@@ -4,31 +4,26 @@ import defaultImage from "../../Assets/No_Profile_Picture.jpg";
 import { FaPhone } from "react-icons/fa6";
 import { IoMdMail } from "react-icons/io";
 import "../../Components/StudentDetails/StudentDetails.scss";
+import Api from '../../API/Api.js';
 
 export default function AdminSideStudentView() {
     const { userData } = useAuth();
     const [studentDetails, setStudentDetails] = useState(null);
-    const [imageURL, setImageURL] = useState(defaultImage); 
+    const [imageURL, setImageURL] = useState(defaultImage);
 
     useEffect(() => {
-        if (userData && userData.studentDetails) {
-            setStudentDetails(userData.studentDetails);
-            if (userData.studentDetails.ProfilePicture) {
-                const profilePictureURL = `http://localhost:8001/images/${userData.studentDetails.ProfilePicture}`;
-                fetch(profilePictureURL)
-                    .then(response => {
-                        if (response.ok) {
-                            setImageURL(profilePictureURL);
-                        } else {
-                            setImageURL(defaultImage);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error checking image existence:', error);
-                        setImageURL(defaultImage);
-                    });
+        const fetchData = async () => {
+            if (userData && userData.studentDetails) {
+                const studentdata = await Api.checkStudentByEmail(userData?.studentDetails?.Email);
+                setStudentDetails(studentdata);
+                console.log(studentdata);
+                if (studentdata && studentdata.ProfilePicture) {
+                    const profilePictureURL = `http://localhost:8001/images/${studentdata.ProfilePicture}`;
+                    setImageURL(profilePictureURL);
+                }
             }
         }
+        fetchData();
     }, [userData]);
 
     return (

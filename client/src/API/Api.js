@@ -3,44 +3,74 @@ import axios from 'axios';
 const baseUrl = "http://localhost:8001/api";
 
 const Api = {
-
+    // API call to update profile picture of student 
     uploadProfilePicture: async (formData) => {
         try {
             const response = await axios.post(`${baseUrl}/studentdetails/upload/profilePicture`, formData
-            , {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
+                , {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
                 }
-            }
-        );
+            );
             return response.data;
         } catch (error) {
             throw error.response.data.message;
         }
     },
+    // API call to upload Internship pdf files
     uploadPdfFiles: async (formData) => {
         try {
             const response = await axios.post(`${baseUrl}/studentinternships//upload/pdf/certificateAndReport/forInternship`, formData
-            , {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
+                , {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
                 }
-            }
-        );
+            );
             return response.data;
         } catch (error) {
             throw error.response.data.message;
         }
     },
+    // API call to upload Project pdf files
     uploadProjectPdfFiles: async (formData) => {
         try {
             const response = await axios.post(`${baseUrl}/studentprojects/upload/pdf/certificateAndReport/forProject`, formData
-            , {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
+                , {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
                 }
-            }
-        );
+            );
+            return response.data;
+        } catch (error) {
+            throw error.response.data.message;
+        }
+    },
+    // API call to fetch all rows from table need_correction
+    getAllNeedCorrection: async () => {
+        try {
+            const response = await axios.get(`${baseUrl}/needCorrection/get/allValues`);
+            return response.data;
+        } catch (error) {
+            throw error.response.data.message;
+        }
+    },
+    // API call to insert data into the need_correction table
+    insertIntoNeedCorrection: async (formData) => {
+        try {
+            const response = await axios.post(`${baseUrl}/needCorrection/insert`, formData);
+            return response.data;
+        } catch (error) {
+            throw error.response.data.message;
+        }
+    },
+
+    //API call to delete data from table need_correction
+    deleteNeedCorrectionByStudentID: async (studentID) => {
+        try {
+            const response = await axios.delete(`${baseUrl}/needCorrection/delete/row`, { data: { Student_ID: studentID } });
             return response.data;
         } catch (error) {
             throw error.response.data.message;

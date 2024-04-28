@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import Api from "../../API/Api.js";
 import { toast } from "react-toastify";
 import { DataGrid } from '@mui/x-data-grid';
-import "./AdminPage.scss";
 import { useAuth } from '../../Utils/Context.js';
+import "./AdminPage.scss";
 
 export default function AdminPage() {
-  const { setSelectedStudent,userData } = useAuth();
+  const { updateStudentDetails } = useAuth();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -39,7 +39,6 @@ export default function AdminPage() {
   const fetchStudentDetails = async () => {
     try {
       const data = await Api.fetchStudentDetails(formData);
-      console.log(data);
       const updatedData = data.data.map((student) => ({
         ...student,
         id: student.Student_ID,
@@ -62,7 +61,7 @@ export default function AdminPage() {
   const handleRowDoubleClick = (params) => {
     const selectedStudentRow = studentDetails.find(student => student.id === params.id);
     
-    const selectedFields = {
+     updateStudentDetails ({
       "Student_ID": selectedStudentRow.Student_ID,
       "Student_Auth_ID": selectedStudentRow.Student_Auth_ID,
       "Roll_No": selectedStudentRow.Roll_No,
@@ -77,9 +76,9 @@ export default function AdminPage() {
       "Year_of_Passing": selectedStudentRow.Year_of_Passing,
       "ProfilePicture": selectedStudentRow.ProfilePicture,
       "Semester": selectedStudentRow.Semester
-    };
+    });
   
-    userData.studentDetails = selectedFields;
+    // userData.studentDetails = selectedFields;
     navigate('/from/adminSide/StudentProfile');
   };
   
@@ -97,6 +96,7 @@ export default function AdminPage() {
 
   return (
     <div className='AdminPageContainer'>
+      <button className="correctionPageLink" onClick={()=>{navigate("/adminPage/pendingCorrections")}}>Check Pending Corrections</button>
       <div className="adminFormContainer">
         <form className='adminForm' onSubmit={handleSubmit}>
           <div className="labelInput">
@@ -162,33 +162,6 @@ export default function AdminPage() {
             />
             {/* <p className="error">{errors.Email}</p> */}
           </div>
-          {/* <div className="labelInput">
-            <label htmlFor="internshipType">Internship Type : </label>
-            <select
-              id="internshipType"
-              name="Internship_Type"
-              value={formData.Internship_Type}
-              onChange={handleChange}
-            >
-              <option value="">Select Internship Type</option>
-              <option value="Social Internship">Social Internship</option>
-              <option value="Academic Internship">Academic Internship</option>
-              <option value="Industrial Internship">Industrial Internship</option>
-            </select>
-          </div> */}
-          {/* <div className="labelInput">
-            <label htmlFor="projectType">Project Type : </label>
-            <select
-              id="projectType"
-              name="Project_Type"
-              value={formData.Project_Type}
-              onChange={handleChange}
-            >
-              <option value="">Select Project Type</option>
-              <option value="Minor Project">Minor Project</option>
-              <option value="Major Project">Major Project</option>
-            </select>
-          </div> */}
           <button className='adminBtn' type='submit'>Search</button>
         </form>
       </div>

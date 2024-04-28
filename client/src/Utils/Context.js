@@ -8,6 +8,14 @@ export const AuthProvider = ({ children }) => {
     const [userData, setUserData] = useState(null);
     const [selectedStudent, setSelectedStudent] = useState(null);
 
+     // Function to update studentDetails within userData
+     const updateStudentDetails = (studentDetails) => {
+        setUserData(prevUserData => ({
+            ...prevUserData,
+            studentDetails: { ...studentDetails }
+        }));
+    };
+
     useEffect(() => {
         const fetchTokenData = async () => {
             const token = localStorage.getItem("authToken");
@@ -108,7 +116,8 @@ export const AuthProvider = ({ children }) => {
             registerAdmin,
             loginAdmin,
             selectedStudent, 
-            setSelectedStudent
+            setSelectedStudent,
+            updateStudentDetails 
         }}>
             {children}
         </AuthContext.Provider>

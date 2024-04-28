@@ -13,7 +13,7 @@ export default function AdminSideProjectView() {
     useEffect(() => {
         async function fetchInternships() {
             try {
-                const rollNo = userData.studentDetails.Roll_No;
+                const rollNo = userData?.studentDetails?.Roll_No;
                 const data = await Api.fetchProjectsByRollNo(rollNo);
                 setProjects(data);
 

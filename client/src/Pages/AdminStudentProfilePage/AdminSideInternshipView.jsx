@@ -13,7 +13,7 @@ export default function AdminSideInternshipView() {
     useEffect(() => {
         async function fetchInternships() {
             try {
-                const rollNo = userData.studentDetails.Roll_No;
+                const rollNo = userData?.studentDetails?.Roll_No;
                 const data = await Api.fetchInternshipsByRollNo(rollNo);
                 setInternships(data);
 
