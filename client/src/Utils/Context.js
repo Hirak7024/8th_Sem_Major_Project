@@ -132,7 +132,8 @@ export const AuthProvider = ({ children }) => {
             selectedStudent, 
             setSelectedStudent,
             updateStudentDetails,
-            needCorrection 
+            needCorrection,
+            setNeedCorrection 
         }}>
             {children}
         </AuthContext.Provider>

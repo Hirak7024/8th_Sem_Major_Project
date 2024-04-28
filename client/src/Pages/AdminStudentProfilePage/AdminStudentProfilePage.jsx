@@ -8,9 +8,8 @@ import { toast } from "react-toastify";
 import "./AdminStudentProfilePage.scss";
 
 export default function AdminStudentProfilePage() {
-  const { userData, needCorrection } = useAuth();
+  const { userData, needCorrection, setNeedCorrection } = useAuth(); // Added setNeedCorrection
   const studentID = userData?.studentDetails?.Student_ID;
-  needCorrection.map((item)=>{console.log("Student_ID : "+item.Student_ID)});
 
   const studentData = {
     Student_ID: userData?.studentDetails?.Student_ID,
@@ -19,12 +18,14 @@ export default function AdminStudentProfilePage() {
     Student_Name: userData?.studentDetails?.Name
   }
 
-
   const handleMarkForCorrection = async () => {
     try {
+      // Insert studentData
       const response = await Api.insertIntoNeedCorrection(studentData);
       if (response && response.message) {
         toast.success(response.message);
+        // Append studentData to needCorrection array
+        setNeedCorrection(prevNeedCorrection => [...prevNeedCorrection, studentData]);
       } else {
         throw new Error('Unexpected response from server');
       }
@@ -39,6 +40,8 @@ export default function AdminStudentProfilePage() {
       const response = await Api.deleteNeedCorrectionByStudentID(studentID);
       if (response && response.message) {
         toast.success(response.message);
+        // Remove studentData from needCorrection array
+        setNeedCorrection(prevNeedCorrection => prevNeedCorrection.filter(student => student.Student_ID !== studentID));
       } else {
         throw new Error('Unexpected response from server');
       }
