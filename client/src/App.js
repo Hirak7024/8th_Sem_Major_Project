@@ -11,6 +11,7 @@ import InternshipDetailsUpdateForm from './Components/InternshipDetails/Internsh
 import ProjectDetailsUpdateForm from './Components/ProjectDetails/ProjectDetailsUpdateForm/ProjectDetailsUpdateForm';
 import AdminStudentProfilePage from './Pages/AdminStudentProfilePage/AdminStudentProfilePage';
 import PendingCorrection from './Pages/AdminPage/PendingCorrection';
+import Chat from './Pages/ChatPage/Chat';
 import AdminPage from './Pages/AdminPage/AdminPage';
 import Navbar from './Components/Navbar/Navbar';
 import { ToastContainer } from 'react-toastify';
@@ -33,6 +34,7 @@ export default function App() {
         <Route path='/adminPage' element={<AdminPage/>} />
         <Route path='/from/adminSide/StudentProfile' element={<AdminStudentProfilePage/>} />
         <Route path='/adminPage/pendingCorrections' element={<PendingCorrection/>} />
+        <Route path='/chat' element={<Chat/>} />
       </Routes>
       <ToastContainer />
     </>

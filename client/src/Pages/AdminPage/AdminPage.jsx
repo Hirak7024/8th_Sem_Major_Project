@@ -4,6 +4,7 @@ import Api from "../../API/Api.js";
 import { toast } from "react-toastify";
 import { DataGrid } from '@mui/x-data-grid';
 import { useAuth } from '../../Utils/Context.js';
+import { IoChatboxEllipses } from "react-icons/io5";
 import "./AdminPage.scss";
 
 export default function AdminPage() {
@@ -28,13 +29,30 @@ export default function AdminPage() {
     }
   }, []);
 
+  useEffect(() => {
+    // Prevent the user from navigating back using the browser's back button
+    const disableBackButton = () => {
+      window.history.pushState(null, "", window.location.href);
+      window.onpopstate = () => {
+        window.history.pushState(null, "", window.location.href);
+      };
+    };
+
+    disableBackButton();
+
+    // Cleanup on component unmount
+    return () => {
+      window.onpopstate = null;
+    };
+  }, []);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     // If the field name is Year_of_Joining or Year_of_Passing, convert the value to a number
     const numericValue = name === 'Year_of_Joining' || name === 'Year_of_Passing' ? parseInt(value, 10) : value;
     setFormData((prev) => ({ ...prev, [name]: numericValue }));
   };
-  
+
 
   const fetchStudentDetails = async () => {
     try {
@@ -60,8 +78,8 @@ export default function AdminPage() {
 
   const handleRowDoubleClick = (params) => {
     const selectedStudentRow = studentDetails.find(student => student.id === params.id);
-    
-     updateStudentDetails ({
+
+    updateStudentDetails({
       "Student_ID": selectedStudentRow.Student_ID,
       "Student_Auth_ID": selectedStudentRow.Student_Auth_ID,
       "Roll_No": selectedStudentRow.Roll_No,
@@ -77,12 +95,12 @@ export default function AdminPage() {
       "ProfilePicture": selectedStudentRow.ProfilePicture,
       "Semester": selectedStudentRow.Semester
     });
-  
+
     // userData.studentDetails = selectedFields;
     navigate('/from/adminSide/StudentProfile');
   };
-  
-  
+
+
 
   const columns = [
     { field: 'Name', sortable: false, filterable: false, headerName: 'Name', width: 150 },
@@ -96,7 +114,8 @@ export default function AdminPage() {
 
   return (
     <div className='AdminPageContainer'>
-      <button className="correctionPageLink" onClick={()=>{navigate("/adminPage/pendingCorrections")}}>Check Pending Corrections</button>
+      <button className="correctionPageLink" onClick={() => { navigate("/adminPage/pendingCorrections") }}>Check Pending Corrections</button>
+      <IoChatboxEllipses className='goToChatBtn' onClick={()=>navigate("/chat")} />
       <div className="adminFormContainer">
         <form className='adminForm' onSubmit={handleSubmit}>
           <div className="labelInput">

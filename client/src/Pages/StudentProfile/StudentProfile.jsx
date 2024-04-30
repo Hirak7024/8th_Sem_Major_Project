@@ -21,6 +21,7 @@ export default function StudentProfile() {
       window.onpopstate = null;
     };
   }, []);
+  
   return (
     <div className='StudentProfileMainContainer'>
       <StudentDetails />

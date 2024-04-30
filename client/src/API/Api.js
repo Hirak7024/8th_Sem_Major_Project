@@ -3,6 +3,25 @@ import axios from 'axios';
 const baseUrl = "http://localhost:8001/api";
 
 const Api = {
+
+      // API call to fetch messages by Sender_Email
+      fetchMessagesBySenderEmail: async (Sender_Email) => {
+        try {
+            const response = await axios.post(`${baseUrl}/messages/fetchMessage`, { Sender_Email });
+            return response.data;
+        } catch (error) {
+            throw error.response.data.message;
+        }
+    },
+     // API call to fetch messages by Receiver_Email
+     fetchMessagesByReceiverEmail: async (Receiver_Email) => {
+        try {
+            const response = await axios.post(`${baseUrl}/messages/receiver/fetchMessage`, { Receiver_Email });
+            return response.data;
+        } catch (error) {
+            throw error.response.data.message;
+        }
+    },
     // API call to update profile picture of student 
     uploadProfilePicture: async (formData) => {
         try {
