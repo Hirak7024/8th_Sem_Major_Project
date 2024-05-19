@@ -4,7 +4,7 @@ import pool from '../DataBase.js';
 
 //TO REGISTER NEW ADMIN
 export const RegisterAdmin = async (req, res) => {
-    const { Email, Password, SignUpKey } = req.body;
+    const { Email, Password, SignUpKey, Admin_Name } = req.body;
     const serverSignUpKey = process.env.AdminSignUpKey;
 
     try {
@@ -24,17 +24,17 @@ export const RegisterAdmin = async (req, res) => {
         const hashedPass = await bcrypt.hash(Password, salt);
 
         // Insert new user
-        await pool.execute('INSERT INTO admin (Email, Password) VALUES (?, ?)', [Email, hashedPass]);
+        await pool.execute('INSERT INTO admin (Email, Password,Admin_Name) VALUES (?, ?,?)', [Email, hashedPass, Admin_Name]);
 
         // Retrieve the newly inserted user to get Admin_ID
-        const [newUser] = await pool.execute('SELECT Admin_ID FROM admin WHERE Email = ?', [Email]);
+        const [newUser] = await pool.execute('SELECT Admin_ID,Admin_Name FROM admin WHERE Email = ?', [Email]);
         const user = newUser[0];
 
         // Generate JWT token
         const token = jwt.sign({ Email }, process.env.JWT_KEY, { expiresIn: 60 * 60 * 24 });
 
         // Prepare response
-        const userResponse = { Email, Admin_ID: user.Admin_ID };
+        const userResponse = { Email, Admin_ID: user.Admin_ID, Admin_Name: user.Admin_Name };
 
         res.status(200).json({ data: { userResponse, token }, message: "Admin Registered Successfully", status_code: 200 });
     } catch (error) {
@@ -65,7 +65,7 @@ export const LoginAdmin = async (req, res) => {
         const token = jwt.sign({ Email }, process.env.JWT_KEY, { expiresIn: 60 * 60 * 24 });
 
         // Prepare response
-        const userResponse = { Email: user.Email, Admin_ID: user.Admin_ID };
+        const userResponse = { Email: user.Email, Admin_ID: user.Admin_ID, Admin_Name: user.Admin_Name };
 
         res.status(200).json({ data: { userResponse, token }, message: "Login Successful", status_code: 200 });
     } catch (error) {

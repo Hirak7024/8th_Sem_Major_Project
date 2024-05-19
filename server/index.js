@@ -8,6 +8,7 @@ import Internship_Routes from "./Routes/internships.js";
 import Admin_Routes from "./Routes/admin.js";
 import Need_Correction_Routes from "./Routes/need_correction.js";
 import Message_Routes from "./Routes/messages.js";
+import Comments_Internships_Route from "./Routes/comments_internships.js";
 
 dotenv.config();
 const app = express();
@@ -28,6 +29,7 @@ app.use("/api/studentinternships", Internship_Routes);
 app.use("/api/admin", Admin_Routes);
 app.use("/api/needCorrection", Need_Correction_Routes);
 app.use("/api/messages", Message_Routes);
+app.use("/api/comments", Comments_Internships_Route);
 
 
 app.listen(PORT, () => { console.log(`Server Connected to PORT ${PORT}`) });
