@@ -5,6 +5,6 @@ const router = express.Router();
 
 router.post("/addComment", addComment);
 router.put("/updateComment", updateComment);
-router.get("/getCommentByInternshipId", getCommentsByInternshipId)
+router.post("/getCommentByInternshipId", getCommentsByInternshipId)
 
 export default router;

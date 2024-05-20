@@ -1,0 +1,119 @@
+.Comments_Main_Container {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    left: 0;
+
+    .Comments_Container {
+        width: 60%;
+        height: 90%;
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 2.5rem 2rem 1.5rem 2rem;
+
+        .commentsCloseBtn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background-color: red;
+            color: white;
+            padding: 0.2rem 0.5rem;
+            font-size: 10px;
+            cursor: pointer;
+            outline: none;
+            border: none;
+        }
+
+        .comments_Box {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            overflow-y: scroll;
+
+            .Comment {
+                // background-color: rgb(222, 219, 219);
+                // box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+                // box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
+                background-color: royalblue;
+                color: white;
+                width: 60%;
+                display: flex;
+                flex-direction: column;
+                align-self: flex-start;
+                padding: 2vh 2vw;
+                border-radius: 10px;
+
+                .Commentor_Name {
+                    font-size: 12px;
+                    font-weight: 600;
+                    color: black;
+                    margin-bottom: 0.5rem;
+                    color: white;
+
+                }
+
+                .Comment_Text {
+                    font-size: 11px;
+                    margin-bottom: 0;
+                    color: white;
+
+                }
+
+                .commentReply {
+                    font-size: 11px;
+                    font-weight: 500;
+                    color: black;
+                    border: none;
+                    outline: none;
+                    background: none;
+                    width: fit-content;
+                }
+            }
+
+            .Comment.flexStart {
+                align-self: flex-start;
+            }
+
+            .Comment.flexEnd {
+                align-self: flex-end;
+            }
+        }
+        .comments_Box::-webkit-scrollbar{
+            width: 0;
+        }
+        .commentInputBox2 {
+            width: 100%;
+            .commentForm2 {
+                width: 100%;
+                display: flex;
+                .commentInput2 {
+                    width: 90%;
+                    height: 2rem;
+                    outline: none;
+                    font-size: 12px;
+                    padding-left: 5px;
+                }
+
+                .commentInsertBtn2 {
+                    width: 10%;
+                    height: 2rem;
+                    border: none;
+                    outline: none;
+                    background-color: royalblue;
+                    color: white;
+                    font-size: 11px;
+                }
+            }
+        }
+    }
+}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Api from '../../API/Api.js';
+import Api, {backendBaseURL} from '../../API/Api.js';
 import { useAuth } from '../../Utils/Context.js';
 import { useNavigate } from 'react-router-dom';
 import UploadCertificateReport from './UploadCertificateReport/UploadCertificateReport.jsx';
@@ -8,6 +8,7 @@ import { toast } from "react-toastify"
 import { MdOutlineModeEditOutline } from "react-icons/md";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import PdfImage from "../../Assets/PdfIcon.png";
+import Comments from '../Comments/Comments.jsx';
 import "./InternshipDetails.scss";
 
 export default function InternshipDetails() {
@@ -25,9 +26,9 @@ export default function InternshipDetails() {
 
                 // Fetch PDF data for each internship
                 const pdfRequests = data.map(internship => {
-                    const certificateRequest = axios.get(`http://localhost:8001/pdfs/internships/${internship.Internship_Certificate_Link}`)
+                    const certificateRequest = axios.get(`${backendBaseURL}/pdfs/internships/${internship.Internship_Certificate_Link}`)
                         .catch(() => null); // Handle error if certificate doesn't exist
-                    const reportRequest = axios.get(`http://localhost:8001/pdfs/internships/${internship.Internship_Report_Link}`)
+                    const reportRequest = axios.get(`${backendBaseURL}/pdfs/internships/${internship.Internship_Report_Link}`)
                         .catch(() => null); // Handle error if report doesn't exist
                     return Promise.all([certificateRequest, reportRequest]);
                 });
@@ -79,7 +80,7 @@ export default function InternshipDetails() {
 
     const handleViewCertificatePdf = (internshipId) => {
         if (pdfData[internshipId] && pdfData[internshipId].certificate) {
-            window.open(`http://localhost:8001/pdfs/internships/${pdfData[internshipId].certificate}`);
+            window.open(`${backendBaseURL}/pdfs/internships/${pdfData[internshipId].certificate}`);
         } else {
             setUploadPdfFiles(prevState => ({
                 ...prevState,
@@ -90,7 +91,7 @@ export default function InternshipDetails() {
 
     const handleViewReportPdf = (internshipId) => {
         if (pdfData[internshipId] && pdfData[internshipId].report) {
-            window.open(`http://localhost:8001/pdfs/internships/${pdfData[internshipId].report}`);
+            window.open(`${backendBaseURL}/pdfs/internships/${pdfData[internshipId].report}`);
         } else {
             setUploadPdfFiles(prevState => ({
                 ...prevState,

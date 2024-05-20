@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Api from '../../API/Api.js';
+import Api,{backendBaseURL} from '../../API/Api.js';
 import { useAuth } from '../../Utils/Context.js';
 import { useNavigate } from 'react-router-dom';
 import UploadProjectCertificateReport from './UploadProjectCertificateReport/UploadProjectCertificateReport.jsx';
@@ -25,9 +25,9 @@ export default function ProjectDetails() {
 
                 // Fetch PDF data for each internship
                 const pdfRequests = data.map(project => {
-                    const certificateRequest = axios.get(`http://localhost:8001/pdfs/projects/${project.Project_Certificate_Link}`)
+                    const certificateRequest = axios.get(`${backendBaseURL}/pdfs/projects/${project.Project_Certificate_Link}`)
                         .catch(() => null); // Handle error if certificate doesn't exist
-                    const reportRequest = axios.get(`http://localhost:8001/pdfs/projects/${project.Project_Report_Link}`)
+                    const reportRequest = axios.get(`${backendBaseURL}/pdfs/projects/${project.Project_Report_Link}`)
                         .catch(() => null); // Handle error if report doesn't exist
                     return Promise.all([certificateRequest, reportRequest]);
                 });
@@ -79,7 +79,7 @@ export default function ProjectDetails() {
 
     const handleViewCertificatePdf = (projectId) => {
         if (projectPdfData[projectId] && projectPdfData[projectId].certificate) {
-            window.open(`http://localhost:8001/pdfs/projects/${projectPdfData[projectId].certificate}`);
+            window.open(`${backendBaseURL}/pdfs/projects/${projectPdfData[projectId].certificate}`);
         } else {
             setUploadProjectPdfFiles(prevState => ({
                 ...prevState,
@@ -90,7 +90,7 @@ export default function ProjectDetails() {
 
     const handleViewReportPdf = (projectId) => {
         if (projectPdfData[projectId] && projectPdfData[projectId].report) {
-            window.open(`http://localhost:8001/pdfs/projects/${projectPdfData[projectId].report}`);
+            window.open(`${backendBaseURL}/pdfs/projects/${projectPdfData[projectId].report}`);
         } else {
             setUploadProjectPdfFiles(prevState => ({
                 ...prevState,

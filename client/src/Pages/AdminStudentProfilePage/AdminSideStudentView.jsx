@@ -4,7 +4,7 @@ import defaultImage from "../../Assets/No_Profile_Picture.jpg";
 import { FaPhone } from "react-icons/fa6";
 import { IoMdMail } from "react-icons/io";
 import "../../Components/StudentDetails/StudentDetails.scss";
-import Api from '../../API/Api.js';
+import Api,{backendBaseURL} from '../../API/Api.js';
 
 export default function AdminSideStudentView() {
     const { userData } = useAuth();
@@ -18,7 +18,7 @@ export default function AdminSideStudentView() {
                 setStudentDetails(studentdata);
                 console.log(studentdata);
                 if (studentdata && studentdata.ProfilePicture) {
-                    const profilePictureURL = `http://localhost:8001/images/${studentdata.ProfilePicture}`;
+                    const profilePictureURL = `${backendBaseURL}/images/${studentdata.ProfilePicture}`;
                     setImageURL(profilePictureURL);
                 }
             }

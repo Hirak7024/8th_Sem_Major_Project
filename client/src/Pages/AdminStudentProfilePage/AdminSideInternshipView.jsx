@@ -1,14 +1,46 @@
 import React, { useState, useEffect } from 'react';
-import Api from '../../API/Api.js';
+import Api, { backendBaseURL } from '../../API/Api.js';
 import { useAuth } from '../../Utils/Context.js';
 import axios from "axios";
 import PdfImage from "../../Assets/PdfIcon.png";
+import Comments from '../../Components/Comments/Comments.jsx';
 import "../../Components/InternshipDetails/InternshipDetails.scss";
+import {toast} from "react-toastify";
 
 export default function AdminSideInternshipView() {
     const { userData } = useAuth();
     const [internships, setInternships] = useState([]);
     const [pdfData, setPdfData] = useState({});
+    const [showCommentBox, setShowCommentBox] = useState(true);
+    const [showComments, setShowComments] = useState(false);
+    const [currentInternshipId, setCurrentInternshipId] = useState(null);
+    const [commentData, setCommentData]= useState({
+        Internship_ID: null,
+        Commentor_Name: userData.user.Admin_Name,
+        Comment: "",
+        Commentor_ID: userData.user.Admin_ID,
+        Commentor_Email: userData.user.Email,
+        Is_Reply: false
+    })
+
+    const handleCommentChange = (e) => {
+        setCommentData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    };
+
+
+    const handleCommentSubmit = async (e, internshipId) => {
+        e.preventDefault();
+
+        try {
+            const updatedCommentData = { ...commentData, Internship_ID: internshipId };
+            const response = await Api.addComment(updatedCommentData);
+            setShowCommentBox(true);
+            setCommentData(prev => ({ ...prev, Comment: "" })); // Clear the comment input
+            toast.success(response.message);
+        } catch (error) {
+            toast.error('Error adding comment:', error);
+        }
+    };
 
     useEffect(() => {
         async function fetchInternships() {
@@ -19,9 +51,9 @@ export default function AdminSideInternshipView() {
 
                 // Fetch PDF data for each internship
                 const pdfRequests = data.map(internship => {
-                    const certificateRequest = axios.get(`http://localhost:8001/pdfs/internships/${internship.Internship_Certificate_Link}`)
+                    const certificateRequest = axios.get(`${backendBaseURL}/pdfs/internships/${internship.Internship_Certificate_Link}`)
                         .catch(() => null); // Handle error if certificate doesn't exist
-                    const reportRequest = axios.get(`http://localhost:8001/pdfs/internships/${internship.Internship_Report_Link}`)
+                    const reportRequest = axios.get(`${backendBaseURL}/pdfs/internships/${internship.Internship_Report_Link}`)
                         .catch(() => null); // Handle error if report doesn't exist
                     return Promise.all([certificateRequest, reportRequest]);
                 });
@@ -47,14 +79,14 @@ export default function AdminSideInternshipView() {
 
     const handleViewCertificatePdf = (internshipId) => {
         if (pdfData[internshipId] && pdfData[internshipId].certificate) {
-            window.open(`http://localhost:8001/pdfs/internships/${pdfData[internshipId].certificate}`);
+            window.open(`${backendBaseURL}/pdfs/internships/${pdfData[internshipId].certificate}`);
         }
     };
 
     const handleViewReportPdf = (internshipId) => {
         if (pdfData[internshipId] && pdfData[internshipId].report) {
-            window.open(`http://localhost:8001/pdfs/internships/${pdfData[internshipId].report}`);
-        } 
+            window.open(`${backendBaseURL}/pdfs/internships/${pdfData[internshipId].report}`);
+        }
     };
 
     return (
@@ -80,6 +112,30 @@ export default function AdminSideInternshipView() {
                             </div>
                         </div>
                     )}
+                    <div className="commentContainer">
+                        {showCommentBox ? (
+                            <button className="addCommentBtn" onClick={() => setShowCommentBox(false)}>Add Comment</button>
+                        ) : (
+                            <div className="commentInputBox">
+                                <form className="commentForm" onSubmit={(e) => handleCommentSubmit(e, internship.Internship_ID)}>
+                                    <input type="text" 
+                                    className='commentInput'
+                                    value={commentData.Comment}
+                                    name='Comment'
+                                    onChange={handleCommentChange}
+                                    required
+                                    />
+                                    <button className="commentInsertBtn" type='submit'>Send</button>
+                                </form>
+                            </div>
+                        )
+                        }
+                        <p className="noOfComments" onClick={() => { 
+                            setCurrentInternshipId(internship.Internship_ID);
+                            setShowComments(true);
+                        }}>Check Comments</p>
+                        {showComments && <Comments key={index} Internship_ID={currentInternshipId} showComments={showComments} setShowComments={setShowComments} />}
+                    </div>
                 </div>
             ))}
         </div>

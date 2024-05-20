@@ -2,53 +2,20 @@ import pool from "../DataBase.js";
 
 // TO ADD A COMMENT
 export const addComment = async (req, res) => {
-    const { Internship_ID, Commentor_Name, Comment, Reply, Replier_Name } = req.body;
+    const { Internship_ID, Commentor_Name, Comment, Commentor_ID, Commentor_Email, Is_Reply } = req.body;
 
     try {
-        // Build the base query and values array
-        let query = 'INSERT INTO comments_internships (';
-        const values = [];
-        const columns = [];
-        const placeholders = [];
+        // Insert new comment
+        const [result] = await pool.execute(
+            'INSERT INTO comments_internships (Internship_ID, Commentor_Name, Comment, Commentor_ID, Commentor_Email, Is_Reply) VALUES (?, ?, ?, ?, ?, ?)',
+            [Internship_ID, Commentor_Name, Comment, Commentor_ID, Commentor_Email, Is_Reply]
+        );
 
-        // Add each field if it is present in the request body
-        if (Internship_ID !== undefined) {
-            columns.push('Internship_ID');
-            values.push(Internship_ID);
-            placeholders.push('?');
-        }
-        if (Commentor_Name !== undefined) {
-            columns.push('Commentor_Name');
-            values.push(Commentor_Name);
-            placeholders.push('?');
-        }
-        if (Comment !== undefined) {
-            columns.push('Comment');
-            values.push(Comment);
-            placeholders.push('?');
-        }
-        if (Reply !== undefined) {
-            columns.push('Reply');
-            values.push(Reply);
-            placeholders.push('?');
-        }
-        if (Replier_Name !== undefined) {
-            columns.push('Replier_Name');
-            values.push(Replier_Name);
-            placeholders.push('?');
-        }
-
-        // Combine columns and placeholders into the query
-        query += columns.join(', ') + ') VALUES (' + placeholders.join(', ') + ')';
-
-        // Execute the query with the values
-        const [result] = await pool.execute(query, values);
-
-        // Retrieve the newly inserted comment's ID
+        // Retrieve the newly inserted comment to get its id
         const insertedId = result.insertId;
 
-        // Prepare response with inserted data
-        const newComment = { id: insertedId, Internship_ID, Commentor_Name, Comment, Reply, Replier_Name };
+        // Prepare response
+        const newComment = { id: insertedId, Internship_ID, Commentor_Name, Comment, Commentor_ID, Commentor_Email, Is_Reply };
 
         res.status(200).json({ data: newComment, message: "Comment added successfully", status_code: 200 });
     } catch (error) {
