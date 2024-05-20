@@ -16,9 +16,9 @@ export default function AdminSideInternshipView() {
     const [currentInternshipId, setCurrentInternshipId] = useState(null);
     const [commentData, setCommentData]= useState({
         Internship_ID: null,
-        Commentor_Name: userData.user.Admin_Name,
+        Commentor_Name: userData.user.Name,
         Comment: "",
-        Commentor_ID: userData.user.Admin_ID,
+        Commentor_ID: userData.user.ID,
         Commentor_Email: userData.user.Email,
         Is_Reply: false
     })

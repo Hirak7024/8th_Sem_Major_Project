@@ -31,10 +31,10 @@ export const RegisterAdmin = async (req, res) => {
         const user = newUser[0];
 
         // Generate JWT token
-        const token = jwt.sign({ Email }, process.env.JWT_KEY, { expiresIn: 60 * 60 * 24 });
+        const token = jwt.sign({ Email, ID: user.Admin_ID, Name: user.Admin_Name  }, process.env.JWT_KEY, { expiresIn: 60 * 60 * 24 });
 
         // Prepare response
-        const userResponse = { Email, Admin_ID: user.Admin_ID, Admin_Name: user.Admin_Name };
+        const userResponse = { Email, ID: user.Admin_ID, Name: user.Admin_Name };
 
         res.status(200).json({ data: { userResponse, token }, message: "Admin Registered Successfully", status_code: 200 });
     } catch (error) {
@@ -62,10 +62,10 @@ export const LoginAdmin = async (req, res) => {
         }
 
         // Generate JWT token
-        const token = jwt.sign({ Email }, process.env.JWT_KEY, { expiresIn: 60 * 60 * 24 });
+        const token = jwt.sign({ Email, ID: user.Admin_ID, Name: user.Admin_Name  }, process.env.JWT_KEY, { expiresIn: 60 * 60 * 24 });
 
         // Prepare response
-        const userResponse = { Email: user.Email, Admin_ID: user.Admin_ID, Admin_Name: user.Admin_Name };
+        const userResponse = { Email, ID: user.Admin_ID, Name: user.Admin_Name  };
 
         res.status(200).json({ data: { userResponse, token }, message: "Login Successful", status_code: 200 });
     } catch (error) {

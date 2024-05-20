@@ -36,8 +36,8 @@ export const AuthProvider = ({ children }) => {
             if (token) {
                 try {
                     const decodedToken = await Api.GetPayloadFromToken(token);
-                    const { Email } = decodedToken.payload;
-                    setUserData({user: {Email: Email}});
+                    const { Email, ID, Name } = decodedToken.payload;
+                    setUserData({user: {Email: Email, ID:ID, Name:Name}});
                     const studentDetailsExist = await Api.checkStudentByEmail(Email);
                     if (studentDetailsExist) {
                         const studentDetails = await Api.checkStudentByEmail(Email);
