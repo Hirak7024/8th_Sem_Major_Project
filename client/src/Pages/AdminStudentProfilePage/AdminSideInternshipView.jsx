@@ -11,7 +11,7 @@ export default function AdminSideInternshipView() {
     const { userData } = useAuth();
     const [internships, setInternships] = useState([]);
     const [pdfData, setPdfData] = useState({});
-    const [showCommentBox, setShowCommentBox] = useState(true);
+    const [showCommentBox, setShowCommentBox] = useState(null); // Updated to track specific internship
     const [showComments, setShowComments] = useState(false);
     const [currentInternshipId, setCurrentInternshipId] = useState(null);
     const [commentData, setCommentData]= useState({
@@ -27,14 +27,13 @@ export default function AdminSideInternshipView() {
         setCommentData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     };
 
-
     const handleCommentSubmit = async (e, internshipId) => {
         e.preventDefault();
 
         try {
             const updatedCommentData = { ...commentData, Internship_ID: internshipId };
             const response = await Api.addComment(updatedCommentData);
-            setShowCommentBox(true);
+            setShowCommentBox(null); // Hide the comment box after submission
             setCommentData(prev => ({ ...prev, Comment: "" })); // Clear the comment input
             toast.success(response.message);
         } catch (error) {
@@ -113,9 +112,7 @@ export default function AdminSideInternshipView() {
                         </div>
                     )}
                     <div className="commentContainer">
-                        {showCommentBox ? (
-                            <button className="addCommentBtn" onClick={() => setShowCommentBox(false)}>Add Comment</button>
-                        ) : (
+                        {showCommentBox === internship.Internship_ID ? (
                             <div className="commentInputBox">
                                 <form className="commentForm" onSubmit={(e) => handleCommentSubmit(e, internship.Internship_ID)}>
                                     <input type="text" 
@@ -128,8 +125,9 @@ export default function AdminSideInternshipView() {
                                     <button className="commentInsertBtn" type='submit'>Send</button>
                                 </form>
                             </div>
-                        )
-                        }
+                        ) : (
+                            <button className="addCommentBtn" onClick={() => setShowCommentBox(internship.Internship_ID)}>Add Comment</button>
+                        )}
                         <p className="noOfComments" onClick={() => { 
                             setCurrentInternshipId(internship.Internship_ID);
                             setShowComments(true);
