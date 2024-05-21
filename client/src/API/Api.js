@@ -4,11 +4,28 @@ export const backendBaseURL = "http://localhost:8001";
 
 const Api = {
 
-
+     // API call to add a comment
+     addCommentProject: async (commentData) => {
+        try {
+            const response = await axios.post(`${backendBaseURL}/api/comments/projects/addComment`, commentData);
+            return response.data;
+        } catch (error) {
+            throw error.response.data.message;
+        }
+    },
     // API call to add a comment
     addComment: async (commentData) => {
         try {
             const response = await axios.post(`${backendBaseURL}/api/comments/addComment`, commentData);
+            return response.data;
+        } catch (error) {
+            throw error.response.data.message;
+        }
+    },
+     // API Call to fetch comments by Internship ID
+     fetchCommentsByProjectId: async (Project_ID) => {
+        try {
+            const response = await axios.post(`${backendBaseURL}/api/comments/projects/getCommentByProjectId`, { Project_ID });
             return response.data;
         } catch (error) {
             throw error.response.data.message;

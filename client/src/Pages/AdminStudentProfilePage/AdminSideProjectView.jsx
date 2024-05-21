@@ -3,12 +3,43 @@ import Api,{backendBaseURL} from '../../API/Api.js';
 import { useAuth } from '../../Utils/Context.js';
 import axios from "axios";
 import PdfImage from "../../Assets/PdfIcon.png";
+import {toast} from "react-toastify";
+import CommentsProjects from '../../Components/Comments/CommentsProjects.jsx';
 import "../../Components/ProjectDetails/ProjectDetails.scss";
 
 export default function AdminSideProjectView() {
     const { userData } = useAuth();
     const [projects, setProjects] = useState([]);
     const [projectPdfData, setProjectPdfData] = useState({});
+    const [showCommentBox, setShowCommentBox] = useState(null); // Updated to track specific internship
+    const [showComments, setShowComments] = useState(false);
+    const [currentProjectId, setCurrentProjectId] = useState(null);
+    const [commentData, setCommentData]= useState({
+        Project_ID: null,
+        Commentor_Name: userData.user.Name,
+        Comment: "",
+        Commentor_ID: userData.user.ID,
+        Commentor_Email: userData.user.Email,
+        Is_Reply: false
+    })
+
+    const handleCommentChange = (e) => {
+        setCommentData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    };
+
+    const handleCommentSubmit = async (e, projectId) => {
+        e.preventDefault();
+
+        try {
+            const updatedCommentData = { ...commentData, Project_ID: projectId };
+            const response = await Api.addCommentProject(updatedCommentData);
+            setShowCommentBox(null); // Hide the comment box after submission
+            setCommentData(prev => ({ ...prev, Comment: "" })); // Clear the comment input
+            toast.success(response.message);
+        } catch (error) {
+            toast.error('Error adding comment:', error);
+        }
+    };
 
     useEffect(() => {
         async function fetchInternships() {
@@ -82,6 +113,29 @@ export default function AdminSideProjectView() {
                             </div>
                         </div>
                     )}
+                    <div className="commentContainer">
+                        {showCommentBox === project.Project_ID ? (
+                            <div className="commentInputBox">
+                                <form className="commentForm" onSubmit={(e) => handleCommentSubmit(e, project.Project_ID)}>
+                                    <input type="text" 
+                                    className='commentInput'
+                                    value={commentData.Comment}
+                                    name='Comment'
+                                    onChange={handleCommentChange}
+                                    required
+                                    />
+                                    <button className="commentInsertBtn" type='submit'>Send</button>
+                                </form>
+                            </div>
+                        ) : (
+                            <button className="addCommentBtn" onClick={() => setShowCommentBox(project.Project_ID)}>Add Comment</button>
+                        )}
+                        <p className="noOfComments" onClick={() => { 
+                            setCurrentProjectId(project.Project_ID);
+                            setShowComments(true);
+                        }}>Check Comments</p>
+                        {showComments && <CommentsProjects key={index} Project_ID={currentProjectId} showComments={showComments} setShowComments={setShowComments} />}
+                    </div>
                 </div>
             ))}
         </div>

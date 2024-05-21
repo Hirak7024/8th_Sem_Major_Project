@@ -177,5 +177,65 @@
                 }
             }
         }
+        .commentContainer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.5rem;
+
+            .addCommentBtn {
+                font-size: 12px;
+                outline: none;
+                border: none;
+                background-color: royalblue;
+                color: white;
+                width: 10rem;
+                height: 2rem;
+            }
+
+            .addCommentBtn:hover {
+                cursor: pointer;
+                background-color: white;
+                border: 2px solid royalblue;
+                color: royalblue;
+                font-weight: 600;
+            }
+
+            .noOfComments {
+                font-size: 15px;
+            }
+
+            .noOfComments:hover {
+                cursor: pointer;
+                color: royalblue;
+                font-weight: 600;
+            }
+
+            .commentInputBox {
+                width: 70%;
+                .commentForm {
+                    width: 100%;
+                    display: flex;
+                    .commentInput {
+                        width: 90%;
+                        height: 2rem;
+                        outline: none;
+                        font-size: 12px;
+                        padding-left: 5px;
+                    }
+
+                    .commentInsertBtn {
+                        width: 10%;
+                        height: 2rem;
+                        border: none;
+                        outline: none;
+                        background-color: royalblue;
+                        color: white;
+                        font-size: 11px;
+                    }
+                }
+            }
+
+        }
     }
 }
