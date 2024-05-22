@@ -86,14 +86,14 @@ export default function InternshipDetailsUpdateForm() {
     }
 
     // Start Date validation
-    if (!/^\d{2}-\d{2}-\d{4}$/.test(internshipDetails.Internship_Start_Date)) {
-      newErrors.Internship_Start_Date = "*Start Date should be in DD-MM-YYYY format";
+    if (internshipDetails.Internship_Start_Date.trim() === "") {
+      newErrors.Internship_Organisation = "*Start Date field can't be empty";
       isValid = false;
     }
 
     // End Date validation
-    if (!/^\d{2}-\d{2}-\d{4}$/.test(internshipDetails.Internship_End_Date)) {
-      newErrors.Internship_End_Date = "*End Date should be in DD-MM-YYYY format";
+    if (internshipDetails.Internship_End_Date.trim() === "") {
+      newErrors.Internship_Organisation = "*End Date field can't be empty";
       isValid = false;
     }
 

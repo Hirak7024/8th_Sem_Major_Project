@@ -5,16 +5,16 @@ import { useAuth } from '../../Utils/Context.js';
 import { toast } from 'react-toastify';
 import "./Login.scss";
 
-export default function Login() {
+export default function StudentLogin() {
     const navigate = useNavigate();
     const { loginStudent, loginAdmin } = useAuth();
     const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState({
-        Email: "",
+        UserName: "",
         Password: ""
     });
     const [errors, setErrors] = useState({
-        Email: "",
+        UserName: "",
         Password: ""
     });
 
@@ -46,16 +46,13 @@ export default function Login() {
     const validateForm = () => {
         let isValid = true;
         const newErrors = {
-            Email: "",
+            UserName: "",
             Password: ""
         };
 
-        // Email validation
-        if (formData.Email.length === 0) {
-            newErrors.Email = "*Email field can't be empty";
-            isValid = false;
-        } else if (!formData.Email.match(/^.+@gmail\.com$/)) {
-            newErrors.Email = "*Enter a valid gmail address";
+        // UserName validation
+        if (formData.UserName.length === 0) {
+            newErrors.UserName = "*UserName field can't be empty";
             isValid = false;
         }
 
@@ -69,36 +66,35 @@ export default function Login() {
         return isValid;
     };
 
-    const handleSubmit = async (e, userType) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (validateForm()) {
             let result;
-            if (userType === 'student') {
-                result = await loginStudent(formData);
-                if (result.success) {
-                    toast.success(result.message);
-                    if (result.studentDetailsExist) {
-                        navigate("/studentProfile");
-                    } else {
-                        navigate("/form/studentDetails");
-                    }
+            result = await loginStudent(formData);
+            if (result.success) {
+                toast.success(result.message);
+                if (result.studentDetailsExist) {
+                    navigate("/studentProfile");
                 } else {
-                    // Check if the message indicates student details do not exist
-                    if (result.message === "Student details do not exist") {
-                        navigate("/form/studentDetails");
-                    } else {
-                        toast.error(result.message);
-                    }
+                    navigate("/form/studentDetails");
                 }
-            } else if (userType === 'admin') {
-                result = await loginAdmin(formData);
-                if (result.success) {
-                    toast.success(result.message);
-                    navigate("/adminPage");
+            } else {
+                // Check if the message indicates student details do not exist
+                if (result.message === "Student details do not exist") {
+                    navigate("/form/studentDetails");
                 } else {
                     toast.error(result.message);
                 }
             }
+            // else if (userType === 'admin') {
+            //     result = await loginAdmin(formData);
+            //     if (result.success) {
+            //         toast.success(result.message);
+            //         navigate("/adminPage");
+            //     } else {
+            //         toast.error(result.message);
+            //     }
+            // }
         }
     };
 
@@ -107,18 +103,19 @@ export default function Login() {
     return (
         <div className='login_Container'>
             {/* <h1 className="close_mark_btn">X</h1> */}
+            <h1 className="goToAdmin" onClick={()=>navigate("/login/admin")}>Admin</h1>
             <form className='login_form'>
                 <h1 className="formHeading">Login</h1>
                 <div className="labelInput">
-                    <label htmlFor="email">Enter Your Email : </label>
+                    <label htmlFor="UserName">Enter Your UserName : </label>
                     <input
                         type="text"
-                        id='email'
-                        name='Email'
-                        value={formData.Email}
+                        id='UserName'
+                        name='UserName'
+                        value={formData.UserName}
                         onChange={handleChange}
                     />
-                    <p className="error">{errors.Email}</p>
+                    <p className="error">{errors.UserName}</p>
                 </div>
                 <div className="labelInput">
                     <label htmlFor="password">Enter Your Password : </label>
@@ -135,11 +132,11 @@ export default function Login() {
                     </div>
                     <p className="error">{errors.Password}</p>
                 </div>
-                <button type='submit' className='login_btn' onClick={(e) => handleSubmit(e, 'student')}>Login as Student</button>
-                <button type='submit' className='login_btn' onClick={(e) => handleSubmit(e, 'admin')}>Login as Admin</button>
-                <div className='registerLink_Box'>
+                <button type='submit' className='login_btn' onClick={(e) => handleSubmit(e)}>Login</button>
+                {/* <button type='submit' className='login_btn' onClick={(e) => handleSubmit(e, 'admin')}>Login as Admin</button> */}
+                {/* <div className='registerLink_Box'>
                     Don't Have an Account ? <Link to={"/register"} className='register_Link'>Sign Up</Link>
-                </div>
+                </div> */}
             </form>
         </div>
     )

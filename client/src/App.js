@@ -1,7 +1,9 @@
 import React from 'react';
 import { Routes, Route } from "react-router-dom";
-import Login from './Pages/Login/Login';
-import Register from './Pages/Register/Register';
+import StudentLogin from './Pages/Login/StudentLogin';
+import StudentRegister from './Pages/Register/StudentRegister';
+import AdminLogin from './Pages/Login/AdminLogin';
+import AdminRegister from './Pages/Register/AdminRegister';
 import StudentProfile from './Pages/StudentProfile/StudentProfile';
 import StudentDetailsForm from './Components/StudentDetails/StudentDetailsForm/StudentDetailsForm';
 import InternshipDetailsForm from './Components/InternshipDetails/InternShipDetailsForm/InternshipDetailsForm';
@@ -21,9 +23,11 @@ export default function App() {
     <>
     <Navbar/>
       <Routes>
-        <Route path='/' element={<Login />} />
+        <Route path='/' element={<StudentLogin />} />
+        <Route path='/login/admin' element={<AdminLogin />} />
+        <Route path='/register/student' element={<StudentRegister />} />
+        <Route path='/register/admin' element={<AdminRegister />} />
         <Route path='/studentProfile' element={<StudentProfile />} />
-        <Route path='/register' element={<Register />} />
         <Route path='/form/studentDetails' element={<StudentDetailsForm />} />
         <Route path='/form/internshipDetails' element={<InternshipDetailsForm />} />
         <Route path='/form/projectDetails' element={<ProjectDetailsForm />} />

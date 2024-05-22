@@ -4,8 +4,8 @@ export const backendBaseURL = "http://localhost:8001";
 
 const Api = {
 
-     // API call to add a comment
-     addCommentProject: async (commentData) => {
+    // API call to add a comment
+    addCommentProject: async (commentData) => {
         try {
             const response = await axios.post(`${backendBaseURL}/api/comments/projects/addComment`, commentData);
             return response.data;
@@ -22,8 +22,8 @@ const Api = {
             throw error.response.data.message;
         }
     },
-     // API Call to fetch comments by Internship ID
-     fetchCommentsByProjectId: async (Project_ID) => {
+    // API Call to fetch comments by Internship ID
+    fetchCommentsByProjectId: async (Project_ID) => {
         try {
             const response = await axios.post(`${backendBaseURL}/api/comments/projects/getCommentByProjectId`, { Project_ID });
             return response.data;
@@ -191,10 +191,10 @@ const Api = {
             throw error.response.data.message;
         }
     },
-    // API call to check if student details exist using email
-    checkStudentByEmail: async (email) => {
+    // API call to check if student details exist using UserName
+    checkStudentByUserName: async (userName) => {
         try {
-            const response = await axios.post(`${backendBaseURL}/api/studentdetails/getStudentDetails/byEmail`, { Email: email });
+            const response = await axios.post(`${backendBaseURL}/api/studentdetails/getStudentDetails/byUserName`, { UserName: userName });
             return response.data;
         } catch (error) {
             throw error.response.data.message;

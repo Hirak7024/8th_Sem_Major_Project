@@ -3,7 +3,7 @@ import multer from "multer";
 import path from "path";
 import pool from "../DataBase.js"
 import { pool2 } from '../DataBase.js';
-import { InsertStudent, UpdateStudent, DeleteStudent, checkStudentByEmail, fetchAllDetails } from "../Controllers/Students.js";
+import { InsertStudent, UpdateStudent, DeleteStudent, checkStudentByUserName, fetchAllDetails } from "../Controllers/Students.js";
 
 const router = express.Router();
 
@@ -20,7 +20,7 @@ const uploadImage = multer({ storage: imageStorage }).single("image");
 router.post('/students/insert', InsertStudent);
 router.put('/students/update', UpdateStudent);
 router.delete('/students/delete', DeleteStudent);
-router.post("/getStudentDetails/byEmail", checkStudentByEmail);
+router.post("/getStudentDetails/byUserName", checkStudentByUserName);
 router.post("/getAll/studentDetails/internshipAndProject", fetchAllDetails);
 
 router.post("/upload/profilePicture", (req, res) => {

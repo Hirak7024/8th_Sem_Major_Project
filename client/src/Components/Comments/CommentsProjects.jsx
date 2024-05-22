@@ -12,7 +12,7 @@ export default function CommentsProjects({ showComments, setShowComments, Projec
         Commentor_Name: userData.user.Name,
         Comment: "",
         Commentor_ID: userData.user.ID,
-        Commentor_Email: userData.user.Email,
+        Commentor_UserName: userData.user.UserName,
         Is_Reply: false
     })
 

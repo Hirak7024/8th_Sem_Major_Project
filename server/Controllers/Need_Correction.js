@@ -2,7 +2,7 @@ import pool from "../DataBase.js";
 
 // TO INSERT VALUES INTO TABLE NEED_CORRECTION
 export const insertIntoNeedCorrection = async (req, res) => {
-  const { Student_ID, Student_Email, Student_RollNo, Student_Name } = req.body;
+  const { Student_ID, Student_UserName, Student_RollNo, Student_Name } = req.body;
 
   // Check if the student roll number already exists
   const [existingStudent] = await pool.query('SELECT * FROM need_correction WHERE Student_ID = ?', [Student_ID]);
@@ -13,8 +13,8 @@ export const insertIntoNeedCorrection = async (req, res) => {
   try {
     // Insert values into the need_correction table
     await pool.query(
-      'INSERT INTO need_correction (Student_ID, Student_Email, Student_RollNo, Student_Name) VALUES (?, ?, ?, ?)',
-      [Student_ID, Student_Email, Student_RollNo, Student_Name]
+      'INSERT INTO need_correction (Student_ID, Student_UserName, Student_RollNo, Student_Name) VALUES (?, ?, ?, ?)',
+      [Student_ID, Student_UserName, Student_RollNo, Student_Name]
     );
     
     // Respond with success message

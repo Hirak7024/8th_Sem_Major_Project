@@ -13,7 +13,7 @@ export default function AdminStudentProfilePage() {
 
   const studentData = {
     Student_ID: userData?.studentDetails?.Student_ID,
-    Student_Email: userData?.studentDetails?.Email,
+    Student_UserName: userData?.studentDetails?.UserName,
     Student_RollNo: userData?.studentDetails?.Roll_No,
     Student_Name: userData?.studentDetails?.Name
   }

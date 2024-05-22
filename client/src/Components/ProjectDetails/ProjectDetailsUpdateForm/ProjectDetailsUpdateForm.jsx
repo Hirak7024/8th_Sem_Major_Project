@@ -84,14 +84,14 @@ export default function ProjectDetailsUpdateForm() {
     }
 
     // Start Date validation
-    if (!/^\d{2}-\d{2}-\d{4}$/.test(projectDetails.Project_Start_Date)) {
-      newErrors.Project_Start_Date = "*Start Date should be in DD-MM-YYYY format";
+    if (projectDetails.Project_Start_Date.trim() === "") {
+      newErrors.Internship_Organisation = "*Start Date field can't be empty";
       isValid = false;
     }
 
     // End Date validation
-    if (!/^\d{2}-\d{2}-\d{4}$/.test(projectDetails.Project_End_Date)) {
-      newErrors.Project_End_Date = "*End Date should be in DD-MM-YYYY format";
+    if (projectDetails.Project_End_Date.trim() === "") {
+      newErrors.Internship_Organisation = "*End Date field can't be empty";
       isValid = false;
     }
 
@@ -140,7 +140,7 @@ export default function ProjectDetailsUpdateForm() {
           <div className="labelInput" id='GridBox_3'>
             <label htmlFor="startDate">Start Date : </label>
             <input
-              type="text"
+              type="date"
               id='startDate'
               name='Project_Start_Date'
               value={projectDetails.Project_Start_Date}
@@ -151,7 +151,7 @@ export default function ProjectDetailsUpdateForm() {
           <div className="labelInput" id='GridBox_4'>
             <label htmlFor="endDate">End Date : </label>
             <input
-              type="text"
+              type="date"
               id='endDate'
               name='Project_End_Date'
               value={projectDetails.Project_End_Date}

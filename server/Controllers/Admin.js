@@ -4,19 +4,19 @@ import pool from '../DataBase.js';
 
 //TO REGISTER NEW ADMIN
 export const RegisterAdmin = async (req, res) => {
-    const { Email, Password, SignUpKey, Admin_Name } = req.body;
-    const serverSignUpKey = process.env.AdminSignUpKey;
+    const { UserName, Password, Name } = req.body;
+    // const serverSignUpKey = process.env.AdminSignUpKey;
 
     try {
         // Check if SignUpKey matches the server SignUpKey
-        if (SignUpKey !== serverSignUpKey) {
-            return res.status(400).json({ message: "Invalid Sign Up Key", status_code: 400 });
-        }
+        // if (SignUpKey !== serverSignUpKey) {
+        //     return res.status(400).json({ message: "Invalid Sign Up Key", status_code: 400 });
+        // }
 
         // Check if user already exists
-        const [existingUsers] = await pool.execute('SELECT * FROM admin WHERE Email = ?', [Email]);
+        const [existingUsers] = await pool.execute('SELECT * FROM admin WHERE UserName = ?', [UserName]);
         if (existingUsers.length > 0) {
-            return res.status(400).json({ message: "Admin is already registered", status_code: 400 });
+            return res.status(400).json({ message: "UserName already exists", status_code: 400 });
         }
 
         // Hash the password
@@ -24,17 +24,17 @@ export const RegisterAdmin = async (req, res) => {
         const hashedPass = await bcrypt.hash(Password, salt);
 
         // Insert new user
-        await pool.execute('INSERT INTO admin (Email, Password,Admin_Name) VALUES (?, ?,?)', [Email, hashedPass, Admin_Name]);
+        await pool.execute('INSERT INTO admin (UserName, Password,Name) VALUES (?, ?,?)', [UserName, hashedPass, Name]);
 
         // Retrieve the newly inserted user to get Admin_ID
-        const [newUser] = await pool.execute('SELECT Admin_ID,Admin_Name FROM admin WHERE Email = ?', [Email]);
+        const [newUser] = await pool.execute('SELECT Admin_ID,Name FROM admin WHERE UserName = ?', [UserName]);
         const user = newUser[0];
 
         // Generate JWT token
-        const token = jwt.sign({ Email, ID: user.Admin_ID, Name: user.Admin_Name  }, process.env.JWT_KEY, { expiresIn: 60 * 60 * 24 });
+        const token = jwt.sign({ UserName, ID: user.Admin_ID, Name: user.Name  }, process.env.JWT_KEY, { expiresIn: 60 * 60 * 24 });
 
         // Prepare response
-        const userResponse = { Email, ID: user.Admin_ID, Name: user.Admin_Name };
+        const userResponse = { UserName, ID: user.Admin_ID, Name: user.Name };
 
         res.status(200).json({ data: { userResponse, token }, message: "Admin Registered Successfully", status_code: 200 });
     } catch (error) {
@@ -44,11 +44,11 @@ export const RegisterAdmin = async (req, res) => {
 
 // TO LOGIN ADMIN
 export const LoginAdmin = async (req, res) => {
-    const { Email, Password } = req.body;
+    const { UserName, Password } = req.body;
 
     try {
         // Check if user exists
-        const [users] = await pool.execute('SELECT * FROM admin WHERE Email = ?', [Email]);
+        const [users] = await pool.execute('SELECT * FROM admin WHERE UserName = ?', [UserName]);
         if (users.length === 0) {
             return res.status(404).json({ message: "Admin doesn't exist", status_code: 404 });
         }
@@ -62,10 +62,10 @@ export const LoginAdmin = async (req, res) => {
         }
 
         // Generate JWT token
-        const token = jwt.sign({ Email, ID: user.Admin_ID, Name: user.Admin_Name  }, process.env.JWT_KEY, { expiresIn: 60 * 60 * 24 });
+        const token = jwt.sign({ UserName, ID: user.Admin_ID, Name: user.Name  }, process.env.JWT_KEY, { expiresIn: 60 * 60 * 24 });
 
         // Prepare response
-        const userResponse = { Email, ID: user.Admin_ID, Name: user.Admin_Name  };
+        const userResponse = { UserName, ID: user.Admin_ID, Name: user.Name  };
 
         res.status(200).json({ data: { userResponse, token }, message: "Login Successful", status_code: 200 });
     } catch (error) {

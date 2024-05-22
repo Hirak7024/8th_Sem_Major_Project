@@ -31,7 +31,7 @@ export default function PendingCorrection() {
         if (selectedStudentRow) {
             updateStudentDetails({
                 "Student_ID": selectedStudentRow.Student_ID,
-                "Email": selectedStudentRow.Student_Email,
+                "UserName": selectedStudentRow.Student_UserName,
                 "Roll_No": selectedStudentRow.Student_RollNo,
                 "Name": selectedStudentRow.Student_Name
             });
@@ -45,7 +45,7 @@ export default function PendingCorrection() {
 
     const columns = [
         { field: 'Student_ID', headerName: 'Student ID', width: 150 },
-        { field: 'Student_Email', headerName: 'Email', width: 200 },
+        { field: 'Student_UserName', headerName: 'UserName', width: 200 },
         { field: 'Student_RollNo', headerName: 'Roll No', width: 150 },
         { field: 'Student_Name', headerName: 'Name', width: 150 },
     ];

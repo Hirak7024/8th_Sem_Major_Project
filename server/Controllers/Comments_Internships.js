@@ -2,20 +2,20 @@ import pool from "../DataBase.js";
 
 // TO ADD A COMMENT
 export const addComment = async (req, res) => {
-    const { Internship_ID, Commentor_Name, Comment, Commentor_ID, Commentor_Email, Is_Reply } = req.body;
+    const { Internship_ID, Commentor_Name, Comment, Commentor_ID, Commentor_UserName, Is_Reply } = req.body;
 
     try {
         // Insert new comment
         const [result] = await pool.execute(
-            'INSERT INTO comments_internships (Internship_ID, Commentor_Name, Comment, Commentor_ID, Commentor_Email, Is_Reply) VALUES (?, ?, ?, ?, ?, ?)',
-            [Internship_ID, Commentor_Name, Comment, Commentor_ID, Commentor_Email, Is_Reply]
+            'INSERT INTO comments_internships (Internship_ID, Commentor_Name, Comment, Commentor_ID, Commentor_UserName, Is_Reply) VALUES (?, ?, ?, ?, ?, ?)',
+            [Internship_ID, Commentor_Name, Comment, Commentor_ID, Commentor_UserName, Is_Reply]
         );
 
         // Retrieve the newly inserted comment to get its id
         const insertedId = result.insertId;
 
         // Prepare response
-        const newComment = { id: insertedId, Internship_ID, Commentor_Name, Comment, Commentor_ID, Commentor_Email, Is_Reply };
+        const newComment = { id: insertedId, Internship_ID, Commentor_Name, Comment, Commentor_ID, Commentor_UserName, Is_Reply };
 
         res.status(200).json({ data: newComment, message: "Comment added successfully", status_code: 200 });
     } catch (error) {

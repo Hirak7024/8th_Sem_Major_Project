@@ -14,7 +14,7 @@ export default function AdminSideStudentView() {
     useEffect(() => {
         const fetchData = async () => {
             if (userData && userData.studentDetails) {
-                const studentdata = await Api.checkStudentByEmail(userData?.studentDetails?.Email);
+                const studentdata = await Api.checkStudentByUserName(userData?.studentDetails?.UserName);
                 setStudentDetails(studentdata);
                 console.log(studentdata);
                 if (studentdata && studentdata.ProfilePicture) {

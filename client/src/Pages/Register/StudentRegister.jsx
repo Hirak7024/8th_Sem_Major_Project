@@ -1,47 +1,44 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from "../../Utils/Context.js";
 import { toast } from 'react-toastify';
+import "../Login/Login.scss";
 
-export default function Register() {
+export default function StudentRegister() {
   const navigate = useNavigate();
   const { registerStudent, registerAdmin } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
-  const [showSignUpKey, setShowSignUpKey] = useState(false);
   const [formData, setFormData] = useState({
-    Email: "",
+    UserName: "",
     Password: "",
-    SignUpKey: "",
+    Name: "",
   });
   const [errors, setErrors] = useState({
-    Email: "",
+    UserName: "",
     Password: "",
-    SignUpKey: "",
+    Name: "",
   });
 
   useEffect(() => {
     // Prevent the user from navigating back using the browser's back button
     const disableBackButton = () => {
+      window.history.pushState(null, "", window.location.href);
+      window.onpopstate = () => {
         window.history.pushState(null, "", window.location.href);
-        window.onpopstate = () => {
-            window.history.pushState(null, "", window.location.href);
-        };
+      };
     };
 
     disableBackButton();
 
     // Cleanup on component unmount
     return () => {
-        window.onpopstate = null;
+      window.onpopstate = null;
     };
-}, []);
+  }, []);
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
-  }
-  const toggleShowSignUpKey = () => {
-    setShowSignUpKey(!showSignUpKey);
   }
 
   const handleChange = (e) => {
@@ -51,17 +48,14 @@ export default function Register() {
   const validateForm = () => {
     let isValid = true;
     const newErrors = {
-      Email: "",
+      UserName: "",
       Password: "",
-      SignUpKey: ""
+      Name: ""
     };
 
-    // Email validation
-    if (formData.Email.length === 0) {
-      newErrors.Email = "*Email field can't be empty";
-      isValid = false;
-    } else if (!formData.Email.match(/^.+@gmail\.com$/)) {
-      newErrors.Email = "*Enter a valid gmail address";
+    // UserName validation
+    if (formData.UserName.length === 0) {
+      newErrors.UserName = "*UserName field can't be empty";
       isValid = false;
     }
 
@@ -72,8 +66,8 @@ export default function Register() {
     }
 
     //Sign Up Key Validation
-    if (formData.SignUpKey.length === 0) {
-      newErrors.SignUpKey = "*Sign Up Key can't be empty";
+    if (formData.Name.length === 0) {
+      newErrors.Name = "*Name can't be empty";
       isValid = false;
     }
 
@@ -81,27 +75,26 @@ export default function Register() {
     return isValid;
   };
 
-  const handleSubmit = async (e, userType) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
       let result;
-      if (userType === 'student') {
-        result = await registerStudent(formData);
-        if (result.success) {
-          toast.success(result.message);
-          navigate("/form/studentDetails");
-        } else {
-          toast.error(result.message);
-        }
-      } else if (userType === 'admin') {
-        result = await registerAdmin(formData);
-        if (result.success) {
-          toast.success(result.message);
-          navigate("/adminPage");
-        } else {
-          toast.error(result.message);
-        }
+      result = await registerStudent(formData);
+      if (result.success) {
+        toast.success(result.message);
+        navigate("/form/studentDetails");
+      } else {
+        toast.error(result.message);
       }
+      // else if (userType === 'admin') {
+      //   result = await registerAdmin(formData);
+      //   if (result.success) {
+      //     toast.success(result.message);
+      //     navigate("/adminPage");
+      //   } else {
+      //     toast.error(result.message);
+      //   }
+      // }
     }
   };
 
@@ -112,15 +105,26 @@ export default function Register() {
       <form className='login_form' onSubmit={handleSubmit}>
         <h1 className="formHeading">Register</h1>
         <div className="labelInput">
-          <label htmlFor="email">Enter Your Email : </label>
+          <label htmlFor="name">Enter Your Name : </label>
           <input
             type="text"
-            id='email'
-            name='Email'
-            value={formData.Email}
+            id='name'
+            name='Name'
+            value={formData.Name}
             onChange={handleChange}
           />
-          <p className="error">{errors.Email}</p>
+          <p className="error">{errors.Name}</p>
+        </div>
+        <div className="labelInput">
+          <label htmlFor="UserName">Enter Your UserName : </label>
+          <input
+            type="text"
+            id='UserName'
+            name='UserName'
+            value={formData.UserName}
+            onChange={handleChange}
+          />
+          <p className="error">{errors.UserName}</p>
         </div>
         <div className="labelInput">
           <label htmlFor="password">Enter Your Password : </label>
@@ -137,26 +141,11 @@ export default function Register() {
           </div>
           <p className="error">{errors.Password}</p>
         </div>
-        <div className="labelInput">
-          <label htmlFor="password">Enter Sign Up Key : </label>
-          <div className="password_container">
-            <input
-              type={showSignUpKey ? "text" : "password"}
-              className='password_input'
-              id='signupkey'
-              name='SignUpKey'
-              value={formData.SignUpKey}
-              onChange={handleChange}
-            />
-            {showPassword ? <AiFillEye className='icon' onClick={toggleShowSignUpKey} /> : <AiFillEyeInvisible className='icon' size={22} onClick={toggleShowSignUpKey} />}
-            <p className="error">{errors.SignUpKey}</p>
-          </div>
-        </div>
-        <button type='submit' className='login_btn' onClick={(e) => handleSubmit(e, 'student')}>Register as Student</button>
-        <button type='submit' className='login_btn' onClick={(e) => handleSubmit(e, 'admin')}>Register as Admin</button>
-        <div className='registerLink_Box'>
+        <button type='submit' className='login_btn' onClick={(e) => handleSubmit(e)}>Register</button>
+        {/* <button type='submit' className='login_btn' onClick={(e) => handleSubmit(e, 'admin')}>Register as Admin</button> */}
+        {/* <div className='registerLink_Box'>
           Already Have an Account ? <Link to={"/"} className='register_Link'>login</Link>
-        </div>
+        </div> */}
       </form>
     </div>
   )

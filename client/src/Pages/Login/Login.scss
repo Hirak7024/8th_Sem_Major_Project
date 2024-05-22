@@ -23,6 +23,18 @@
             font-size: 15px;
         }
     }
+    .goToAdmin{
+        font-size: 15px;
+        font: 600;
+        color: white;
+        position: absolute;
+        top: 1.5rem;
+        right: 2rem;
+    }
+    .goToAdmin:hover{
+        cursor: pointer;
+        text-decoration: underline;
+    }
 
     .login_form {
         display: flex;

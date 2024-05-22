@@ -36,11 +36,11 @@ export const AuthProvider = ({ children }) => {
             if (token) {
                 try {
                     const decodedToken = await Api.GetPayloadFromToken(token);
-                    const { Email, ID, Name } = decodedToken.payload;
-                    setUserData({user: {Email: Email, ID:ID, Name:Name}});
-                    const studentDetailsExist = await Api.checkStudentByEmail(Email);
+                    const { UserName, ID, Name } = decodedToken.payload;
+                    setUserData({user: {UserName: UserName, ID:ID, Name:Name}});
+                    const studentDetailsExist = await Api.checkStudentByUserName(UserName);
                     if (studentDetailsExist) {
-                        const studentDetails = await Api.checkStudentByEmail(Email);
+                        const studentDetails = await Api.checkStudentByUserName(UserName);
                         setUserData(prev => ({ ...prev, studentDetails }));
                     }
                 } catch (error) {
@@ -106,9 +106,9 @@ export const AuthProvider = ({ children }) => {
             localStorage.setItem("authToken", token);
 
             // Check if student details exist
-            const studentDetailsExist = await Api.checkStudentByEmail(formData.Email);
+            const studentDetailsExist = await Api.checkStudentByUserName(formData.UserName);
             if (studentDetailsExist) {
-                const studentDetails = await Api.checkStudentByEmail(formData.Email);
+                const studentDetails = await Api.checkStudentByUserName(formData.UserName);
                 setUserData(prev => ({ ...prev, studentDetails }));
                 return { success: true, message: data.message, studentDetailsExist: true };
             } else {

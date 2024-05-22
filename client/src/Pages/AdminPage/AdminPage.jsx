@@ -82,6 +82,7 @@ export default function AdminPage() {
     updateStudentDetails({
       "Student_ID": selectedStudentRow.Student_ID,
       "Student_Auth_ID": selectedStudentRow.Student_Auth_ID,
+      "UserName":selectedStudentRow.UserName,
       "Roll_No": selectedStudentRow.Roll_No,
       "Email": selectedStudentRow.Email,
       "Name": selectedStudentRow.Name,

@@ -5,14 +5,14 @@ const pool = await mysql.createPool({
     host:"localhost",
     user:"root",
     password: "HiraK@#2808",
-    database:"jec"
+    database:"jec2"
 });
 
 export const pool2 = await mysql2.createPool({
     host:"localhost",
     user:"root",
     password: "HiraK@#2808",
-    database:"jec"
+    database:"jec2"
 });
 
 export default pool;
