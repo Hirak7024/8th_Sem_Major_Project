@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from "../../Utils/Context.js";
 import { toast } from 'react-toastify';
-import "../Login/Login.scss";
+import SideBar from '../../Components/SideBar/SideBar.jsx';
+import Api from '../../API/Api.js';
+import "./AdminRegister.scss";
 
 export default function StudentRegister() {
-    const navigate = useNavigate();
-    const { registerStudent, registerAdmin } = useAuth();
     const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState({
         UserName: "",
@@ -78,75 +76,69 @@ export default function StudentRegister() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (validateForm()) {
-            let result;
-            //   result = await registerStudent(formData);
-            //   if (result.success) {
-            //     toast.success(result.message);
-            //     navigate("/form/studentDetails");
-            //   } else {
-            //     toast.error(result.message);
-            //   }
-
-            result = await registerAdmin(formData);
-            if (result.success) {
+            try {
+                const result = await Api.registerAdmin(formData);
+                console.log(result);
                 toast.success(result.message);
-                navigate("/adminPage");
-            } else {
-                toast.error(result.message);
+                setFormData({
+                    UserName: "",
+                    Password: "",
+                    Name: ""
+                  });
+            } catch (error) {
+                console.log(error);
+                toast.error(error);
             }
-
         }
     };
 
 
     return (
-        <div className='login_Container'>
-            {/* <h1 className="close_mark_btn">X</h1> */}
-            <form className='login_form' onSubmit={handleSubmit}>
-                <h1 className="formHeading">Register</h1>
-                <div className="labelInput">
-                    <label htmlFor="name">Enter Your Name : </label>
-                    <input
-                        type="text"
-                        id='name'
-                        name='Name'
-                        value={formData.Name}
-                        onChange={handleChange}
-                    />
-                    <p className="error">{errors.Name}</p>
-                </div>
-                <div className="labelInput">
-                    <label htmlFor="UserName">Enter Your UserName : </label>
-                    <input
-                        type="text"
-                        id='UserName'
-                        name='UserName'
-                        value={formData.UserName}
-                        onChange={handleChange}
-                    />
-                    <p className="error">{errors.UserName}</p>
-                </div>
-                <div className="labelInput">
-                    <label htmlFor="password">Enter Your Password : </label>
-                    <div className="password_container">
+        <div className="adminregisterMainContainer">
+            <SideBar />
+            <div className='adminRegister_Container'>
+                <form className='adminRegister_form' onSubmit={handleSubmit}>
+                    <h1 className="adminRegister_formHeading">Register Admin</h1>
+                    <div className="adminRegister_labelInput">
+                        <label htmlFor="name">Name : </label>
                         <input
-                            type={showPassword ? "text" : "password"}
-                            className='password_input'
-                            id='password'
-                            name='Password'
-                            value={formData.Password}
+                            type="text"
+                            id='name'
+                            name='Name'
+                            value={formData.Name}
                             onChange={handleChange}
                         />
-                        {showPassword ? <AiFillEye className='icon' onClick={toggleShowPassword} /> : <AiFillEyeInvisible className='icon' size={22} onClick={toggleShowPassword} />}
+                        <p className="adminRegister_error">{errors.Name}</p>
                     </div>
-                    <p className="error">{errors.Password}</p>
-                </div>
-                <button type='submit' className='login_btn' onClick={(e) => handleSubmit(e)}>Register as Admin</button>
-                {/* <button type='submit' className='login_btn' onClick={(e) => handleSubmit(e, 'admin')}>Register as Admin</button> */}
-                {/* <div className='registerLink_Box'>
-          Already Have an Account ? <Link to={"/"} className='register_Link'>login</Link>
-        </div> */}
-            </form>
+                    <div className="adminRegister_labelInput">
+                        <label htmlFor="UserName">UserName : </label>
+                        <input
+                            type="text"
+                            id='UserName'
+                            name='UserName'
+                            value={formData.UserName}
+                            onChange={handleChange}
+                        />
+                        <p className="adminRegister_error">{errors.UserName}</p>
+                    </div>
+                    <div className="adminRegister_labelInput">
+                        <label htmlFor="password">Password : </label>
+                        <div className="adminRegister_password_container">
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                className='adminRegister_password_input'
+                                id='password'
+                                name='Password'
+                                value={formData.Password}
+                                onChange={handleChange}
+                            />
+                            {showPassword ? <AiFillEye className='icon' onClick={toggleShowPassword} /> : <AiFillEyeInvisible className='icon' size={22} onClick={toggleShowPassword} />}
+                        </div>
+                        <p className="adminRegister_error">{errors.Password}</p>
+                    </div>
+                    <button type='submit' className='adminRegister_login_btn' onClick={(e) => handleSubmit(e)}>Register</button>
+                </form>
+            </div>
         </div>
     )
 }

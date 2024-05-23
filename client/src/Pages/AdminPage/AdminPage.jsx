@@ -4,7 +4,7 @@ import Api from "../../API/Api.js";
 import { toast } from "react-toastify";
 import { DataGrid } from '@mui/x-data-grid';
 import { useAuth } from '../../Utils/Context.js';
-import { IoChatboxEllipses } from "react-icons/io5";
+import SideBar from '../../Components/SideBar/SideBar.jsx';
 import "./AdminPage.scss";
 
 export default function AdminPage() {
@@ -82,7 +82,7 @@ export default function AdminPage() {
     updateStudentDetails({
       "Student_ID": selectedStudentRow.Student_ID,
       "Student_Auth_ID": selectedStudentRow.Student_Auth_ID,
-      "UserName":selectedStudentRow.UserName,
+      "UserName": selectedStudentRow.UserName,
       "Roll_No": selectedStudentRow.Roll_No,
       "Email": selectedStudentRow.Email,
       "Name": selectedStudentRow.Name,
@@ -114,86 +114,87 @@ export default function AdminPage() {
   ];
 
   return (
-    <div className='AdminPageContainer'>
-      <button className="correctionPageLink" onClick={() => { navigate("/adminPage/pendingCorrections") }}>Check Pending Corrections</button>
-      <IoChatboxEllipses className='goToChatBtn' onClick={()=>navigate("/chat")} />
-      <div className="adminFormContainer">
-        <form className='adminForm' onSubmit={handleSubmit}>
-          <div className="labelInput">
-            <label htmlFor="rollNo">Student's Roll No : </label>
-            <input
-              type="text"
-              id='rollNo'
-              name='Roll_No'
-              value={formData.Roll_No}
-              onChange={handleChange}
-            />
-            {/* <p className="error">{errors.Email}</p> */}
-          </div>
-          <div className="labelInput">
-            <label htmlFor="registrationNo">Student's Registration No : </label>
-            <input
-              type="text"
-              id='registrationNo'
-              name='Registration_No'
-              value={formData.Registration_No}
-              onChange={handleChange}
-            />
-            {/* <p className="error">{errors.Email}</p> */}
-          </div>
-          <div className="labelInput">
-            <label htmlFor="department">Student's Department : </label>
-            <select
-              id="department"
-              name="Department"
-              value={formData.Department}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Select Student's Department </option>
-              <option value="Computer Science & Engineering">Computer Science & Engineering</option>
-              <option value="Civil Engineering">Civil Engineering</option>
-              <option value="Electrical Engineering">Electrical Engineering</option>
-              <option value="Mechanical Engineering">Mechanical Engineering</option>
-              <option value="Instrumentation Engineering">Instrumentation Engineering</option>
-            </select>
-          </div>
-          <div className="labelInput">
-            <label htmlFor="yearOfJoining">Year of Joining : </label>
-            <input
-              type="number"
-              id='yearOfJoining'
-              name='Year_of_Joining'
-              value={formData.Year_of_Joining}
-              onChange={handleChange}
-              required
-            />
-            {/* <p className="error">{errors.Email}</p> */}
-          </div>
-          <div className="labelInput">
-            <label htmlFor="yearOfPassing">Year of Passing : </label>
-            <input
-              type="number"
-              id='yearOfPassing'
-              name='Year_of_Passing'
-              value={formData.Year_of_Passing}
-              onChange={handleChange}
-              required
-            />
-            {/* <p className="error">{errors.Email}</p> */}
-          </div>
-          <button className='adminBtn' type='submit'>Search</button>
-        </form>
-      </div>
-      <div className="studentTableContainer" style={{ height: 400, width: '100%' }}>
-        <DataGrid
-          rows={studentDetails}
-          columns={columns}
-          pageSize={5}
-          pageSizeOptions={[5, 10]}
-          onRowDoubleClick={handleRowDoubleClick}
-        // checkboxSelection
-        />
+    <div className="adminPageMainContainer">
+      <SideBar />
+      <div className='AdminPageContainer'>
+        <div className="adminFormContainer">
+          <form className='adminForm' onSubmit={handleSubmit}>
+            <div className="labelInput">
+              <label htmlFor="rollNo">Student's Roll No : </label>
+              <input
+                type="text"
+                id='rollNo'
+                name='Roll_No'
+                value={formData.Roll_No}
+                onChange={handleChange}
+              />
+              {/* <p className="error">{errors.Email}</p> */}
+            </div>
+            <div className="labelInput">
+              <label htmlFor="registrationNo">Student's Registration No : </label>
+              <input
+                type="text"
+                id='registrationNo'
+                name='Registration_No'
+                value={formData.Registration_No}
+                onChange={handleChange}
+              />
+              {/* <p className="error">{errors.Email}</p> */}
+            </div>
+            <div className="labelInput">
+              <label htmlFor="department">Student's Department : </label>
+              <select
+                id="department"
+                name="Department"
+                value={formData.Department}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Select Student's Department </option>
+                <option value="Computer Science & Engineering">Computer Science & Engineering</option>
+                <option value="Civil Engineering">Civil Engineering</option>
+                <option value="Electrical Engineering">Electrical Engineering</option>
+                <option value="Mechanical Engineering">Mechanical Engineering</option>
+                <option value="Instrumentation Engineering">Instrumentation Engineering</option>
+              </select>
+            </div>
+            <div className="labelInput">
+              <label htmlFor="yearOfJoining">Year of Joining : </label>
+              <input
+                type="number"
+                id='yearOfJoining'
+                name='Year_of_Joining'
+                value={formData.Year_of_Joining}
+                onChange={handleChange}
+                required
+              />
+              {/* <p className="error">{errors.Email}</p> */}
+            </div>
+            <div className="labelInput">
+              <label htmlFor="yearOfPassing">Year of Passing : </label>
+              <input
+                type="number"
+                id='yearOfPassing'
+                name='Year_of_Passing'
+                value={formData.Year_of_Passing}
+                onChange={handleChange}
+                required
+              />
+              {/* <p className="error">{errors.Email}</p> */}
+            </div>
+            <button className='adminBtn' type='submit'>Search</button>
+          </form>
+        </div>
+        <div className="studentTableContainer" style={{ height: '100%', width: '100%' }}>
+          <DataGrid
+            rows={studentDetails}
+            columns={columns}
+            pageSize={5}
+            pageSizeOptions={[5, 10]}
+            onRowDoubleClick={handleRowDoubleClick}
+          // checkboxSelection
+          />
+        </div>
       </div>
     </div>
   )

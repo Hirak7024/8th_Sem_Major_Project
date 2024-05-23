@@ -5,9 +5,10 @@ import { toast } from "react-toastify";
 import "./PendingCorrection.scss";
 import { useAuth } from '../../Utils/Context.js';
 import { useNavigate } from 'react-router-dom';
+import SideBar from '../../Components/SideBar/SideBar.jsx';
 
 export default function PendingCorrection() {
-    const { updateStudentDetails  } = useAuth();
+    const { updateStudentDetails } = useAuth();
     const [pendingCorrections, setPendingCorrections] = useState([]);
 
     const navigate = useNavigate();
@@ -51,16 +52,19 @@ export default function PendingCorrection() {
     ];
 
     return (
-        <div className='PendingCorrectionContainer'>
-            <h2>Pending Corrections</h2>
-            <div className="pendingCorrectionTable" style={{ height: 400, width: '100%' }}>
-                <DataGrid
-                    rows={pendingCorrections}
-                    columns={columns}
-                    pageSize={5}
-                    pageSizeOptions={[5, 10]}
-                    onRowDoubleClick={handleRowDoubleClick}
-                />
+        <div className='PendingCorrectioMainContainer'>
+            <SideBar/>
+            <div className='PendingCorrectionContainer'>
+                <h2 className='pendingCorrectons'>Pending Corrections</h2>
+                <div className="pendingCorrectionTable" style={{ height: '100%', width: '100%' }}>
+                    <DataGrid
+                        rows={pendingCorrections}
+                        columns={columns}
+                        pageSize={5}
+                        pageSizeOptions={[5, 10]}
+                        onRowDoubleClick={handleRowDoubleClick}
+                    />
+                </div>
             </div>
         </div>
     )

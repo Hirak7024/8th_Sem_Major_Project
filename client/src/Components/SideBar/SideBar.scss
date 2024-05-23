@@ -1,0 +1,23 @@
+.Sidebar_MainContainer{
+    width: 15rem;
+    height: calc(100vh - 4rem);
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    .sidebarList{
+        // list-style: none;
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+        margin: 0;
+        .sideBarListItem{
+            list-style: none;
+            padding: 1rem 0 1rem 1rem ;
+            margin: 0;
+            font-size: 15px;
+        }
+        .sideBarListItem:hover{
+            cursor: pointer;
+            background-color: rgb(201, 198, 198);
+        }
+    }
+}

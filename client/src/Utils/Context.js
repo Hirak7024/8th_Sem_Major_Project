@@ -59,17 +59,17 @@ export const AuthProvider = ({ children }) => {
     }, [location]);
 
     // FUNCTION TO REGISTER A NEW ADMIN
-    const registerAdmin = async (formData) => {
-        try {
-            const data = await Api.registerAdmin(formData);
-            const { userResponse, token } = data.data;
-            setUserData({ user: userResponse, token });
-            localStorage.setItem("authToken", token);
-            return { success: true, message: data.message };
-        } catch (error) {
-            return { success: false, message: error };
-        }
-    };
+    // const registerAdmin = async (formData) => {
+    //     try {
+    //         const data = await Api.registerAdmin(formData);
+    //         const { userResponse, token } = data.data;
+    //         setUserData({ user: userResponse, token });
+    //         localStorage.setItem("authToken", token);
+    //         return { success: true, message: data.message };
+    //     } catch (error) {
+    //         return { success: false, message: error };
+    //     }
+    // };
 
     // FUNCTION TO LOGIN AS NEW ADMIN
     const loginAdmin = async (formData) => {
@@ -85,17 +85,17 @@ export const AuthProvider = ({ children }) => {
     };
 
     // FUNCTION TO REGISTER A NEW STUDENT
-    const registerStudent = async (formData) => {
-        try {
-            const data = await Api.registerStudent(formData);
-            const { userResponse, token } = data.data;
-            setUserData({ user: userResponse, token });
-            localStorage.setItem("authToken", token);
-            return { success: true, message: data.message };
-        } catch (error) {
-            return { success: false, message: error };
-        }
-    };
+    // const registerStudent = async (formData) => {
+    //     try {
+    //         const data = await Api.registerStudent(formData);
+    //         const { userResponse, token } = data.data;
+    //         setUserData({ user: userResponse, token });
+    //         localStorage.setItem("authToken", token);
+    //         return { success: true, message: data.message };
+    //     } catch (error) {
+    //         return { success: false, message: error };
+    //     }
+    // };
 
     // FUNCTION TO LOGIN AS NEW ADMIN
     const loginStudent = async (formData) => {
@@ -125,9 +125,9 @@ export const AuthProvider = ({ children }) => {
         <AuthContext.Provider value={{
             userData,
             setUserData,
-            registerStudent,
+            // registerStudent,
             loginStudent,
-            registerAdmin,
+            // registerAdmin,
             loginAdmin,
             selectedStudent, 
             setSelectedStudent,
