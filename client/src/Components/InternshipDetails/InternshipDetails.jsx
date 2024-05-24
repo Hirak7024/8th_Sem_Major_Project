@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Api, {backendBaseURL} from '../../API/Api.js';
+import Api, { backendBaseURL } from '../../API/Api.js';
 import { useAuth } from '../../Utils/Context.js';
 import { useNavigate } from 'react-router-dom';
 import UploadCertificateReport from './UploadCertificateReport/UploadCertificateReport.jsx';
@@ -8,6 +8,7 @@ import { toast } from "react-toastify"
 import { MdOutlineModeEditOutline } from "react-icons/md";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import PdfImage from "../../Assets/PdfIcon.png";
+import Comments from '../Comments/Comments.jsx';
 import "./InternshipDetails.scss";
 
 export default function InternshipDetails() {
@@ -15,6 +16,9 @@ export default function InternshipDetails() {
     const [internships, setInternships] = useState([]);
     const [uploadPdfFiles, setUploadPdfFiles] = useState({});
     const [pdfData, setPdfData] = useState({});
+    const [showComments, setShowComments] = useState(false);
+    const [currentInternshipId, setCurrentInternshipId] = useState(null);
+    const isReply= true;
 
     useEffect(() => {
         async function fetchInternships() {
@@ -121,7 +125,7 @@ export default function InternshipDetails() {
                     ) : (
                         <div className="viewPdfBox">
                             {/* Buttons to view PDF files */}
-                            <MdOutlineModeEditOutline className='viewPdfBoxEditBtn' onClick={() => handleUploadClick(internship.Internship_ID)}/>
+                            <MdOutlineModeEditOutline className='viewPdfBoxEditBtn' onClick={() => handleUploadClick(internship.Internship_ID)} />
                             <div className="PdfAndTitleBox">
                                 <img src={PdfImage} alt="" className='InternshipViewPdfBtn' onClick={() => handleViewCertificatePdf(internship.Internship_ID)} />
                                 <p className="ViewPdfTitle">{pdfData[internship.Internship_ID]?.certificate}</p>
@@ -133,6 +137,13 @@ export default function InternshipDetails() {
                         </div>
                     )}
                     {uploadPdfFiles[internship.Internship_ID] && <UploadCertificateReport setUploadPdfFiles={setUploadPdfFiles} Internship_ID={internship.Internship_ID} />}
+                    <div className="commentContainer" style={{position:"relative", top:"0", left:"0"}}>
+                        <p className="noOfComments" style={{position:"absolute", right:"1rem"}} onClick={() => {
+                            setCurrentInternshipId(internship.Internship_ID);
+                            setShowComments(true);
+                        }}>Check Comments</p>
+                        {showComments && <Comments key={index} Internship_ID={currentInternshipId} showComments={showComments} setShowComments={setShowComments} isReply={isReply} />}
+                    </div>
                 </div>
             ))}
         </div>

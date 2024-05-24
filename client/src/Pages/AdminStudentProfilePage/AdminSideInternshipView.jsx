@@ -14,13 +14,14 @@ export default function AdminSideInternshipView() {
     const [showCommentBox, setShowCommentBox] = useState(null); // Updated to track specific internship
     const [showComments, setShowComments] = useState(false);
     const [currentInternshipId, setCurrentInternshipId] = useState(null);
+    const isReply= false;
     const [commentData, setCommentData]= useState({
         Internship_ID: null,
         Commentor_Name: userData.user.Name,
         Comment: "",
         Commentor_ID: userData.user.ID,
         Commentor_UserName: userData.user.UserName,
-        Is_Reply: false
+        Is_Reply: isReply
     })
 
     const handleCommentChange = (e) => {
@@ -132,7 +133,7 @@ export default function AdminSideInternshipView() {
                             setCurrentInternshipId(internship.Internship_ID);
                             setShowComments(true);
                         }}>Check Comments</p>
-                        {showComments && <Comments key={index} Internship_ID={currentInternshipId} showComments={showComments} setShowComments={setShowComments} />}
+                        {showComments && <Comments key={index} Internship_ID={currentInternshipId} showComments={showComments} setShowComments={setShowComments} isReply={isReply}/>}
                     </div>
                 </div>
             ))}

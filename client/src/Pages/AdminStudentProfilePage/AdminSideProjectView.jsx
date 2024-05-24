@@ -14,13 +14,14 @@ export default function AdminSideProjectView() {
     const [showCommentBox, setShowCommentBox] = useState(null); // Updated to track specific internship
     const [showComments, setShowComments] = useState(false);
     const [currentProjectId, setCurrentProjectId] = useState(null);
+    const isReply = false;
     const [commentData, setCommentData]= useState({
         Project_ID: null,
         Commentor_Name: userData.user.Name,
         Comment: "",
         Commentor_ID: userData.user.ID,
         Commentor_UserName: userData.user.UserName,
-        Is_Reply: false
+        Is_Reply: isReply
     })
 
     const handleCommentChange = (e) => {
@@ -134,7 +135,7 @@ export default function AdminSideProjectView() {
                             setCurrentProjectId(project.Project_ID);
                             setShowComments(true);
                         }}>Check Comments</p>
-                        {showComments && <CommentsProjects key={index} Project_ID={currentProjectId} showComments={showComments} setShowComments={setShowComments} />}
+                        {showComments && <CommentsProjects key={index} Project_ID={currentProjectId} showComments={showComments} setShowComments={setShowComments} isReply={isReply} />}
                     </div>
                 </div>
             ))}

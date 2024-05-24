@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { MdOutlineModeEditOutline } from "react-icons/md";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import PdfImage from "../../Assets/PdfIcon.png";
+import CommentsProjects from '../Comments/CommentsProjects.jsx';
 import "./ProjectDetails.scss";
 
 export default function ProjectDetails() {
@@ -15,6 +16,9 @@ export default function ProjectDetails() {
     const [projects, setProjects] = useState([]);
     const [uploadProjectPdfFiles, setUploadProjectPdfFiles] = useState({});
     const [projectPdfData, setProjectPdfData] = useState({});
+    const [showComments, setShowComments] = useState(false);
+    const [currentProjectId, setCurrentProjectId] = useState(null);
+    const isReply = true;
 
     useEffect(() => {
         async function fetchInternships() {
@@ -135,6 +139,13 @@ export default function ProjectDetails() {
                         </div>
                     )}
                     {uploadProjectPdfFiles[project.Project_ID] && <UploadProjectCertificateReport setUploadProjectPdfFiles={setUploadProjectPdfFiles} Project_ID={project.Project_ID} />}
+                    <div className="commentContainer" style={{position:"relative", top:"0", left:"0"}}>
+                        <p className="noOfComments" style={{position:"absolute", right:"1rem"}} onClick={() => {
+                            setCurrentProjectId(project.Project_ID);
+                            setShowComments(true);
+                        }}>Check Comments</p>
+                        {showComments && <CommentsProjects key={index} Project_ID={currentProjectId} showComments={showComments} setShowComments={setShowComments}  isReply={isReply} />}
+                    </div>
                 </div>
             ))}
         </div>

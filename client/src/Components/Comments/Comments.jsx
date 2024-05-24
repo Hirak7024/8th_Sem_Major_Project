@@ -4,7 +4,7 @@ import { useAuth } from '../../Utils/Context.js';
 import { toast } from 'react-toastify';
 import "./Comments.scss";
 
-export default function Comments({ showComments, setShowComments, Internship_ID }) {
+export default function Comments({ showComments, setShowComments, Internship_ID, isReply }) {
     const { userData } = useAuth();
     const [comments, setComments] = useState([]);
     const [commentData, setCommentData] = useState({
@@ -13,7 +13,7 @@ export default function Comments({ showComments, setShowComments, Internship_ID 
         Comment: "",
         Commentor_ID: userData.user.ID,
         Commentor_UserName: userData.user.UserName,
-        Is_Reply: false
+        Is_Reply: isReply
     })
 
 
