@@ -123,6 +123,7 @@ export default function ProjectDetails() {
                     ) : (
                         <div className="ProjectViewPdfBox">
                             {/* Buttons to view PDF files */}
+                            <MdOutlineModeEditOutline className='projectviewPdfBoxEditBtn' onClick={() => handleUploadClick(project.Project_ID)}/>
                             <div className="ProjectPdfAndTitleBox">
                                 <img src={PdfImage} alt="" className='ProjectViewPdfBtn' onClick={() => handleViewCertificatePdf(project.Project_ID)} />
                                 <p className="ViewPdfTitle">{projectPdfData[project.Project_ID]?.certificate}</p>

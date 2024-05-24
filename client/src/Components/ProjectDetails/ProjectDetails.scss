@@ -154,6 +154,19 @@
             display: flex;
             gap: 2rem;
             margin-top: 1rem;
+            position: relative;
+            .projectviewPdfBoxEditBtn{
+                width: 1.5rem;
+                height: 1.5rem;
+                position: absolute;
+                top: -1rem;
+                left: 18rem;
+                color: royalblue;
+                cursor: pointer;
+                border-radius: 50%;
+                // background-color: royalblue;
+                padding: 4px;
+            }
 
             .ProjectPdfAndTitleBox {
                 display: flex;

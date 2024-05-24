@@ -8,7 +8,6 @@ import { toast } from "react-toastify"
 import { MdOutlineModeEditOutline } from "react-icons/md";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import PdfImage from "../../Assets/PdfIcon.png";
-import Comments from '../Comments/Comments.jsx';
 import "./InternshipDetails.scss";
 
 export default function InternshipDetails() {
@@ -114,7 +113,6 @@ export default function InternshipDetails() {
                     <p id='internshipDescription'>{internship.Internship_Description}</p>
                     <p id='internshipGuideName'>{internship.Internship_Guide_Name}</p>
                     <p id='internshipGuideDesignation'>{internship.Internship_Guide_Designation}</p>
-                    {/* <p id='internshipGuideOrganisation'>{internship.Internship_Organisation}</p> */}
                     {pdfData[internship.Internship_ID] && pdfData[internship.Internship_ID].certificate === null && pdfData[internship.Internship_ID].report === null ? (
                         <div className="ContainerToUploadInternshipPdf">
                             <p className='PdfFileUploadTitle'>Add Certificate and Report</p>
@@ -123,6 +121,7 @@ export default function InternshipDetails() {
                     ) : (
                         <div className="viewPdfBox">
                             {/* Buttons to view PDF files */}
+                            <MdOutlineModeEditOutline className='viewPdfBoxEditBtn' onClick={() => handleUploadClick(internship.Internship_ID)}/>
                             <div className="PdfAndTitleBox">
                                 <img src={PdfImage} alt="" className='InternshipViewPdfBtn' onClick={() => handleViewCertificatePdf(internship.Internship_ID)} />
                                 <p className="ViewPdfTitle">{pdfData[internship.Internship_ID]?.certificate}</p>
