@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import pool from '../DataBase.js';
 
-//TO REGISTER NEW STUDENT
+// TO REGISTER NEW STUDENT
 const RegisterStudent = async (req, res) => {
     const { UserName, Password, Name } = req.body;
     // const serverSignUpKey = process.env.StudentSignUpKey;
@@ -24,7 +24,7 @@ const RegisterStudent = async (req, res) => {
         const hashedPass = await bcrypt.hash(Password, salt);
 
         // Insert new user
-        await pool.execute('INSERT INTO student_auth (UserName, Password, Name) VALUES (?, ?, ?)', [UserName, hashedPass,Name]);
+        await pool.execute('INSERT INTO student_auth (UserName, Password, Name) VALUES (?, ?, ?)', [UserName, hashedPass, Name]);
 
         // Retrieve the newly inserted user to get Student_Auth_ID
         const [newUser] = await pool.execute('SELECT Student_Auth_ID,Name FROM student_auth WHERE UserName = ?', [UserName]);
@@ -34,7 +34,7 @@ const RegisterStudent = async (req, res) => {
         const token = jwt.sign({ UserName, ID: user.Student_Auth_ID, Name: user.Name }, process.env.JWT_KEY, { expiresIn: 60 * 60 * 24 });
 
         // Prepare response
-        const userResponse = {  UserName, ID: user.Student_Auth_ID, Name: user.Name };
+        const userResponse = { UserName, ID: user.Student_Auth_ID, Name: user.Name };
 
         res.status(200).json({ data: { userResponse, token }, message: "Student Registered Successfully", status_code: 200 });
     } catch (error) {
@@ -49,7 +49,7 @@ const LoginStudent = async (req, res) => {
 
     try {
         // Check if user exists
-        const [users] = await pool.execute('SELECT * FROM student_auth WHERE UserName = ?', [UserName]);
+        const [users] = await pool.execute('SELECT * FROM student_auth WHERE BINARY UserName = ?', [UserName]);
         if (users.length === 0) {
             return res.status(404).json({ message: "Student doesn't exist", status_code: 404 });
         }
@@ -63,7 +63,7 @@ const LoginStudent = async (req, res) => {
         }
 
         // Generate JWT token
-        const token = jwt.sign({ UserName, ID: user.Student_Auth_ID, Name: user.Name  }, process.env.JWT_KEY, { expiresIn: 60 * 60 * 24 });
+        const token = jwt.sign({ UserName, ID: user.Student_Auth_ID, Name: user.Name }, process.env.JWT_KEY, { expiresIn: 60 * 60 * 24 });
 
         // Prepare response
         const userResponse = { UserName, ID: user.Student_Auth_ID, Name: user.Name };
@@ -167,6 +167,35 @@ const GetPayloadFromToken = (req, res) => {
     }
 };
 
+// TO UPDATE PASSWORD USING USERNAME OF STUDENT
+const UpdateStudentPassword = async (req, res) => {
+    const { UserName, newPassword } = req.body;
+
+    if (!UserName || !newPassword) {
+        return res.status(400).json({ message: "UserName and New Password are required", status_code: 400 });
+    }
+
+    try {
+        // Check if the admin exists
+        const [existingUsers] = await pool.execute('SELECT * FROM student_auth WHERE BINARY UserName = ?', [UserName]);
+        if (existingUsers.length === 0) {
+            return res.status(404).json({ message: "Student not found", status_code: 404 });
+        }
+
+        // Hash the new password
+        const salt = await bcrypt.genSalt(10);
+        const hashedPass = await bcrypt.hash(newPassword, salt);
+
+        // Update the admin's password
+        await pool.execute('UPDATE student_auth SET Password = ? WHERE BINARY UserName = ?', [hashedPass, UserName]);
+
+        res.status(200).json({ message: "Password updated successfully", status_code: 200 });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
 
 
-export { RegisterStudent, LoginStudent, UpdateStudentAuth, DeleteStudentAuth, GetPayloadFromToken };
+
+
+export { RegisterStudent, LoginStudent, UpdateStudentAuth, DeleteStudentAuth, GetPayloadFromToken, UpdateStudentPassword };

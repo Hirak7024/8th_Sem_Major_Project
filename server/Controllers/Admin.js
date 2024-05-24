@@ -47,8 +47,8 @@ export const LoginAdmin = async (req, res) => {
     const { UserName, Password } = req.body;
 
     try {
-        // Check if user exists
-        const [users] = await pool.execute('SELECT * FROM admin WHERE UserName = ?', [UserName]);
+        // Check if user exists. BINARY keyword helps to check case sensitivity
+        const [users] = await pool.execute('SELECT * FROM admin WHERE BINARY UserName = ?', [UserName]);
         if (users.length === 0) {
             return res.status(404).json({ message: "Admin doesn't exist", status_code: 404 });
         }
@@ -68,6 +68,34 @@ export const LoginAdmin = async (req, res) => {
         const userResponse = { UserName, ID: user.Admin_ID, Name: user.Name  };
 
         res.status(200).json({ data: { userResponse, token }, message: "Login Successful", status_code: 200 });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+// TO UPDATE PASSWORD USING USERNAME OF ADMIN
+export const UpdateAdminPassword = async (req, res) => {
+    const { UserName, newPassword } = req.body;
+
+    if (!UserName || !newPassword) {
+        return res.status(400).json({ message: "UserName and New Password are required", status_code: 400 });
+    }
+
+    try {
+        // Check if the admin exists
+        const [existingUsers] = await pool.execute('SELECT * FROM admin WHERE BINARY UserName = ?', [UserName]);
+        if (existingUsers.length === 0) {
+            return res.status(404).json({ message: "Admin not found", status_code: 404 });
+        }
+
+        // Hash the new password
+        const salt = await bcrypt.genSalt(10);
+        const hashedPass = await bcrypt.hash(newPassword, salt);
+
+        // Update the admin's password
+        await pool.execute('UPDATE admin SET Password = ? WHERE BINARY UserName = ?', [hashedPass, UserName]);
+
+        res.status(200).json({ message: "Password updated successfully", status_code: 200 });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

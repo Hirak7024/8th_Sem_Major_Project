@@ -154,6 +154,14 @@ const Api = {
             throw error.response.data.message;
         }
     },
+    changeAdminPassword: async (formData) => {
+        try {
+            const response = await axios.put(`${backendBaseURL}/api/admin/updatePassword`, formData);
+            return response.data;
+        } catch (error) {
+            throw error.response.data.message;
+        }
+    },
     // API call to login as admin
     loginAdmin: async (formData) => {
         try {
@@ -177,6 +185,14 @@ const Api = {
     registerStudent: async (formData) => {
         try {
             const response = await axios.post(`${backendBaseURL}/api/studentauth/register`, formData);
+            return response.data;
+        } catch (error) {
+            throw error.response.data.message;
+        }
+    },
+    changeStudentPassword: async (formData) => {
+        try {
+            const response = await axios.put(`${backendBaseURL}/api/studentauth/updatePassword`, formData);
             return response.data;
         } catch (error) {
             throw error.response.data.message;

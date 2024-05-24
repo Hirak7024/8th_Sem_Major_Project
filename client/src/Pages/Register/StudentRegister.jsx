@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import SideBar from '../../Components/SideBar/SideBar.jsx';
 import Api from '../../API/Api.js';
 import "./AdminRegister.scss";
+import { useNavigate } from 'react-router-dom';
 
 export default function StudentRegister() {
   const [showPassword, setShowPassword] = useState(false);
@@ -73,31 +74,33 @@ export default function StudentRegister() {
     return isValid;
   };
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-        try {
-            const result = await Api.registerStudent(formData);
-            console.log(result);
-            toast.success(result.message);
-            setFormData({
-              UserName: "",
-              Password: "",
-              Name: ""
-            });
-        } catch (error) {
-            console.log(error);
-            toast.error(error);
-        }
+      try {
+        const result = await Api.registerStudent(formData);
+        console.log(result);
+        toast.success(result.message);
+        setFormData({
+          UserName: "",
+          Password: "",
+          Name: ""
+        });
+      } catch (error) {
+        console.log(error);
+        toast.error(error);
+      }
     }
-};
+  };
 
 
   return (
     <div className='adminregisterMainContainer'>
-      <SideBar/>
+      <SideBar />
       <div className='adminRegister_Container'>
-        {/* <h1 className="close_mark_btn">X</h1> */}
+        <h1 className="adminRegister_ChangePassword" onClick={() => navigate("/student/changePassword")}>Change Password</h1>
         <form className='adminRegister_form' onSubmit={handleSubmit}>
           <h1 className="adminRegister_formHeading">Register Student</h1>
           <div className="adminRegister_labelInput">

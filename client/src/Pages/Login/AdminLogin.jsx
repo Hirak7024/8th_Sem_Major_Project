@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { useAuth } from '../../Utils/Context.js';
 import { toast } from 'react-toastify';
@@ -7,7 +7,7 @@ import "./Login.scss";
 
 export default function AdminLogin() {
     const navigate = useNavigate();
-    const { loginStudent, loginAdmin } = useAuth();
+    const { loginAdmin } = useAuth();
     const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState({
         UserName: "",
@@ -102,11 +102,11 @@ export default function AdminLogin() {
     return (
         <div className='login_Container'>
             {/* <h1 className="close_mark_btn">X</h1> */}
-            <h1 className="goToAdmin" onClick={()=>navigate("/")}>Student</h1>
+            <h1 className="goToAdmin" onClick={() => navigate("/")}>Student</h1>
             <form className='login_form'>
                 <h1 className="formHeading">Login</h1>
                 <div className="labelInput">
-                    <label htmlFor="UserName">Enter Your UserName : </label>
+                    <label htmlFor="UserName">UserName : </label>
                     <input
                         type="text"
                         id='UserName'
@@ -117,7 +117,7 @@ export default function AdminLogin() {
                     <p className="error">{errors.UserName}</p>
                 </div>
                 <div className="labelInput">
-                    <label htmlFor="password">Enter Your Password : </label>
+                    <label htmlFor="password">Password : </label>
                     <div className="password_container">
                         <input
                             type={showPassword ? "text" : "password"}

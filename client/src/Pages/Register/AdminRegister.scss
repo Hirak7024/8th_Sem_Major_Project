@@ -13,6 +13,20 @@
         background-color: black;
         // background: linear-gradient(120deg, #092143, #009ffd);
         background-color: white;
+        position: relative;
+        left: 0;
+        top: 0;
+        .adminRegister_ChangePassword{
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            font-size: 15px;
+        }
+        .adminRegister_ChangePassword:hover{
+            cursor: pointer;
+            text-decoration: underline;
+            font-weight: 600;
+        }
 
         .adminRegister_form {
             display: flex;
@@ -84,7 +98,7 @@
             }
 
             .adminRegister_login_btn {
-                width: 8rem;
+                width: 10rem;
                 height: 2.2rem;
                 border: none;
                 background-color: #092143;

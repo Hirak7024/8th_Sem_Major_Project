@@ -17,6 +17,8 @@ import AdminPage from './Pages/AdminPage/AdminPage';
 import Navbar from './Components/Navbar/Navbar';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import AdminChangePassword from './Pages/ChangePassword/AdminChangePassword';
+import StudentChangePassword from './Pages/ChangePassword/StudentChangePassword';
 
 export default function App() {
   return (
@@ -37,6 +39,8 @@ export default function App() {
         <Route path='/adminPage' element={<AdminPage/>} />
         <Route path='/from/adminSide/StudentProfile' element={<AdminStudentProfilePage/>} />
         <Route path='/adminPage/pendingCorrections' element={<PendingCorrection/>} />
+        <Route path='/admin/changePassword' element={<AdminChangePassword/>} />
+        <Route path='/student/changePassword' element={<StudentChangePassword/>} />
       </Routes>
       <ToastContainer />
     </>

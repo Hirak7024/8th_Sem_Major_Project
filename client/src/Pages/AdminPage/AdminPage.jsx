@@ -104,6 +104,7 @@ export default function AdminPage() {
 
 
   const columns = [
+    { field: 'UserName', sortable: false, filterable: false, headerName: 'UserName', width: 150 },
     { field: 'Name', sortable: false, filterable: false, headerName: 'Name', width: 150 },
     { field: 'Roll_No', sortable: false, filterable: false, headerName: 'Roll No', width: 150 },
     { field: 'Registration_No', sortable: false, filterable: false, headerName: 'Registration No', width: 150 },
