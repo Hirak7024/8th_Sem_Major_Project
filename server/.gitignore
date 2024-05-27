@@ -1,2 +1,15 @@
 /node_modules
 /.env
+#gitkeep helps to keep the directories although they are empty
+
+# Ignore all files inside the images directory, but keep the directory itself
+server/public/images/*
+!server/public/images/.gitkeep
+
+# Ignore all files inside the internships directory, but keep the directory itself
+server/public/pdfs/internships/*
+!server/public/pdfs/internships/.gitkeep
+
+# Ignore all files inside the projects directory, but keep the directory itself
+server/public/pdfs/projects/*
+!server/public/pdfs/projects/.gitkeep

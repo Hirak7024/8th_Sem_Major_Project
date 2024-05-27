@@ -1,0 +1,3 @@
+touch server/public/images/.gitkeep
+touch server/public/pdfs/internships/.gitkeep
+touch server/public/pdfs/projects/.gitkeep
