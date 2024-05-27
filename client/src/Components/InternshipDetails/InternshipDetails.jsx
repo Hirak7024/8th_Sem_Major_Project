@@ -55,6 +55,35 @@ export default function InternshipDetails() {
         fetchInternships();
     }, [userData]);
 
+     // Effect to handle scroll behavior
+     useEffect(() => {
+        if (showComments) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+
+        // Cleanup when the component unmounts or showComments changes
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [showComments]);
+
+    // Effect to handle scroll behavior when uploading PDFs
+    useEffect(() => {
+        const hasUploadInProgress = Object.values(uploadPdfFiles).some(value => value === true);
+        if (hasUploadInProgress) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+
+        // Cleanup when the component unmounts or uploadPdfFiles changes
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [uploadPdfFiles]);
+
     const navigate = useNavigate();
 
     const handleEdit = (internshipId) => {

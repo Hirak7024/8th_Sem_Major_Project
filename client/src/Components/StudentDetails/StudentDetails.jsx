@@ -42,6 +42,19 @@ export default function StudentDetails() {
         }
     }, [userData]);
 
+    // Effect to handle scroll behavior
+    useEffect(() => {
+        if (profilePictureEditModel) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+
+        // Cleanup when the component unmounts or profilePictureEditModel changes
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [profilePictureEditModel]);
 
     const navigate = useNavigate();
 
@@ -112,8 +125,8 @@ export default function StudentDetails() {
                             <p className='studentInfoHeading'>Batch <strong className='studentInfoValue'>{studentDetails.Year_of_Joining}-{studentDetails.Year_of_Passing}</strong></p>
                         </div>
                         <div className="studentContactDetails">
-                            <p className='contactPara'><FaPhone className='phoneAndMailIcon'/>{studentDetails.Phone_No}</p>
-                            <p className='contactPara'><IoMdMail className='phoneAndMailIcon'/>{studentDetails.Email}</p>
+                            <p className='contactPara'><FaPhone className='phoneAndMailIcon' />{studentDetails.Phone_No}</p>
+                            <p className='contactPara'><IoMdMail className='phoneAndMailIcon' />{studentDetails.Email}</p>
                         </div>
                     </div>
                 </div>
