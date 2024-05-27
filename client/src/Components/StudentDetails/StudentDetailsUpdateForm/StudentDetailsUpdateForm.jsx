@@ -14,6 +14,7 @@ export default function StudentDetailsUpdateForm() {
         Registration_No: "",
         Date_of_Birth: "",
         Phone_No: "",
+        Email: "",
         Course: "",
         Department: "",
         Semester: null,
@@ -27,6 +28,7 @@ export default function StudentDetailsUpdateForm() {
         Registration_No: "",
         Date_of_Birth: "",
         Phone_No: "",
+        Email: "",
         Course: "",
         Department: "",
         Semester: "",
@@ -49,7 +51,7 @@ export default function StudentDetailsUpdateForm() {
         if (validateForm()) {
             try {
                 await Api.updateStudent(studentDetails);
-                const updatedStudentDetails = await Api.checkStudentByEmail(userData.user.Email);
+                const updatedStudentDetails = await Api.checkStudentByUserName(userData.user.UserName);
                 setUserData(prev => ({ ...prev, studentDetails: updatedStudentDetails }));
                 navigate("/studentProfile");
             } catch (error) {
@@ -66,6 +68,7 @@ export default function StudentDetailsUpdateForm() {
             Registration_No: "",
             Date_of_Birth: "",
             Phone_No: "",
+            Email: "",
             Course: "",
             Department: "",
             Semester: "",
@@ -92,16 +95,24 @@ export default function StudentDetailsUpdateForm() {
         }
 
         // Date of Birth validation
-        if (!/^\d{2}-\d{2}-\d{4}$/.test(studentDetails.Date_of_Birth)) {
-            newErrors.Date_of_Birth = "*Date of Birth should be in DD-MM-YYYY format";
+        if (studentDetails.Date_of_Birth.trim() === "") {
+            newErrors.Date_of_Birth = "*Date of Birth field can't be empty";
             isValid = false;
         }
+
 
         // Phone No validation
         if (!/^\d{10}$/.test(studentDetails.Phone_No)) {
             newErrors.Phone_No = "*Phone No should be 10 digits";
             isValid = false;
         }
+
+         // Email validation
+         if (studentDetails.Email.trim() === "") {
+            newErrors.Email = "*Email field can't be empty";
+            isValid = false;
+        }
+
 
         // Course validation
         if (studentDetails.Course.trim() === "") {
@@ -163,7 +174,7 @@ export default function StudentDetailsUpdateForm() {
                             value={studentDetails.Roll_No}
                             onChange={handleChange}
                         />
-                         <p className="error">{errors.Roll_No}</p>
+                        <p className="error">{errors.Roll_No}</p>
                     </div>
                     <div className="labelInput">
                         <label htmlFor="registrationNo">Registration No : </label>
@@ -174,18 +185,18 @@ export default function StudentDetailsUpdateForm() {
                             value={studentDetails.Registration_No}
                             onChange={handleChange}
                         />
-                         <p className="error">{errors.Registration_No}</p>
+                        <p className="error">{errors.Registration_No}</p>
                     </div>
                     <div className="labelInput">
                         <label htmlFor="dob">Date of Birth [dd-mm-yyyy] : </label>
                         <input
-                            type="text"
+                            type="date"
                             id='dob'
                             name='Date_of_Birth'
                             value={studentDetails.Date_of_Birth}
                             onChange={handleChange}
                         />
-                       <p className="error">{errors.Date_of_Birth}</p>
+                        <p className="error">{errors.Date_of_Birth}</p>
                     </div>
                     <div className="labelInput">
                         <label htmlFor="phoneNo">Phone No : </label>
@@ -196,7 +207,18 @@ export default function StudentDetailsUpdateForm() {
                             value={studentDetails.Phone_No}
                             onChange={handleChange}
                         />
-                       <p className="error">{errors.Phone_No}</p>
+                        <p className="error">{errors.Phone_No}</p>
+                    </div>
+                    <div className="labelInput">
+                        <label htmlFor="email">Email : </label>
+                        <input
+                            type="email"
+                            id='email'
+                            name='Email'
+                            value={studentDetails.Email}
+                            onChange={handleChange}
+                        />
+                        <p className="error">{errors.Email}</p>
                     </div>
                     <div className="labelInput">
                         <label htmlFor="course">Course : </label>
@@ -207,7 +229,7 @@ export default function StudentDetailsUpdateForm() {
                             value={studentDetails.Course}
                             onChange={handleChange}
                         />
-                       <p className="error">{errors.Course}</p>
+                        <p className="error">{errors.Course}</p>
                     </div>
                     <div className="labelInput">
                         <label htmlFor="department">Student's Department : </label>

@@ -14,19 +14,21 @@ export default function StudentDetailsForm() {
         Registration_No: "",
         Date_of_Birth: "",
         Phone_No: "",
+        Email: "",
         Course: "",
         Department: "",
         Semester: null,
         Year_of_Joining: null,
         Year_of_Passing: null
     });
-    
+
     const [errors, setErrors] = useState({
         Name: "",
         Roll_No: "",
         Registration_No: "",
         Date_of_Birth: "",
         Phone_No: "",
+        Email: "",
         Course: "",
         Department: "",
         Semester: "",
@@ -46,12 +48,12 @@ export default function StudentDetailsForm() {
             try {
                 const data = await Api.insertStudent({
                     ...studentDetails,
-                    Student_Auth_ID: userData.user.Student_Auth_ID,
-                    Email: userData.user.Email
+                    Student_Auth_ID: userData.user.ID,
+                    UserName: userData.user.UserName
                 });
                 toast.success(data.message);
                 // Fetch updated user data
-                const updatedStudentDetails = await Api.checkStudentByEmail(userData.user.Email);
+                const updatedStudentDetails = await Api.checkStudentByUserName(userData.user.UserName);
                 setUserData(prev => ({ ...prev, studentDetails: updatedStudentDetails }));
                 navigate("/studentProfile"); // Navigate to StudentDetails after successfully submitting the form
             } catch (error) {
@@ -69,6 +71,7 @@ export default function StudentDetailsForm() {
             Registration_No: "",
             Date_of_Birth: "",
             Phone_No: "",
+            Email: "",
             Course: "",
             Department: "",
             Semester: "",
@@ -95,14 +98,19 @@ export default function StudentDetailsForm() {
         }
 
         // Date of Birth validation
-        if (!/^\d{2}-\d{2}-\d{4}$/.test(studentDetails.Date_of_Birth)) {
-            newErrors.Date_of_Birth = "*Date of Birth should be in DD-MM-YYYY format";
+        if (studentDetails.Date_of_Birth.trim() === "") {
+            newErrors.Date_of_Birth = "*Date of Birth field can't be empty";
             isValid = false;
         }
 
         // Phone No validation
         if (!/^\d{10}$/.test(studentDetails.Phone_No)) {
             newErrors.Phone_No = "*Phone No should be 10 digits";
+            isValid = false;
+        }
+
+        if (studentDetails.Email.trim() === "") {
+            newErrors.Email = "*Email field can't be empty";
             isValid = false;
         }
 
@@ -182,7 +190,7 @@ export default function StudentDetailsForm() {
                     <div className="labelInput">
                         <label htmlFor="dob">Date of Birth [DD-MM-YYYY] : </label>
                         <input
-                            type="text"
+                            type="date"
                             id='dob'
                             name='Date_of_Birth'
                             value={studentDetails.Date_of_Birth}
@@ -200,6 +208,17 @@ export default function StudentDetailsForm() {
                             onChange={handleChange}
                         />
                         <p className="error">{errors.Phone_No}</p>
+                    </div>
+                    <div className="labelInput">
+                        <label htmlFor="email">Email : </label>
+                        <input
+                            type="email"
+                            id='email'
+                            name='Email'
+                            value={studentDetails.Email}
+                            onChange={handleChange}
+                        />
+                        <p className="error">{errors.Email}</p>
                     </div>
                     <div className="labelInput">
                         <label htmlFor="course">Course : </label>
