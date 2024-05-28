@@ -104,14 +104,14 @@ export default function AdminPage() {
 
 
   const columns = [
-    { field: 'UserName', sortable: false, filterable: false, headerName: 'UserName', width: 150 },
-    { field: 'Name', sortable: false, filterable: false, headerName: 'Name', width: 150 },
-    { field: 'Roll_No', sortable: false, filterable: false, headerName: 'Roll No', width: 150 },
-    { field: 'Registration_No', sortable: false, filterable: false, headerName: 'Registration No', width: 150 },
-    { field: 'Course', headerName: 'Course', width: 70, sortable: false, filterable: false, },
-    { field: 'Department', headerName: 'Department', sortable: false, filterable: false, width: 300 },
-    { field: 'Semester', headerName: 'Semester', width: 80, sortable: false, filterable: false, },
-    { field: 'Batch', headerName: 'Batch', sortable: false, filterable: false, width: 200 }, // Adding Batch column
+    { field: 'UserName', sortable: false, filterable: false, headerName: 'UserName', width: 150, headerAlign: 'center' },
+    { field: 'Name', sortable: false, filterable: false, headerName: 'Name', width: 150, headerAlign: 'center' },
+    { field: 'Roll_No', sortable: false, filterable: false, headerName: 'Roll No', width: 150, headerAlign: 'center' },
+    { field: 'Registration_No', sortable: false, filterable: false, headerName: 'Registration No', width: 150, headerAlign: 'center' },
+    { field: 'Course', headerName: 'Course', width: 70, sortable: false, filterable: false, headerAlign: 'center' },
+    { field: 'Department', headerName: 'Department', sortable: false, filterable: false, width: 250, headerAlign: 'center' },
+    { field: 'Semester', headerName: 'Semester', width: 100, sortable: false, filterable: false, headerAlign: 'center' },
+    { field: 'Batch', headerName: 'Batch', sortable: false, filterable: false, width: 200, headerAlign: 'center' }, // Adding Batch column
   ];
 
   return (
@@ -142,8 +142,8 @@ export default function AdminPage() {
               />
               {/* <p className="error">{errors.Email}</p> */}
             </div>
-            <div className="labelInput">
-              <label htmlFor="department">Student's Department : </label>
+            <div className="labelInput" >
+              <label htmlFor="department">Student's Department</label>
               <select
                 id="department"
                 name="Department"
@@ -160,7 +160,7 @@ export default function AdminPage() {
               </select>
             </div>
             <div className="labelInput">
-              <label htmlFor="yearOfJoining">Year of Joining : </label>
+              <label htmlFor="yearOfJoining">Year of Joining</label>
               <input
                 type="number"
                 id='yearOfJoining'
@@ -171,8 +171,8 @@ export default function AdminPage() {
               />
               {/* <p className="error">{errors.Email}</p> */}
             </div>
-            <div className="labelInput">
-              <label htmlFor="yearOfPassing">Year of Passing : </label>
+            <div className="labelInput" id='box3'>
+              <label htmlFor="yearOfPassing" >Year of Passing</label>
               <input
                 type="number"
                 id='yearOfPassing'
@@ -186,8 +186,8 @@ export default function AdminPage() {
             <button className='adminBtn' type='submit'>Search</button>
           </form>
         </div>
-        <div className="studentTableContainer" style={{ height: '100%', width: '100%' }}>
-          <DataGrid
+        <div className="studentTableContainer" style={{ height: "100%", width: '100%' }}>
+          <DataGrid style={{ height: "25rem", backgroundColor: "white" }}
             rows={studentDetails}
             columns={columns}
             pageSize={5}
