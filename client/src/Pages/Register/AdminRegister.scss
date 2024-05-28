@@ -3,7 +3,7 @@
 .adminregisterMainContainer {
     width: 100vw;
     display: flex;
-    gap: 1rem;
+
     .adminRegister_Container {
         width: calc(100vw - 15rem);
         height: calc(100vh - 4rem);
@@ -11,21 +11,25 @@
         align-items: center;
         justify-content: center;
         background-color: black;
-        // background: linear-gradient(120deg, #092143, #009ffd);
-        background-color: white;
+        // background-color: rgb(251, 251, 226);
+        background-color: rgb(230, 227, 227);
         position: relative;
         left: 0;
         top: 0;
-        .adminRegister_ChangePassword{
+
+        .adminRegister_ChangePassword {
             position: absolute;
             top: 2rem;
             right: 2rem;
             font-size: 15px;
+            color: rgb(18, 4, 148);
+            font-weight: 600;
         }
-        .adminRegister_ChangePassword:hover{
+
+        .adminRegister_ChangePassword:hover {
             cursor: pointer;
             text-decoration: underline;
-            font-weight: 600;
+            // color: rgb(18, 4, 148);
         }
 
         .adminRegister_form {
@@ -34,7 +38,7 @@
             width: 25rem;
             align-items: center;
             background-color: white;
-            padding: 2rem 2rem ;
+            padding: 2rem 2rem;
             border-radius: 5px;
             box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 
@@ -42,6 +46,7 @@
                 font-size: 22px;
                 font-weight: bolder;
                 margin-bottom: 2rem;
+                color: rgb(18, 4, 148);
             }
 
             .adminRegister_labelInput {
@@ -54,6 +59,7 @@
                 label {
                     font-size: 14px;
                     font-weight: 600;
+                    color: rgb(18, 4, 148);
                 }
 
                 input {
@@ -101,7 +107,7 @@
                 width: 10rem;
                 height: 2.2rem;
                 border: none;
-                background-color: #092143;
+                background-color: rgb(18, 4, 148);
                 outline: none;
                 color: white;
                 font-size: 13px;

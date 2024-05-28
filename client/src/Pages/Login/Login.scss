@@ -7,23 +7,14 @@
     align-items: center;
     justify-content: center;
     background-color: black;
-    background: linear-gradient(120deg, #092143, #009ffd);
+    // background: linear-gradient(120deg, #092143, #009ffd);
+    // background-color: rgb(251, 251, 226);
+    background-image: url('../../Assets/NN3.jpg');
     position: absolute;
     top: 0;
     left: 0;
-    .close_mark_btn{
-        font-size: 20px;
-        font-weight: 600;
-        color: white;
-        position: absolute;
-        right: 2vw;
-        top: 3vh;
-        cursor: pointer;
-        @include xsm{
-            font-size: 15px;
-        }
-    }
-    .goToAdmin{
+
+    .goToAdmin {
         font-size: 15px;
         font: 600;
         color: white;
@@ -31,7 +22,8 @@
         top: 1.5rem;
         right: 2rem;
     }
-    .goToAdmin:hover{
+
+    .goToAdmin:hover {
         cursor: pointer;
         text-decoration: underline;
     }
@@ -39,37 +31,21 @@
     .login_form {
         display: flex;
         flex-direction: column;
-        width: 32rem;
+        width: 30rem;
         align-items: center;
-        background-color: white;
+        // background-color: white;
         padding: 4vh 3vw;
         border-radius: 5px;
-        @include lg{
-            width: 27rem;
-        }
-        @include md{
-            width: 25rem;
-        }
-        @include sm{
-            width: 20rem;
-        }
-        @include xsm{
-            width: 16rem;
-        }
+        // box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+        background: transparent;
+        backdrop-filter: blur(5px);
+        color: white;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 
         .formHeading {
             font-size: 35px;
             font-weight: bolder;
             margin-bottom: 2rem;
-            @include lg{
-                font-size: 33px;
-            }
-            @include sm{
-                font-size: 25px;
-            }
-            @include xsm{
-                font-size: 20px;
-            }
         }
 
         .labelInput {
@@ -78,146 +54,86 @@
             width: 100%;
             gap: 0.5rem;
             margin-bottom: 1rem;
-            @include xsm{
-                margin-bottom: 0.5rem;
-            }
 
             label {
                 font-size: 20px;
                 font-weight: 600;
-                @include lg{
-                    font-size: 17px;
-                }
-                @include sm{
-                    font-size: 14px;
-                }
-                @include xsm{
-                    font-size: 12px;
-                }
             }
 
             input {
                 font-size: 18px;
+                background: transparent;
+                border: none;
                 outline: none;
-                border-top: none;
-                border-left: none;
-                border-right: none;
-                border-bottom: 2px solid #092143;
-                height: 1.7rem;
-                @include lg{
-                    font-size: 16px;
-                }
-                @include sm{
-                    font-size: 14px;
-                }
-                @include xsm{
-                    font-size: 12px;
-                    height: 1.4rem;
+                border: 2px solid rgba(225, 225, 225, 0.2);
+                height: 2rem;
+                padding-left: 5px;
+                color: white;
+            }
+
+            .password_container {
+                position: relative;
+
+                .password_input {
+                    font-size: 18px;
+                    background: transparent;
+                    border: none;
+                    outline: none;
+                    border: 2px solid rgba(225, 225, 225, 0.2);
+                    height: 2rem;
+                    width: 100%;
+                    padding-left: 5px;
+                color: white;
+
                 }
 
-            }
-            .password_container{
-                position: relative;
-                .password_input{
-                    font-size: 18px;
-                    outline: none;
-                    border-top: none;
-                    border-left: none;
-                    border-right: none;
-                    border-bottom: 2px solid #092143;
-                    height: 1.7rem;
-                    width: 100%;
-                    @include lg{
-                        font-size: 16px;
-                    }
-                    @include sm{
-                        font-size: 14px;
-                    }
-                    @include xsm{
-                        font-size: 12px;
-                    }
-                }
-                .icon{
+                .icon {
                     position: absolute;
-                    right: 0;
-                    top: -0.5rem;
+                    right: 0.5rem;
+                    top: 0.3rem;
                     cursor: pointer;
                     width: 2vw;
                     height: 3vh;
-                    @include sm{
-                        width: 16px;
-                        height: 16px;
-                        top: 0rem;
-                    }
                 }
             }
-            .error{
+
+            .error {
                 font-size: 13px;
-                color: red;
+                color: white;
                 font-weight: 600;
-                @include sm{
-                    font-size: 10px;
-                }
-                @include xsm{
-                    font-size: 8px;
-                }
             }
         }
 
-            .login_btn {
-                width: 12rem;
-                height: 2.8rem;
-                border: none;
-                background-color: #092143;
-                outline: none;
-                color: white;
-                font-size: 17px;
-                font-weight: 500;
+        .login_btn {
+            width: 12rem;
+            height: 2.8rem;
+            border: none;
+            background-color: rgb(192, 115, 15);
+            outline: none;
+            color: white;
+            font-size: 17px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 3px;
+        }
+
+        .registerLink_Box {
+            display: flex;
+            font-size: 15px;
+            gap: 5px;
+
+            .register_Link {
+                color: #092143;
                 cursor: pointer;
-                margin-top: 1rem;
-                margin-bottom: 1rem;
-                border-radius: 3px;
-                @include lg{
-                    font-size: 16px;
-                    height: 2.5rem;
-                }
-                @include sm{
-                    font-size: 14px;
-                    height: 2rem;
-                    width: 7rem;
-                }
-                @include xsm{
-                    font-size: 12px;
-                    height: 1.7rem;
-                    width: 6rem;
-                    margin-top: 0.5rem ;
-                }
+                font-weight: 600;
+                text-decoration: none;
             }
 
-            .registerLink_Box {
-                display: flex;
-                font-size: 15px;
-                gap: 5px;
-                @include lg{
-                    font-size: 13px;
-                }
-                @include sm{
-                    font-size: 11px;
-                }
-                @include xsm{
-                    font-size: 9px;
-                }
-
-                .register_Link {
-                    color: #092143;
-                    cursor: pointer;
-                    font-weight: 600;
-                    text-decoration: none;
-                }
-
-                .register_Link:hover {
-                    text-decoration: underline;
-                }
+            .register_Link:hover {
+                text-decoration: underline;
             }
         }
     }
+}

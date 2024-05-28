@@ -12,11 +12,16 @@
         word-spacing: 10px;
     }
     .logoutBtn{
-        padding: 4px 12px;
+        width: 7rem;
+        height: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         border: none;
         outline: none;
         border-radius: 7px;
         font-size: 13px;
+        font-weight: 600;
         cursor: pointer;
     }
     .logoutBtn:hover{

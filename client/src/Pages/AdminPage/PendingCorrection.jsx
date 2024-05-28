@@ -45,10 +45,10 @@ export default function PendingCorrection() {
 
 
     const columns = [
-        { field: 'Student_ID', headerName: 'Student ID', width: 150 },
-        { field: 'Student_UserName', headerName: 'UserName', width: 200 },
-        { field: 'Student_RollNo', headerName: 'Roll No', width: 150 },
-        { field: 'Student_Name', headerName: 'Name', width: 150 },
+        { field: 'Student_ID', headerName: 'Student ID', width: 150,headerAlign: 'center' },
+        { field: 'Student_UserName', headerName: 'UserName', width: 200,headerAlign: 'center' },
+        { field: 'Student_RollNo', headerName: 'Roll No', width: 150,headerAlign: 'center' },
+        { field: 'Student_Name', headerName: 'Name', width: 150,headerAlign: 'center' },
     ];
 
     return (
@@ -56,8 +56,8 @@ export default function PendingCorrection() {
             <SideBar/>
             <div className='PendingCorrectionContainer'>
                 <h2 className='pendingCorrectons'>Pending Corrections</h2>
-                <div className="pendingCorrectionTable" style={{ height: '100%', width: '100%' }}>
-                    <DataGrid
+                <div className="pendingCorrectionTable" style={{ height: '100%', width: '90%' }}>
+                    <DataGrid style={{backgroundColor:"white"}}
                         rows={pendingCorrections}
                         columns={columns}
                         pageSize={5}

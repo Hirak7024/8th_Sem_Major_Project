@@ -1,7 +1,8 @@
 .Sidebar_MainContainer{
     width: 15rem;
     height: calc(100vh - 4rem);
-    background-color: white;
+    color: white;
+    background-color: rgb(34,6,70);
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
     .sidebarList{
         // list-style: none;
@@ -17,7 +18,8 @@
         }
         .sideBarListItem:hover{
             cursor: pointer;
-            background-color: rgb(201, 198, 198);
+            background-color: rgb(18, 4, 148);
+            // background-color: rgb(199, 197, 197);
         }
     }
 }
