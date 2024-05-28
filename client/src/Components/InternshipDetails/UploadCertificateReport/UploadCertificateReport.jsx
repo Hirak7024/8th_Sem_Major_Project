@@ -51,6 +51,7 @@ export default function UploadCertificateReport({ Internship_ID, setUploadPdfFil
                         type="file"
                         id="certificate"
                         name="Certificate"
+                        accept="application/pdf"
                         onChange={handlePdfFile}
                     />
                 </div>
@@ -60,6 +61,7 @@ export default function UploadCertificateReport({ Internship_ID, setUploadPdfFil
                         type="file"
                         id="report"
                         name="Report"
+                        accept="application/pdf"
                         onChange={handlePdfFile}
 
                     />

@@ -107,7 +107,10 @@ export default function StudentDetails() {
                             <div className="profilePictureEditBox">
                                 <button className='ProfilePictureEditContainerExit' onClick={handleModalClose} >X</button>
                                 <img className='ModelProfilePic' src={imageFile ? URL.createObjectURL(imageFile) : defaultImage} alt="NewProfilePicture" />
-                                <input className='ModelImgInputTag' type="file" onChange={handleImageFile} />
+                                <input className='ModelImgInputTag' 
+                                type="file"
+                                accept=".jpeg, .jpg, .png" 
+                                onChange={handleImageFile} />
                                 <button className='uploadImgButton' onClick={handleUploadImage}>Upload Image</button>
                             </div>
                         </div>}
