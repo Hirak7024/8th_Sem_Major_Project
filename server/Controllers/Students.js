@@ -121,59 +121,53 @@ export const checkStudentByUserName = async (req, res) => {
 };
 
 
-// Controller function to fetch student details based on provided parameters for Admin Side
 export const fetchAllDetails = async (req, res) => {
   try {
-    // Extracting parameters from request body
     const { Roll_No, Registration_No, Department, Year_of_Joining, Year_of_Passing } = req.body;
 
     let query = "SELECT * FROM students";
+    let conditions = [];
+    let values = [];
 
-    // Building the WHERE clause based on provided parameters
-    let whereClause = "";
-    const conditions = [];
     if (Roll_No) {
-      conditions.push(`Roll_No = '${Roll_No}'`);
-    } else if (Registration_No) {
-      conditions.push(`Registration_No = '${Registration_No}'`);
+      conditions.push(`Roll_No = ?`);
+      values.push(Roll_No);
+    }
+    if (Registration_No) {
+      conditions.push(`Registration_No = ?`);
+      values.push(Registration_No);
+    }
+    if (Department) {
+      conditions.push(`Department = ?`);
+      values.push(Department);
+    }
+    if (Year_of_Joining) {
+      conditions.push(`Year_of_Joining = ?`);
+      values.push(Year_of_Joining);
+    }
+    if (Year_of_Passing) {
+      conditions.push(`Year_of_Passing = ?`);
+      values.push(Year_of_Passing);
     }
 
-    // Combining conditions
     if (conditions.length > 0) {
-      whereClause = " WHERE " + conditions.join(" AND ");
+      query += " WHERE " + conditions.join(" AND ");
     }
 
-    // Adding the whereClause to the query
-    query += whereClause;
+    const [rows, fields] = await pool.query(query, values);
 
-    // Executing the query
-    const [rows, fields] = await pool.query(query);
-
-    // Checking if any rows are returned
     if (rows.length === 0) {
-      // No student details found, sending response
-      return res.status(404).json({ success: false, message: "Student Details do not exist" });
+      return res.status(404).json({ success: false, message: "Student details do not exist" });
     }
 
-    // Checking if the fetched student details match the provided ones
-    const student = rows[0];
-    if (
-      (Department && student.Department !== Department) ||
-      (Year_of_Joining && student.Year_of_Joining !== Year_of_Joining) ||
-      (Year_of_Passing && student.Year_of_Passing !== Year_of_Passing)
-    ) {
-      // Student details do not match, sending response
-      return res.status(404).json({ success: false, message: "Student Details do not exist" });
-    }
-
-    // Sending response with fetched student details
     res.status(200).json({ success: true, data: rows });
   } catch (error) {
-    // Handling errors
     console.error("Error fetching student details:", error);
     res.status(500).json({ success: false, message: "Failed to fetch student details" });
   }
 };
+
+
 
 
 
