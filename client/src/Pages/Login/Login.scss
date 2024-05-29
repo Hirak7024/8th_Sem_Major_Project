@@ -8,8 +8,7 @@
     justify-content: center;
     background-color: black;
     // background: linear-gradient(120deg, #092143, #009ffd);
-    // background-color: rgb(251, 251, 226);
-    background-image: url('../../Assets/NN3.jpg');
+    background: radial-gradient(circle at 85.4% 50.8%, rgb(14, 72, 222) 0%, rgb(3, 22, 65) 74.2%);
     position: absolute;
     top: 0;
     left: 0;
@@ -31,16 +30,11 @@
     .login_form {
         display: flex;
         flex-direction: column;
-        width: 30rem;
+        width: 32rem;
         align-items: center;
-        // background-color: white;
+        background-color: white;
         padding: 4vh 3vw;
         border-radius: 5px;
-        // box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-        background: transparent;
-        backdrop-filter: blur(5px);
-        color: white;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 
         .formHeading {
             font-size: 35px;
@@ -62,13 +56,12 @@
 
             input {
                 font-size: 18px;
-                background: transparent;
-                border: none;
                 outline: none;
-                border: 2px solid rgba(225, 225, 225, 0.2);
-                height: 2rem;
-                padding-left: 5px;
-                color: white;
+                border-top: none;
+                border-left: none;
+                border-right: none;
+                border-bottom: 2px solid #092143;
+                height: 1.7rem;
             }
 
             .password_container {
@@ -76,21 +69,20 @@
 
                 .password_input {
                     font-size: 18px;
-                    background: transparent;
-                    border: none;
                     outline: none;
-                    border: 2px solid rgba(225, 225, 225, 0.2);
-                    height: 2rem;
+                    border-top: none;
+                    border-left: none;
+                    border-right: none;
+                    border-bottom: 2px solid #092143;
+                    height: 1.7rem;
                     width: 100%;
-                    padding-left: 5px;
-                color: white;
 
                 }
 
                 .icon {
                     position: absolute;
-                    right: 0.5rem;
-                    top: 0.3rem;
+                    right: 0;
+                    top: -0.5rem;
                     cursor: pointer;
                     width: 2vw;
                     height: 3vh;
@@ -99,7 +91,7 @@
 
             .error {
                 font-size: 13px;
-                color: white;
+                color: red;
                 font-weight: 600;
             }
         }
@@ -108,7 +100,7 @@
             width: 12rem;
             height: 2.8rem;
             border: none;
-            background-color: rgb(192, 115, 15);
+            background-color: #092143;
             outline: none;
             color: white;
             font-size: 17px;
