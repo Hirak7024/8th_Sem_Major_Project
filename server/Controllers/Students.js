@@ -120,7 +120,7 @@ export const checkStudentByUserName = async (req, res) => {
   }
 };
 
-
+// ADMIN SIDE FETCH DETAILS OF STUDENTS
 export const fetchAllDetails = async (req, res) => {
   try {
     const { Roll_No, Registration_No, Department, Year_of_Joining, Year_of_Passing } = req.body;
